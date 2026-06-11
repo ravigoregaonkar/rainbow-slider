@@ -27,6 +27,23 @@
         }
         return id;
     }
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+        fullscreenBtn.addEventListener('click', () => {
+            // Target the root <html> element to expand the entire viewport
+            const docElement = document.documentElement; 
+
+            if (docElement.requestFullscreen) {
+                docElement.requestFullscreen();
+            } else if (docElement.webkitRequestFullscreen) { /* Safari support */
+                docElement.webkitRequestFullscreen();
+            } else if (docElement.msRequestFullscreen) { /* IE11 / Early Edge support */
+                docElement.msRequestFullscreen();
+            }
+            
+            // Optional: Hide the button once full screen is active
+            fullscreenBtn.style.display = 'none';
+        });
 
     // ===== SCALE CONTAINER =====
     function scaleContainer() {
