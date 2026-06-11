@@ -213,53 +213,38 @@
 
     // ===== RESPONSIVE =====
     function scaleContainer() {
-    const baseWidth = 1024;
-    const baseHeight = 768;
+        const ww = window.innerWidth;
+        const wh = window.innerHeight;
+        const baseW = 1024;
+        const baseH = 768;
 
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+        if (ww <= 1024 && isLandscape()) {
+            container.style.width = ww + 'px';
+            container.style.height = wh + 'px';
+            container.style.transform = 'none';
 
-    const scale = Math.min(
-        screenWidth / baseWidth,
-        screenHeight / baseHeight
-    );
+            canvas.width = ww;
+            canvas.height = wh;
 
-    const offsetX = (screenWidth - baseWidth * scale) / 2;
-    const offsetY = (screenHeight - baseHeight * scale) / 2;
+            GAME.scaleX = ww / baseW;
+            GAME.scaleY = wh / baseH;
+            GAME.scale = Math.min(GAME.scaleX, GAME.scaleY);
+        } else {
+            const scale = Math.min(ww / baseW, wh / baseH);
 
-    canvas.style.transform = `
-        translate(${offsetX}px, ${offsetY}px)
-        scale(${scale})
-    `;
+            container.style.width = baseW + 'px';
+            container.style.height = baseH + 'px';
+            container.style.setProperty('--scale', scale);
+            container.style.transform = 'scale(' + scale + ')';
 
-    canvas.style.transformOrigin = "top left";
-}
+            canvas.width = baseW;
+            canvas.height = baseH;
 
-    function fixIOS() {
-        setTimeout(() => {
-            window.scrollTo(0, 1);
-        }, 200);
+            GAME.scaleX = 1;
+            GAME.scaleY = 1;
+            GAME.scale = 1;
+        }
     }
-    function handleResize() {
-        scaleContainer();
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    window.addEventListener("orientationchange", () => {
-        setTimeout(handleResize, 300);
-    });
-
-    // ✅ KEY FIX FOR iPHONE
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", handleResize);
-    }
-
-    // ✅ helps hide address bar
-    window.addEventListener("load", () => {
-        fixIOS();
-        handleResize();
-    });
 
     function checkOrientation() {
         if (isPortrait() && isMobileOrTablet()) {
@@ -1844,7 +1829,6 @@
     document.addEventListener('arakitol:startGameplay', (e) => {
         console.log('Zone 1 Gameplay starting for:', e.detail.playerName);
         initGameplay();
-        fixIOS();
     });
 
     console.log('%c Zone 1 Gameplay Engine Loaded ', 'color: #4CAF50; font-size: 14px;');
