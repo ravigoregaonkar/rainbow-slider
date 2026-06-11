@@ -1,255 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,viewport-fit=cover, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Catch The D</title>
-    <link rel="stylesheet" href="style.css">
-    <base target="_blank">
-    <base target="_blank">
-</head>
-
-<body>
-    <div id="loading-screen">
-        <div class="loading-logo"><img src="images/logo.png"></div>
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
-        </div>
-        <div class="loading-text">Loading Power Quest...</div>
-    </div>
-
-    <div id="game-container">
-        <div class="bg-image" id="menu-bg">
-            <img src="images/login-background.png" alt="Background" id="bg-img">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0,viewport-fit=cover, user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Catch The D</title>
+        <link rel="stylesheet" href="style.css">
+        <base target="_blank">
+        <base target="_blank">
+    </head>
+    <body>
+        <div id="loading-screen">
+            <div class="loading-logo"><img src="images/logo.png"></div>
+            <div class="loading-bar"><div class="loading-progress"></div></div>
+            <div class="loading-text">Loading Power Quest...</div>
         </div>
 
-        <div class="logo-container" id="menu-logo">
-            <img src="images/logo.png" alt="Arakitol Power Quest Logo" id="logo-img">
-        </div>
+        <div id="game-container">
+            <div class="bg-image" id="menu-bg">
+                <img src="images/login-background.png" alt="Background"
+                    id="bg-img">
+            </div>
 
-        <div class="character-container" id="menu-boy">
-            <img src="images/boy.png" alt="Superhero Boy" id="boy-img">
-        </div>
+            <div class="logo-container" id="menu-logo">
+                <img src="images/logo.png" alt="Arakitol Power Quest Logo"
+                    id="logo-img">
+            </div>
 
-        <div class="d-icon-container d-icon1" id="menu-d1"><img src="images/D-icon.png" alt="D icon"></div>
-        <div class="d-icon-container d-icon2" id="menu-d2"><img src="images/super-d-icon-home.png" alt="D icon"></div>
-        <div class="d-icon-container d-icon3" id="menu-d3"><img src="images/super-d-icon-home.png" alt="D icon"></div>
+            <div class="character-container" id="menu-boy">
+                <img src="images/boy.png" alt="Superhero Boy" id="boy-img">
+            </div>
 
-        <div class="sun-container" id="menu-sun"><img src="images/sun.png" alt="sun icon"></div>
+            <div class="d-icon-container d-icon1" id="menu-d1"><img
+                    src="images/D-icon.png" alt="D icon"></div>
+            <div class="d-icon-container d-icon2" id="menu-d2"><img
+                    src="images/super-d-icon-home.png" alt="D icon"></div>
+            <div class="d-icon-container d-icon3" id="menu-d3"><img
+                    src="images/super-d-icon-home.png" alt="D icon"></div>
 
-        <div id="login-screen" class="screen active">
-            <div class="login-box">
-                <div class="login-box-bg">
-                    <div class="login-box-header">
-                        <div class="login-box-title">WELCOME CHAMPION</div>
-                    </div>
-                    <div class="form-content">
-                        <div class="input-group">
-                            <span class="input-label">YOUR NAME</span>
-                            <div class="input-wrapper">
-                                <div class="input-icon">
-                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"
-                                        alt="User">
-                                </div>
-                                <input type="text" class="input-field" id="yourName"
-                                    placeholder="Enter your name for certificate" required autocomplete="off"
-                                    inputmode="text">
-                            </div>
+            <div class="sun-container" id="menu-sun"><img src="images/sun.png"
+                    alt="sun icon"></div>
+
+            <div id="login-screen" class="screen active">
+                <div class="login-box">
+                    <div class="login-box-bg">
+                        <div class="login-box-header">
+                            <div class="login-box-title">WELCOME CHAMPION</div>
                         </div>
-                        <button type="submit" class="continue-btn" id="continueBtn">
-                            <span class="continue-btn-text">CONTINUE</span>
-                            <span class="continue-btn-arrow">&#10132;</span>
-                        </button>
-                        <div class="safety-text">
-                            <span class="safety-icon">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237cb342'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/%3E%3C/svg%3E"
-                                    alt="Shield">
-                            </span>
-                            <span>Your information is safe with us</span>
+                        <div class="form-content">
+                            <div class="input-group">
+                                <span class="input-label">YOUR NAME</span>
+                                <div class="input-wrapper">
+                                    <div class="input-icon">
+                                        <img
+                                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"
+                                            alt="User">
+                                    </div>
+                                    <input type="text" class="input-field"
+                                        id="yourName"
+                                        placeholder="Enter your name for certificate"
+                                        required autocomplete="off"
+                                        inputmode="text">
+                                </div>
+                            </div>
+                            <button type="submit" class="continue-btn"
+                                id="continueBtn">
+                                <span class="continue-btn-text">CONTINUE</span>
+                                <span class="continue-btn-arrow">&#10132;</span>
+                            </button>
+                            <div class="safety-text">
+                                <span class="safety-icon">
+                                    <img
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237cb342'%3E%3Cpath d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z'/%3E%3C/svg%3E"
+                                        alt="Shield">
+                                </span>
+                                <span>Your information is safe with us</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="start-screen" class="screen">
-            <div class="buttons-area">
-                <button class="game-btn start-game-btn" id="startGameBtn"><img src="images/start-game-button.png"
-                        alt="Start Game"></button>
-                <button class="game-btn how-to-play-btn" id="howToPlayBtn"><img src="images/how-to-play-button.png"
-                        alt="How to Play"></button>
+            <div id="start-screen" class="screen">
+                <div class="buttons-area">
+                    <button class="game-btn start-game-btn"
+                        id="startGameBtn"><img
+                            src="images/start-game-button.png"
+                            alt="Start Game"></button>
+                    <button class="game-btn how-to-play-btn"
+                        id="howToPlayBtn"><img
+                            src="images/how-to-play-button.png"
+                            alt="How to Play"></button>
+                </div>
             </div>
-        </div>
 
-        <!-- <div class="benefits-bar" id="menu-benefits">
+            <!-- <div class="benefits-bar" id="menu-benefits">
             <div class="benefit-item"><img src="images/icon1.png" alt="Strong Bones" class="benefit-img"></div>
             <div class="benefit-item"><img src="images/icon2.png" alt="Muscle Function" class="benefit-img"></div>
             <div class="benefit-item"><img src="images/icon3.png" alt="Energy Support" class="benefit-img"></div>
             <div class="benefit-item"><img src="images/icon4.png" alt="Immunity Support" class="benefit-img"></div>
         </div> -->
 
-        <div id="gameplay-screen" class="screen">
-            <canvas id="gameCanvas" width="1024" height="768"></canvas>
-            <div class="hud-layer">
-                <div class="hud-left-group">
-                    <div class="hud-item hud-coins">
-                        <div class="hud-bg-css">
-                            <div class="hud-icon"><img src="images/D-coin.png"></div>
-                            <div class="hud-info">
-                                <span class="hud-label">D COINS</span>
-                                <span class="hud-value" id="coinCount">00</span>
+            <div id="gameplay-screen" class="screen">
+                <canvas id="gameCanvas" width="1024" height="768"></canvas>
+                <div class="hud-layer">
+                    <div class="hud-left-group">
+                        <div class="hud-item hud-coins">
+                            <div class="hud-bg-css">
+                                <div class="hud-icon"><img
+                                        src="images/D-coin.png"></div>
+                                <div class="hud-info">
+                                    <span class="hud-label">D COINS</span>
+                                    <span class="hud-value"
+                                        id="coinCount">00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hud-item hud-super-coins">
+                            <div class="hud-bg-css hud-super-bg">
+                                <div class="hud-icon"><img
+                                        src="images/super-coin.png"></div>
+                                <div class="hud-info">
+                                    <span class="hud-label">SUPER</span>
+                                    <span class="hud-value"
+                                        id="superCoinCount">0/8</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hud-item hud-time">
+                            <div class="hud-bg-css hud-time-bg">
+                                <div class="hud-icon hud-time-icon"><img
+                                        src="images/hud-time1.png"></div>
+                                <div class="hud-info">
+                                    <span class="hud-value"
+                                        id="timeCount">00</span>
+                                    <span class="hud-unit">SEC</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="hud-item hud-super-coins">
-                        <div class="hud-bg-css hud-super-bg">
-                            <div class="hud-icon"><img src="images/super-coin.png"></div>
-                            <div class="hud-info">
-                                <span class="hud-label">SUPER</span>
-                                <span class="hud-value" id="superCoinCount">0/8</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hud-item hud-time">
-                        <div class="hud-bg-css hud-time-bg">
-                            <div class="hud-icon hud-time-icon"><img src="images/hud-time1.png"></div>
-                            <div class="hud-info">
-                                <span class="hud-value" id="timeCount">00</span>
-                                <span class="hud-unit">SEC</span>
-                            </div>
-                        </div>
+                    <div class="hud-right-group">
+                        <button id="musicBtn" class="music-btn"><img
+                                id="musicIcon" src="images/music-on.svg"
+                                alt="Music"></button>
+                        <button class="pause-btn" id="pauseBtn"><img
+                                src="images/pause-btn.svg" alt="Pause"></button>
                     </div>
                 </div>
-                <div class="hud-right-group">
-                    <button id="musicBtn" class="music-btn"><img id="musicIcon" src="images/music-on.svg"
-                            alt="Music"></button>
-                    <button class="pause-btn" id="pauseBtn"><img src="images/pause-btn.svg" alt="Pause"></button>
-                </div>
+                <button class="forward-btn" id="forwardBtn"><img
+                        src="images/forward-btn.svg" alt="Forward"></button>
+                <button class="jump-btn" id="jumpBtn"><img
+                        src="images/jump-button.svg" alt="Jump"></button>
             </div>
-            <button class="forward-btn" id="forwardBtn"><img src="images/forward-btn.svg" alt="Forward"></button>
-            <button class="jump-btn" id="jumpBtn"><img src="images/jump-button.svg" alt="Jump"></button>
         </div>
-    </div>
 
-    <div id="how-to-play-popup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="popup-close" id="popupClose">&times;</button>
-            <img src="images/how-to-play-popup.png" alt="How to Play" class="popup-image">
-        </div>
-    </div>
-
-    <div id="pause-menu" class="overlay">
-        <div class="overlay-content">
-            <h2>PAUSED</h2>
-            <button class="pause-overlay-btn" id="resumeBtn"><img src="images/resume-btn.png"></button>
-            <button class="pause-overlay-btn" id="restartBtn"><img src="images/restart-btn.png"></button>
-            <button class="pause-overlay-btn" id="quitBtn"><img src="images/quit-btn.png"></button>
-        </div>
-    </div>
-
-    <div id="game-over" class="overlay">
-        <div class="mission-complete-content">
-            <div class="mission-banner">
-                <span class="mission-star">&#11088;</span>
-                <h2>MISSION<br>COMPLETE!</h2>
-                <span class="mission-star">&#11088;</span>
+        <div id="how-to-play-popup" class="popup-overlay">
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose">&times;</button>
+                <img src="images/how-to-play-popup.png" alt="How to Play"
+                    class="popup-image">
             </div>
-            <p class="mission-subtitle">Great job! You have collected all
-                Super Coins!</p>
-            <div class="mission-stats">
-                <div class="mission-stat coin-collect">
-                    <div class="stat-icon-box"><img src="images/D-coin.png" alt="Coins" class="stat-icon-img"></div>
-                    <div class="stat-value" id="finalCoins">0</div>
-                    <div class="stat-label">D Coins Collected</div>
+        </div>
+
+        <div id="pause-menu" class="overlay">
+            <div class="overlay-content">
+                <h2>PAUSED</h2>
+                <button class="pause-overlay-btn" id="resumeBtn"><img
+                        src="images/resume-btn.png"></button>
+                <button class="pause-overlay-btn" id="restartBtn"><img
+                        src="images/restart-btn.png"></button>
+                <button class="pause-overlay-btn" id="quitBtn"><img
+                        src="images/quit-btn.png"></button>
+            </div>
+        </div>
+
+        <div id="game-over" class="overlay">
+            <div class="mission-complete-content">
+                <div class="mission-banner">
+                    <span class="mission-star">&#11088;</span>
+                    <h2>MISSION<br>COMPLETE!</h2>
+                    <span class="mission-star">&#11088;</span>
                 </div>
-                <div class="mission-stat super-coin-stat">
-                    <div class="stat-icon-box"><img src="images/super-coin.png" alt="Super Coins" class="stat-icon-img">
+                <p class="mission-subtitle">Great job! You have collected all
+                    Super Coins!</p>
+                <div class="mission-stats">
+                    <div class="mission-stat coin-collect">
+                        <div class="stat-icon-box"><img src="images/D-coin.png"
+                                alt="Coins" class="stat-icon-img"></div>
+                        <div class="stat-value" id="finalCoins">0</div>
+                        <div class="stat-label">D Coins Collected</div>
                     </div>
-                    <div class="stat-value" id="finalSuperCoins">0</div>
-                    <div class="stat-label">Super Coins</div>
+                    <div class="mission-stat super-coin-stat">
+                        <div class="stat-icon-box"><img
+                                src="images/super-coin.png" alt="Super Coins"
+                                class="stat-icon-img"></div>
+                        <div class="stat-value" id="finalSuperCoins">0</div>
+                        <div class="stat-label">Super Coins</div>
+                    </div>
+                    <div class="mission-stat time-stat">
+                        <div class="stat-icon-box"><img
+                                src="images/hud-time1.png" alt="Time"
+                                class="stat-icon-img"></div>
+                        <div class="stat-value" id="finalTime">0</div>
+                        <div class="stat-label">Time (Seconds)</div>
+                    </div>
+                    <div class="mission-stat final-score">
+                        <div class="stat-icon-box"><img
+                                src="images/hud-score1.png" alt="Score"
+                                class="stat-icon-img"></div>
+                        <div class="stat-value" id="finalScore">0</div>
+                        <div class="stat-label">Final Score</div>
+                    </div>
                 </div>
-                <div class="mission-stat time-stat">
-                    <div class="stat-icon-box"><img src="images/hud-time1.png" alt="Time" class="stat-icon-img"></div>
-                    <div class="stat-value" id="finalTime">0</div>
-                    <div class="stat-label">Time (Seconds)</div>
+                <button class="overlay-btn leaderboard-btn"
+                    id="viewLeaderboardBtn">VIEW LEADERBOARD <span
+                        class="btn-arrow">&#8250;</span></button>
+            </div>
+        </div>
+
+        <div id="leaderboard-overlay" class="overlay">
+            <div class="leaderboard-content">
+                <div class="leaderboard-header">
+                    <span class="lb-star">&#11088;</span>
+                    <h2>LEADERBOARD</h2>
+                    <span class="lb-star">&#11088;</span>
                 </div>
-                <div class="mission-stat final-score">
-                    <div class="stat-icon-box"><img src="images/hud-score1.png" alt="Score" class="stat-icon-img"></div>
-                    <div class="stat-value" id="finalScore">0</div>
-                    <div class="stat-label">Final Score</div>
+                <div class="leaderboard-table-wrapper">
+                    <table class="leaderboard-table">
+                        <thead><tr><th>RANK</th><th>NAME</th><th>ATTEMPTS</th><th>D
+                                    COINS</th><th>SUPER
+                                    COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+                <div class="leaderboard-buttons">
+                    <button class="overlay-btn cert-btn" id="viewCertBtn"><span
+                            class="btn-icon">&#128196;</span> VIEW
+                        CERTIFICATE</button>
                 </div>
             </div>
-            <button class="overlay-btn leaderboard-btn" id="viewLeaderboardBtn">VIEW LEADERBOARD <span
-                    class="btn-arrow">&#8250;</span></button>
         </div>
-    </div>
 
-    <div id="leaderboard-overlay" class="overlay">
-        <div class="leaderboard-content">
-            <div class="leaderboard-header">
-                <span class="lb-star">&#11088;</span>
-                <h2>LEADERBOARD</h2>
-                <span class="lb-star">&#11088;</span>
-            </div>
-            <div class="leaderboard-table-wrapper">
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>NAME</th>
-                            <th>ATTEMPTS</th>
-                            <th>D
-                                COINS</th>
-                            <th>SUPER
-                                COINS</th>
-                            <th>TIME</th>
-                            <th>SCORE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboardBody"></tbody>
-                </table>
-            </div>
-            <div class="leaderboard-buttons">
-                <button class="overlay-btn cert-btn" id="viewCertBtn"><span class="btn-icon">&#128196;</span> VIEW
-                    CERTIFICATE</button>
+        <div id="certificate-popup" class="overlay">
+            <div class="certificate-view-content">
+                <button class="cert-popup-close"
+                    id="certPopupClose">&times;</button>
+                <div class="certificate-frame" id="certificateFrame"></div>
+                <div class="certificate-actions">
+                    <button class="overlay-btn download-cert-btn"
+                        id="downloadCertBtn"><span
+                            class="btn-icon">&#11015;</span> DOWNLOAD
+                        CERTIFICATE</button>
+                    <button class="overlay-btn back-btn" id="certBackBtn"><span
+                            class="btn-icon">&#8592;</span> BACK TO
+                        LEADERBOARD</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="certificate-popup" class="overlay">
-        <div class="certificate-view-content">
-            <button class="cert-popup-close" id="certPopupClose">&times;</button>
-            <div class="certificate-frame" id="certificateFrame"></div>
-            <div class="certificate-actions">
-                <button class="overlay-btn download-cert-btn" id="downloadCertBtn"><span
-                        class="btn-icon">&#11015;</span> DOWNLOAD
-                    CERTIFICATE</button>
-                <button class="overlay-btn back-btn" id="certBackBtn"><span class="btn-icon">&#8592;</span> BACK TO
-                    LEADERBOARD</button>
+        <audio id="coinSound" src="sounds/coin.mp3" preload="auto"></audio>
+        <audio id="jumpSound" src="sounds/jump.mp3" preload="auto"></audio>
+        <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
+        <audio id="superCoinSound" src="sounds/super-coin.mp3"
+            preload="auto"></audio>
+        <audio id="bgMusic" src="sounds/game-music.mp3" loop></audio>
+
+        <script src="login.js"></script>
+        <script src="zone1.js"></script>
+
+        <div id="rotate-overlay">
+            <div class="rotate-content">
+                <div class="rotate-icon">&#128241;</div>
+                <div class="rotate-arrow">&#128260;</div>
+                <h2>Please Rotate Your Device</h2>
+                <p>This game works best in landscape mode</p>
             </div>
         </div>
-    </div>
-
-    <audio id="coinSound" src="sounds/coin.mp3" preload="auto"></audio>
-    <audio id="jumpSound" src="sounds/jump.mp3" preload="auto"></audio>
-    <audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
-    <audio id="superCoinSound" src="sounds/super-coin.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="sounds/game-music.mp3" loop></audio>
-
-    <script src="login.js"></script>
-    <script src="zone1.js"></script>
-
-    <div id="rotate-overlay">
-        <div class="rotate-content">
-            <div class="rotate-icon">&#128241;</div>
-            <div class="rotate-arrow">&#128260;</div>
-            <h2>Please Rotate Your Device</h2>
-            <p>This game works best in landscape mode</p>
-        </div>
-    </div>
-</body>
-
+    </body>
 </html>
