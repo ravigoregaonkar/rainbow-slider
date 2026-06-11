@@ -1,3 +1,9 @@
+
+:root {
+    --vh: 1vh;
+}
+
+
 /* ===== RESET & BASE ===== */
 * {
     margin: 0;
@@ -23,6 +29,9 @@ body {
     overflow: hidden;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     transform-origin: center center;
+}
+#game-container {
+    height: calc(var(--vh) * 100);
 }
 
 @media (max-width: 1024px),
