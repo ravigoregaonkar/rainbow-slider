@@ -27,6 +27,24 @@
         }
         return id;
     }
+    
+window.onload = function () {
+  setTimeout(() => {
+    window.scrollTo(0, 1);
+  }, 100);
+}
+
+
+function goFullscreen() {
+  const el = document.documentElement;
+
+  if (el.requestFullscreen) {
+    el.requestFullscreen();
+  } else if (el.webkitRequestFullscreen) {
+    el.webkitRequestFullscreen(); // Safari
+  }}
+
+
     const fullscreenBtn = document.getElementById('fullscreen-btn');
 
         fullscreenBtn.addEventListener('click', () => {
