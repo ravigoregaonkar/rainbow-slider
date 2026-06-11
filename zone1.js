@@ -216,53 +216,50 @@
     const baseWidth = 1024;
     const baseHeight = 768;
 
-    // ✅ iPhone REAL height fix
-    const realHeight = window.visualViewport
-        ? window.visualViewport.height
-        : window.innerHeight;
-
-    const realWidth = window.innerWidth;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
     const scale = Math.min(
-        realWidth / baseWidth,
-        realHeight / baseHeight
+        screenWidth / baseWidth,
+        screenHeight / baseHeight
     );
 
-    const newWidth = baseWidth * scale;
-    const newHeight = baseHeight * scale;
+    const offsetX = (screenWidth - baseWidth * scale) / 2;
+    const offsetY = (screenHeight - baseHeight * scale) / 2;
 
-    canvas.style.width = newWidth + "px";
-    canvas.style.height = newHeight + "px";
+    canvas.style.transform = `
+        translate(${offsetX}px, ${offsetY}px)
+        scale(${scale})
+    `;
 
-    canvas.width = baseWidth;
-    canvas.height = baseHeight;
+    canvas.style.transformOrigin = "top left";
 }
 
-function fixIOS() {
-    setTimeout(() => {
-        window.scrollTo(0, 1);
-    }, 200);
-}
-function handleResize() {
-    scaleContainer();
-}
+    function fixIOS() {
+        setTimeout(() => {
+            window.scrollTo(0, 1);
+        }, 200);
+    }
+    function handleResize() {
+        scaleContainer();
+    }
 
-window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-window.addEventListener("orientationchange", () => {
-    setTimeout(handleResize, 300);
-});
+    window.addEventListener("orientationchange", () => {
+        setTimeout(handleResize, 300);
+    });
 
-// ✅ KEY FIX FOR iPHONE
-if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", handleResize);
-}
+    // ✅ KEY FIX FOR iPHONE
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", handleResize);
+    }
 
-// ✅ helps hide address bar
-window.addEventListener("load", () => {
-    fixIOS();
-    handleResize();
-});
+    // ✅ helps hide address bar
+    window.addEventListener("load", () => {
+        fixIOS();
+        handleResize();
+    });
 
     function checkOrientation() {
         if (isPortrait() && isMobileOrTablet()) {
