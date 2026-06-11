@@ -213,59 +213,56 @@
 
     // ===== RESPONSIVE =====
     function scaleContainer() {
-        
-const ww = window.innerWidth;
-const wh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const baseWidth = 1024;
+    const baseHeight = 768;
 
-        const baseW = 1024;
-        const baseH = 768;
+    // ✅ iPhone REAL height fix
+    const realHeight = window.visualViewport
+        ? window.visualViewport.height
+        : window.innerHeight;
 
-        if (ww <= 1024 && isLandscape()) {
-            container.style.width = ww + 'px';
-            container.style.height = wh + 'px';
-            container.style.transform = 'none';
+    const realWidth = window.innerWidth;
 
-            canvas.width = ww;
-            canvas.height = wh;
+    const scale = Math.min(
+        realWidth / baseWidth,
+        realHeight / baseHeight
+    );
 
-            GAME.scaleX = ww / baseW;
-            GAME.scaleY = wh / baseH;
-            GAME.scale = Math.min(GAME.scaleX, GAME.scaleY);
-        } else {
-            const scale = Math.min(ww / baseW, wh / baseH);
+    const newWidth = baseWidth * scale;
+    const newHeight = baseHeight * scale;
 
-            container.style.width = baseW + 'px';
-            container.style.height = baseH + 'px';
-            container.style.setProperty('--scale', scale);
-            container.style.transform = 'scale(' + scale + ')';
+    canvas.style.width = newWidth + "px";
+    canvas.style.height = newHeight + "px";
 
-            canvas.width = baseW;
-            canvas.height = baseH;
+    canvas.width = baseWidth;
+    canvas.height = baseHeight;
+}
 
-            GAME.scaleX = 1;
-            GAME.scaleY = 1;
-            GAME.scale = 1;
-        }
-    }
-    
+function fixIOS() {
+    setTimeout(() => {
+        window.scrollTo(0, 1);
+    }, 200);
+}
+function handleResize() {
+    scaleContainer();
+}
+
+window.addEventListener("resize", handleResize);
+
+window.addEventListener("orientationchange", () => {
+    setTimeout(handleResize, 300);
+});
+
+// ✅ KEY FIX FOR iPHONE
 if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', () => {
-        scaleContainer();
-    });
-}
-function setRealVh() {
-    const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    window.visualViewport.addEventListener("resize", handleResize);
 }
 
-setRealVh();
-window.addEventListener('resize', setRealVh);
-
-
-if (isMobileOrTablet() && isPortrait()) {
-    document.body.style.height = "100vh";
-}
-
+// ✅ helps hide address bar
+window.addEventListener("load", () => {
+    fixIOS();
+    handleResize();
+});
 
     function checkOrientation() {
         if (isPortrait() && isMobileOrTablet()) {
@@ -1850,6 +1847,7 @@ if (isMobileOrTablet() && isPortrait()) {
     document.addEventListener('arakitol:startGameplay', (e) => {
         console.log('Zone 1 Gameplay starting for:', e.detail.playerName);
         initGameplay();
+        fixIOS();
     });
 
     console.log('%c Zone 1 Gameplay Engine Loaded ', 'color: #4CAF50; font-size: 14px;');
