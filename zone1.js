@@ -155,9 +155,9 @@
     const finishFlag = {
         x: 0,
         y: 0,
-        width: 130,
-        height: 430,
-        flagY: 30,
+        width: 58,
+        height: 504,
+        flagY: 10,
         active: false,
         touched: false,
         climbFrame: 0,
@@ -213,8 +213,10 @@
 
     // ===== RESPONSIVE =====
     function scaleContainer() {
-        const ww = window.innerWidth;
-        const wh = window.innerHeight;
+        
+const ww = window.innerWidth;
+const wh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+
         const baseW = 1024;
         const baseH = 768;
 
@@ -245,6 +247,25 @@
             GAME.scale = 1;
         }
     }
+    
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+        scaleContainer();
+    });
+}
+function setRealVh() {
+    const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+setRealVh();
+window.addEventListener('resize', setRealVh);
+
+
+if (isMobileOrTablet() && isPortrait()) {
+    document.body.style.height = "100vh";
+}
+
 
     function checkOrientation() {
         if (isPortrait() && isMobileOrTablet()) {
