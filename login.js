@@ -44,8 +44,8 @@
         } else {
             gameContainer.style.width = baseWidth + 'px';
             gameContainer.style.height = baseHeight + 'px';
-            gameContainer.style.setProperty('--scale', scale);
-            gameContainer.style.transform = 'scale(' + scale + ')';
+            // gameContainer.style.setProperty('--scale', scale);
+            // gameContainer.style.transform = 'scale(' + scale + ')';
         }
     }
 
