@@ -5,6 +5,9 @@
 (function() {
     'use strict';
 
+    // ===== AUDIO ELEMENTS =====
+    const bgMusic = document.getElementById('bgMusic');
+
     // ===== DOM ELEMENTS =====
     const gameContainer = document.getElementById('game-container');
     const loadingScreen = document.getElementById('loading-screen');
@@ -27,61 +30,19 @@
         }
         return id;
     }
-    
-window.onload = function () {
-  setTimeout(() => {
-    window.scrollTo(0, 1);
-  }, 100);
-}
-
-
-function goFullscreen() {
-  const el = document.documentElement;
-
-  if (el.requestFullscreen) {
-    el.requestFullscreen();
-  } else if (el.webkitRequestFullscreen) {
-    el.webkitRequestFullscreen(); // Safari
-  }}
-
-
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-
-        fullscreenBtn.addEventListener('click', () => {
-            // Target the root <html> element to expand the entire viewport
-            const docElement = document.documentElement; 
-
-            if (docElement.requestFullscreen) {
-                docElement.requestFullscreen();
-            } else if (docElement.webkitRequestFullscreen) { /* Safari support */
-                docElement.webkitRequestFullscreen();
-            } else if (docElement.msRequestFullscreen) { /* IE11 / Early Edge support */
-                docElement.msRequestFullscreen();
-            }
-            
-            // Optional: Hide the button once full screen is active
-            fullscreenBtn.style.display = 'none';
-        });
 
     // ===== SCALE CONTAINER =====
     function scaleContainer() {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const baseWidth = 1024;
-        const baseHeight = 768;
 
-        let scale = Math.min(windowWidth / baseWidth, windowHeight / baseHeight);
-
-        if (windowWidth <= 600) {
-            gameContainer.style.width = windowWidth + 'px';
-            gameContainer.style.height = windowHeight + 'px';
-            gameContainer.style.transform = 'none';
-        } else {
-            gameContainer.style.width = baseWidth + 'px';
-            gameContainer.style.height = baseHeight + 'px';
-            // gameContainer.style.setProperty('--scale', scale);
-            // gameContainer.style.transform = 'scale(' + scale + ')';
-        }
+        // Always full screen
+        gameContainer.style.width = windowWidth + 'px';
+        gameContainer.style.height = windowHeight + 'px';
+        gameContainer.style.transform = 'none';
+        gameContainer.style.position = 'fixed';
+        gameContainer.style.top = '0';
+        gameContainer.style.left = '0';
     }
 
     window.addEventListener('resize', scaleContainer);
@@ -375,6 +336,19 @@ function goFullscreen() {
         }
     `;
     document.head.appendChild(sparkleStyle);
+
+    // ===== SPARKLE EFFECT =====
+    function createSparkle() {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animation = 'sparkleFloat ' + (1 + Math.random() * 2) + 's ease-out forwards';
+        document.getElementById('game-container').appendChild(sparkle);
+        setTimeout(function() {
+            if (sparkle.parentNode) sparkle.remove();
+        }, 3000);
+    }
 
     setInterval(createSparkle, 1500);
 
