@@ -1,0 +1,38 @@
+    // ===== FULLSCREEN BUTTON =====
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const fsIconEnter = document.getElementById('fsIconEnter');
+    const fsIconExit = document.getElementById('fsIconExit');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    function updateFsIcons() {
+        const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        fsIconEnter.style.display = isFS ? 'none' : 'block';
+        fsIconExit.style.display = isFS ? 'block' : 'none';
+    }
+
+    document.addEventListener('fullscreenchange', updateFsIcons);
+    document.addEventListener('webkitfullscreenchange', updateFsIcons);
+
+    fullscreenBtn.addEventListener('click', function() {
+        if (isIOS) {
+            // iOS Safari: scroll address bar away and expand viewport
+            window.scrollTo(0, 1);
+            document.documentElement.style.height = '100vh';
+            document.body.style.height = '100vh';
+            document.body.style.overflow = 'hidden';
+            gameContainer.style.height = (window.innerHeight) + 'px';
+            // Force recalc after a tick
+            setTimeout(function() {
+                gameContainer.style.height = (window.innerHeight) + 'px';
+                scaleContainer();
+            }, 300);
+            return;
+        }
+
+        const el = document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            (el.requestFullscreen || el.webkitRequestFullscreen).call(el).catch(() => {});
+        } else {
+            (document.exitFullscreen || document.webkitExitFullscreen).call(document).catch(() => {});
+        }
+    });

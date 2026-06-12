@@ -939,6 +939,31 @@ body {
     transform: scale(1.1);
 }
 
+/* Fullscreen Button */
+.fullscreen-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.15s ease;
+    background: linear-gradient(135deg, rgba(13,31,60,0.9), rgba(26,58,107,0.9));
+    border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.fullscreen-btn:hover {
+    transform: scale(1.1);
+}
+
+.fullscreen-btn:active {
+    transform: scale(0.95);
+}
+
 /* Forward Button */
 .forward-btn {
     position: absolute;
