@@ -4,16 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />      
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>Catch The D</title>
         <link rel="stylesheet" href="style.css">
         <base target="_blank">
         <base target="_blank">
-        <script src="./manifest.json"></script>
-    </head>
+    <base target="_blank">
+<base target="_blank">
+</head>
     <body>
         <div id="loading-screen">
             <div class="loading-logo"><img src="images/logo.png"></div>
@@ -81,7 +79,6 @@
                                 </span>
                                 <span>Your information is safe with us</span>
                             </div>
-                            <button id="fullscreen-btn">Start Fullscreen Experience</button>
                         </div>
                     </div>
                 </div>
@@ -108,38 +105,32 @@
         </div> -->
 
             <div id="gameplay-screen" class="screen">
-                <canvas id="gameCanvas" width="1024" height="768"></canvas>
+                <canvas id="gameCanvas"></canvas>
                 <div class="hud-layer">
                     <div class="hud-left-group">
-                        <div class="hud-item hud-coins">
-                            <div class="hud-bg-css">
-                                <div class="hud-icon"><img
-                                        src="images/D-coin.png"></div>
+                        <div class="hud-item hud-score">
+                            <div class="hud-bg-css hud-score-bg">
+                                <div class="hud-icon"><img src="images/hud-score1.png"></div>
                                 <div class="hud-info">
-                                    <span class="hud-label">D COINS</span>
-                                    <span class="hud-value"
-                                        id="coinCount">00</span>
+                                    <span class="hud-label">SCORE</span>
+                                    <span class="hud-value" id="scoreCount">000</span>
                                 </div>
                             </div>
                         </div>
                         <div class="hud-item hud-super-coins">
                             <div class="hud-bg-css hud-super-bg">
-                                <div class="hud-icon"><img
-                                        src="images/super-coin.png"></div>
+                                <div class="hud-icon"><img src="images/super-coin.png"></div>
                                 <div class="hud-info">
                                     <span class="hud-label">SUPER</span>
-                                    <span class="hud-value"
-                                        id="superCoinCount">0/8</span>
+                                    <span class="hud-value" id="superCoinCount">0/8</span>
                                 </div>
                             </div>
                         </div>
                         <div class="hud-item hud-time">
                             <div class="hud-bg-css hud-time-bg">
-                                <div class="hud-icon hud-time-icon"><img
-                                        src="images/hud-time1.png"></div>
+                                <div class="hud-icon hud-time-icon"><img src="images/hud-time1.png"></div>
                                 <div class="hud-info">
-                                    <span class="hud-value"
-                                        id="timeCount">00</span>
+                                    <span class="hud-value" id="timeCount">00</span>
                                     <span class="hud-unit">SEC</span>
                                 </div>
                             </div>
@@ -190,30 +181,18 @@
                 <p class="mission-subtitle">Great job! You have collected all
                     Super Coins!</p>
                 <div class="mission-stats">
-                    <div class="mission-stat coin-collect">
-                        <div class="stat-icon-box"><img src="images/D-coin.png"
-                                alt="Coins" class="stat-icon-img"></div>
-                        <div class="stat-value" id="finalCoins">0</div>
-                        <div class="stat-label">D Coins Collected</div>
-                    </div>
                     <div class="mission-stat super-coin-stat">
-                        <div class="stat-icon-box"><img
-                                src="images/super-coin.png" alt="Super Coins"
-                                class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img src="images/super-coin.png" alt="Super Coins" class="stat-icon-img"></div>
                         <div class="stat-value" id="finalSuperCoins">0</div>
                         <div class="stat-label">Super Coins</div>
                     </div>
                     <div class="mission-stat time-stat">
-                        <div class="stat-icon-box"><img
-                                src="images/hud-time1.png" alt="Time"
-                                class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img src="images/hud-time1.png" alt="Time" class="stat-icon-img"></div>
                         <div class="stat-value" id="finalTime">0</div>
                         <div class="stat-label">Time (Seconds)</div>
                     </div>
                     <div class="mission-stat final-score">
-                        <div class="stat-icon-box"><img
-                                src="images/hud-score1.png" alt="Score"
-                                class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img src="images/hud-score1.png" alt="Score" class="stat-icon-img"></div>
                         <div class="stat-value" id="finalScore">0</div>
                         <div class="stat-label">Final Score</div>
                     </div>
@@ -233,9 +212,7 @@
                 </div>
                 <div class="leaderboard-table-wrapper">
                     <table class="leaderboard-table">
-                        <thead><tr><th>RANK</th><th>NAME</th><th>ATTEMPTS</th><th>D
-                                    COINS</th><th>SUPER
-                                    COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
+                        <thead><tr><th>RANK</th><th>NAME</th><th>SUPER COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
                         <tbody id="leaderboardBody"></tbody>
                     </table>
                 </div>
