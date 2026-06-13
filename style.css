@@ -939,6 +939,8 @@ body {
 
 /* Fullscreen Button */
 .fullscreen-btn {
+    position: absolute;
+    top: 15%;
     width: 55px;
     height: 55px;
     border-radius: 12px;
