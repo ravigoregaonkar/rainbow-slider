@@ -36,3 +36,8 @@
             (document.exitFullscreen || document.webkitExitFullscreen).call(document).catch(() => {});
         }
     });
+document.addEventListener("DOMContentLoaded", function() {
+    if (fullscreenBtn) {
+        button.click();
+    }
+});
