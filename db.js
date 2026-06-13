@@ -1,4 +1,5 @@
-    // ===== FULLSCREEN BUTTON =====
+document.addEventListener("DOMContentLoaded", function () {
+
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const fsIconEnter = document.getElementById('fsIconEnter');
     const fsIconExit = document.getElementById('fsIconExit');
@@ -13,16 +14,15 @@
     document.addEventListener('fullscreenchange', updateFsIcons);
     document.addEventListener('webkitfullscreenchange', updateFsIcons);
 
-    fullscreenBtn.addEventListener('click', function() {
+    fullscreenBtn.addEventListener('click', function () {
         if (isIOS) {
-            // iOS Safari: scroll address bar away and expand viewport
             window.scrollTo(0, 1);
             document.documentElement.style.height = '100vh';
             document.body.style.height = '100vh';
             document.body.style.overflow = 'hidden';
             gameContainer.style.height = (window.innerHeight) + 'px';
-            // Force recalc after a tick
-            setTimeout(function() {
+
+            setTimeout(function () {
                 gameContainer.style.height = (window.innerHeight) + 'px';
                 scaleContainer();
             }, 300);
@@ -36,8 +36,8 @@
             (document.exitFullscreen || document.webkitExitFullscreen).call(document).catch(() => {});
         }
     });
-document.addEventListener("DOMContentLoaded", function() {
-    if (fullscreenBtn) {
-        button.click();
-    }
+
+    // ✅ CALL on load
+    updateFsIcons();
+
 });
