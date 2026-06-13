@@ -266,26 +266,32 @@
         </div>
     </body>
     <script>
-        function enterBrowserFullscreen() {
-    // Scroll to hide address bar
-    window.scrollTo(0, 1);
+        const gameContainer = document.getElementById("gameContainer");
 
-    const vh = window.innerHeight;
+function fixIOSFullscreen() {
+    // Create dynamic viewport height fix
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-    document.body.style.overflow = "hidden";
-    document.body.style.height = vh + "px";
-
-    gameContainer.style.position = "fixed";
-    gameContainer.style.top = "0";
-    gameContainer.style.left = "0";
-    gameContainer.style.width = "100vw";
-    gameContainer.style.height = vh + "px";
+    // Apply to container
+    gameContainer.style.height = `calc(var(--vh) * 100)`;
 }
 
+// Run multiple times (important for iOS)
 window.addEventListener("load", () => {
-    setTimeout(enterBrowserFullscreen, 200);
+    fixIOSFullscreen();
+    setTimeout(fixIOSFullscreen, 300);
+});
+
+// MUST run on user interaction (critical for iOS)
+document.addEventListener("touchstart", () => {
+    fixIOSFullscreen();
+}, { once: true });
+
+// Handle address bar show/hide
+window.addEventListener("resize", fixIOSFullscreen);
+window.addEventListener("orientationchange", () => {
+    setTimeout(fixIOSFullscreen, 300);
 });
 
 // iOS requires user interaction
