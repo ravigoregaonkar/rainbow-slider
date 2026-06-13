@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", viewport-fit=cover/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>Catch The D</title>
         <link rel="stylesheet" href="style.css">
@@ -43,6 +43,7 @@
 
             <div class="sun-container" id="menu-sun"><img src="images/sun.png"
                     alt="sun icon"></div>
+
             <button class="fullscreen-btn" id="fullscreenBtn" title="Fullscreen">
                             <svg id="fsIconEnter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
                             <svg id="fsIconExit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28" style="display:none"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
@@ -146,10 +147,6 @@
                                 alt="Music"></button>
                         <button class="pause-btn" id="pauseBtn"><img
                                 src="images/pause-btn.svg" alt="Pause"></button>
-                        <button class="fullscreen-btn" id="fullscreenBtn" title="Fullscreen">
-                            <svg id="fsIconEnter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-                            <svg id="fsIconExit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28" style="display:none"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
-                        </button>
                     </div>
                 </div>
                 <button class="forward-btn" id="forwardBtn"><img
@@ -257,7 +254,6 @@
         <audio id="bgMusic" src="sounds/game-music.mp3" loop></audio>
 
         <script src="login.js"></script>
-        <script src="db.js"></script>
         <script src="zone1.js"></script>
 
         <div id="rotate-overlay">
@@ -269,4 +265,48 @@
             </div>
         </div>
     </body>
+    <script>
+        function enterBrowserFullscreen() {
+    // Scroll to hide address bar
+    window.scrollTo(0, 1);
+
+    const vh = window.innerHeight;
+
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.body.style.overflow = "hidden";
+    document.body.style.height = vh + "px";
+
+    gameContainer.style.position = "fixed";
+    gameContainer.style.top = "0";
+    gameContainer.style.left = "0";
+    gameContainer.style.width = "100vw";
+    gameContainer.style.height = vh + "px";
+}
+
+window.addEventListener("load", () => {
+    setTimeout(enterBrowserFullscreen, 200);
+});
+
+// iOS requires user interaction
+document.addEventListener("touchstart", () => {
+    enterBrowserFullscreen();
+}, { once: true });
+
+
+window.addEventListener("resize", () => {
+    const vh = window.innerHeight;
+    gameContainer.style.height = vh + "px";
+});
+
+let lastTap = 0;
+
+document.addEventListener("touchend", function () {
+    const now = Date.now();
+    if (now - lastTap < 300) {
+        enterBrowserFullscreen();
+    }
+    lastTap = now;
+});
+    </script>
 </html>
