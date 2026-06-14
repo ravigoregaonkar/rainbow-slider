@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fullscreenBtn.addEventListener('click', function () {
         if (isIOS) {
-            window.scrollTo(0, 1);
+            // window.scrollTo(0, 1);
             document.documentElement.style.height = '100vh';
             document.body.style.height = '100vh';
             document.body.style.overflow = 'hidden';
