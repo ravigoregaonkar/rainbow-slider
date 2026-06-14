@@ -1229,6 +1229,9 @@ body {
 .quiz-result.wrong {
     color: #ff4444;
 }
+.download-btn{
+    display: none;
+}
 
 @keyframes overlayFadeIn {
     from {
@@ -1419,7 +1422,7 @@ body {
         position: absolute;
         bottom: 25px;
         right: 20px;
-        display: flex;
+        display: flex !important;
         justify-content: center;
         align-items: center;
         flex-direction: column; 
