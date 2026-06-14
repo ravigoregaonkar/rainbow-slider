@@ -1272,7 +1272,33 @@ body {
 }
 @media (max-width: 1200px) {
     .character-container{
-        bottom: -5%;
+        bottom: -8%;
+        width: 17vw;
+        left: 10%;
+    }
+    .logo-container{
+        top: 15%;
+        width: 18vw;
+    }
+    .d-icon-container.d-icon1{
+        top: 184px;
+        right: 222px;
+        width: 107px;
+    }
+    .d-icon-container.d-icon2{
+        top: 14%;
+        left: 26%;
+        width: 7vw;
+    }
+    .d-icon-container.d-icon3{
+        width: 6vw;
+        top: 36%;
+        left: 5%;
+    }
+    .sun-container{
+        width: 17vw;
+        top: 17%;
+        left: 10%;
     }
 }
 @media (max-width: 1025px) {
