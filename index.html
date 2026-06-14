@@ -269,47 +269,4 @@
             </div>
         </div>
     </body>
-    <script>
-        function toggleFullscreen() {
-    const el = document.documentElement;
-
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el).catch(() => {});
-    } else {
-        (document.exitFullscreen || document.webkitExitFullscreen)?.call(document).catch(() => {});
-    }
-}
-
-document.addEventListener("touchstart", function () {
-    toggleFullscreen();
-}, { once: true }); // runs only first tap
-
-document.addEventListener("click", function () {
-    toggleFullscreen();
-}, { once: true });
-
-function iosFullscreen() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-    document.body.style.margin = 0;
-    document.body.style.overflow = "hidden";
-
-    gameContainer.style.position = "fixed";
-    gameContainer.style.top = 0;
-    gameContainer.style.left = 0;
-    gameContainer.style.width = "100vw";
-    gameContainer.style.height = "calc(var(--vh) * 100)";
-}
-
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-document.addEventListener("touchstart", function () {
-    if (isIOS) {
-        iosFullscreen();   // ✅ fallback
-    } else {
-        toggleFullscreen(); // ✅ real fullscreen
-    }
-}, { once: true });
-    </script>
 </html>
