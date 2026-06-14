@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ Prevent scroll when exiting fullscreen
         if (!isFS) {
             window.scrollTo(0, 0);
-            document.body.style.overflow = 'auto'; // restore scrolling if needed
+            document.body.style.overflow = 'hidden'; // restore scrolling if needed
         }
     }
 
