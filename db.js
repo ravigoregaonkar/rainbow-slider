@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
         fsIconEnter.style.display = isFS ? 'none' : 'block';
         fsIconExit.style.display = isFS ? 'block' : 'none';
+
+        // ✅ Prevent scroll when exiting fullscreen
+        if (!isFS) {
+            window.scrollTo(0, 0);
+            document.body.style.overflow = 'auto'; // restore scrolling if needed
+        }
     }
 
     document.addEventListener('fullscreenchange', updateFsIcons);
