@@ -504,10 +504,10 @@ body.show-game #game-container {
 /* ===== LOGO ===== */
 .logo-container {
     position: absolute;
-    top: 55px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 280px;
+    width: 250px;
     height: 170px;
     z-index: 10;
     display: flex;
@@ -987,7 +987,7 @@ body.show-game #game-container {
 
 .popup-content {
     position: relative;
-    width: 480px;
+    width: 600px;
     max-width: 90vw;
     max-height: 90vh;
     animation: popupScaleIn 0.4s ease;
@@ -1002,7 +1002,7 @@ body.show-game #game-container {
 
 .popup-close {
     position: absolute;
-    top: 15px;
+    top: -15px;
     right: -15px;
     width: 45px;
     height: 45px;
@@ -1656,6 +1656,306 @@ body.show-game #game-container {
 }
 
 /* ===== MOBILE ADJUSTMENTS ===== */
+/* Ravi CSS Start  */
+@media (max-width: 1440px) {
+    .logo-container{
+        top: 1%;
+        width: 14vw;
+        height: auto;
+    }
+    .character-container{
+        left: 15%;
+        bottom: -20%;
+        transform: translateY(-50%);
+        width: 13vw;
+    }
+}
+@media (max-width: 1200px) {
+    .character-container{
+        bottom: -8%;
+        width: 17vw;
+        left: 10%;
+    }
+    .logo-container{
+        top: 75px;
+        width: 18vw;
+    }
+    .d-icon-container.d-icon1{
+        top: 184px;
+        right: 222px;
+        width: 107px;
+    }
+    .d-icon-container.d-icon2{
+        top: 14%;
+        left: 26%;
+        width: 7vw;
+    }
+    .d-icon-container.d-icon3{
+        width: 6vw;
+        top: 36%;
+        left: 5%;
+    }
+    .sun-container{
+        width: 17vw;
+        top: 17%;
+        left: 10%;
+    }
+}
+@media (max-width: 1025px) {
+    .logo-container{
+        top: 6%;
+        width: 37vh;
+        height: auto;
+    }
+    .login-box{
+        width: 41vw;
+    }
+    .character-container{
+        left: 7%;
+        bottom: 10%;
+        width: 31vh;
+        height: auto;
+        transform: translate(-5%, -5%);
+    }
+    .d-icon-container.d-icon1{
+        top: 24%;
+        right: 18%;
+        width: 13vh;
+    }
+    .d-icon-container.d-icon2{
+        top: 10%;
+        left: 27%;
+        width: 11vh;
+    }
+    .sun-container{
+        width: 30vh;
+        top: 12%;
+        left: 9%;
+    }
+    .d-icon-container.d-icon3{
+        top: 40%;
+        left: 5%;
+        width: 10vh;
+    }
+}
+@media (max-width: 991px) {
+    .login-box-bg{
+        border: 2px solid rgb(255 215 0);
+    }
+    .login-box{
+        width: 50vw;
+    }
+    .login-box-title{
+        font-size: 2.5vw;
+    }
+    .logo-container{
+        top: 1%;
+        width: 36vh;
+    }
+    .login-box-header{
+        padding: 10px 0 5px;
+    }
+    .continue-btn{
+        padding: 1vw 2vw;
+    }
+    .form-content{
+        padding: 10px 25px 10px;
+    }
+    .input-group {
+        margin-bottom: 10px;
+    }
+    .input-field{
+        padding: 8px 14px 8px 37px;
+    }
+    .input-icon{
+        width: 20px;
+        height: 20px;
+    }
+    .continue-btn{
+        margin-top: 5px;
+        box-shadow: 0 4px 0 #cc8400, 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .character-container{
+        left: 9%;
+        bottom: 3%;
+    }
+    #how-to-play-popup .popup-content{
+        width: 40vw;
+        max-width: 60vw;
+    }
+    .mission-stats{
+        margin-top: 7px !important;
+        margin-bottom: 0px !important;
+    }
+    .stat-icon-box{
+        width: 5vw !important;
+        margin-bottom: 0px !important;
+    }
+    .stat-value{
+        font-size: 3vw !important;
+    }
+    .mission-complete-content{padding: 20px 25px !important;}
+    .mission-complete-content .leaderboard-btn{
+        font-size: 3vw !important;
+        padding: 10px 70px !important;
+        margin-top: 15px !important;
+        margin-bottom: 0px !important;
+    }
+    .leaderboard-content .leaderboard-header h2{
+        font-size: 30px;
+    }
+    .leaderboard-content .leaderboard-table-wrapper{
+        max-height: 120px;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+    .scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+    .leaderboard-table thead{
+        position: sticky;
+        top: 0;
+    }
+    .certificate-view-content .cert-popup-close{
+        top: 30px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+    .cert-title{
+        font-size: 4vw !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+    }
+    .achive-text, .certify-text{
+        margin-top: 5px !important;
+        margin-bottom: 5px !important;
+    }
+    .outer-cert{padding: 20px !important;}
+    .sucess-text{margin-top: 5px !important;}
+    .user-name{line-height: 1 !important;}
+    .game-name{
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .score-outer{margin-top: 10px !important; margin-bottom: 10px !important;}
+    .score-count{font-size: 20px !important;}
+    .score-box{
+        padding: 0 !important;
+        width: 16vw !important;
+    }
+    .certificate-actions{
+        display: none !important;
+    }
+    .certificate-frame{
+        margin-bottom: 0 !important;
+    }
+    .certificate-view-content{
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        overflow: inherit !important;
+    }
+    .certificate-view-content .cert-popup-close{
+        display: block;
+    }
+}
+@media (max-width: 768px) {
+    .sun-container{
+        top: 9%;
+    }
+    .character-container{
+        left: 8%;
+    }
+    .login-box{
+        top: 52%;;
+    }
+    .mission-stats{
+        margin-top: 7px !important;
+        margin-bottom: 0px !important;
+    }
+    .stat-icon-box{
+        width: 5vw !important;
+        margin-bottom: 0px !important;
+    }
+    .stat-value{
+        font-size: 3vw !important;
+    }
+    .mission-complete-content .leaderboard-btn{
+        font-size: 3vw !important;
+        padding: 10px 70px !important;
+        margin-top: 15px !important;
+        margin-bottom: 0px !important;
+    }
+    .leaderboard-content .leaderboard-header h2{
+        font-size: 30px;
+    }
+    .leaderboard-content .leaderboard-table-wrapper{
+        max-height: 120px;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+    .scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+    .leaderboard-table thead{
+        position: sticky;
+        top: 0;
+    }
+    .certificate-view-content .cert-popup-close{
+        top: 0px;
+        right: 0px;
+        width: 50px;
+        height: 50px;
+    }
+    .cert-title{
+        font-size: 4vw !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+    }
+    .achive-text, .certify-text{
+        margin-top: 5px !important;
+        margin-bottom: 5px !important;
+    }
+    .outer-cert{padding: 20px !important;}
+    .sucess-text{margin-top: 5px !important;}
+    .user-name{line-height: 1 !important;}
+    .game-name{
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .score-outer{margin-top: 10px !important; margin-bottom: 10px !important;}
+    .score-count{font-size: 20px !important;}
+    .score-box{
+        padding: 0 !important;
+        width: 16vw !important;
+    }
+    .download-btn{
+        position: absolute;
+        bottom: 25px;
+        right: 20px;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; 
+    }
+    .download-btn p{
+        color: #fff;
+    }
+    .small-download{
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+        border-radius: 50%;
+        background: #1565c0;
+        color: #fff;
+        border: none;
+        margin-top: 5px;
+    }
+
+
+}
+/* Ravi CSS End  */
 @media (max-width: 600px) {
     .logo-container {
         width: 300px;
