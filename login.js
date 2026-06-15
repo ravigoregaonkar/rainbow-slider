@@ -377,6 +377,8 @@
 
     preloadImages();
 
+
+
     // ===== CONSOLE WELCOME =====
     console.log('%c Arakitol Power Quest ', 'background: linear-gradient(90deg, #1a5fb4, #FFD700); color: #fff; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 10px;');
     console.log('%c Menu System Loaded ', 'color: #FFD700; font-size: 14px;');

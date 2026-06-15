@@ -1454,26 +1454,26 @@
         const headerSize = forDownload ? '14px' : '12px';
         const subtitleSize = forDownload ? '16px' : '14px';
 
-        return `<div class="outer-cert" style="${containerStyle} background: linear-gradient(135deg, #fff9f0 0%, #fff 50%, #f0f8ff 100%); border: ${borderWidth} solid #1a5fb4; border-radius: 25px; padding: ${padding}; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; overflow: hidden; font-family: calibri; box-sizing: border-box; margin: 0 auto;">
+        return `<div style="${containerStyle} background: linear-gradient(135deg, #fff9f0 0%, #fff 50%, #f0f8ff 100%); border: ${borderWidth} solid #1a5fb4; border-radius: 25px; padding: ${padding}; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; overflow: hidden; font-family: calibri; box-sizing: border-box; margin: 0 auto;">
             <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 3px dashed #FFD700; border-radius: 18px; pointer-events: none;"></div>
             <div style="font-size: ${headerSize}; color: #1a5fb4; letter-spacing: 5px; font-weight: 700; text-transform: uppercase; margin-bottom: 5px;">ARAKITOL POWER QUEST</div>
-            <div class="cert-title" style="font-size: ${titleSize}; color: #1a237e; font-weight: 900; margin: 5px 0; letter-spacing: 2px;">CERTIFICATE</div>
-            <div class="achive-text" style="font-size: ${subtitleSize}; color: #666; letter-spacing: 8px; margin-bottom: 15px; text-transform: uppercase;">OF ACHIEVEMENT</div>
-            <div class="certify-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">This is to certify that</div>
-            <div class="user-name" style="font-size: ${nameSize}; color: #e65100; font-weight: bold; margin: 10px 0;">${yourName}</div>
-            <div class="sucess-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">has successfully completed the</div>
-            <div class="game-name" style="font-size: 20px; color: #1a237e; font-weight: 800; margin: 15px 0;">Vitamin D Challenge</div>
-            <div class="score-outer" style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
-                <div class="score-box" style="width: 200px; background: #fff3e0; border: 2px solid #FF6B00; border-radius: 15px; padding: 15px 10px;">
-                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
+            <div style="font-size: ${titleSize}; color: #1a237e; font-weight: 900; margin: 5px 0; letter-spacing: 2px;">CERTIFICATE</div>
+            <div style="font-size: ${subtitleSize}; color: #666; letter-spacing: 8px; margin-bottom: 15px; text-transform: uppercase;">OF ACHIEVEMENT</div>
+            <div style="font-size: 16px; color: #555; margin: 15px 0 5px;">This is to certify that</div>
+            <div style="font-size: ${nameSize}; color: #e65100; font-weight: bold; margin: 10px 0;">${yourName}</div>
+            <div style="font-size: 16px; color: #555; margin: 15px 0 5px;">has successfully completed the</div>
+            <div style="font-size: 20px; color: #1a237e; font-weight: 800; margin: 15px 0;">Vitamin D Challenge</div>
+            <div style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
+                <div style="width: 200px; background: #fff3e0; border: 2px solid #FF6B00; border-radius: 15px; padding: 15px 10px;">
+                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Super Coins</div>
                 </div>
-                <div class="score-box" style="width: 200px; background: #e0ebf1; border: 2px solid #0539d2; border-radius: 15px; padding: 15px 10px;">
-                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #1565c0;">${time}s</div>
+                <div style="width: 200px; background: #e0ebf1; border: 2px solid #0539d2; border-radius: 15px; padding: 15px 10px;">
+                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #1565c0;">${time}s</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Time</div>
                 </div>
-                <div class="score-box" style="width: 200px; background: #e8efcf; border: 2px solid #1b7801; border-radius: 15px; padding: 15px 10px;">
-                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #2e7d32;">${totalScore}</div>
+                <div style="width: 200px; background: #e8efcf; border: 2px solid #1b7801; border-radius: 15px; padding: 15px 10px;">
+                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #2e7d32;">${totalScore}</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Final Score</div>
                 </div>
             </div>
