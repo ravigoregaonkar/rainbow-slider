@@ -9,10 +9,10 @@
         <link rel="stylesheet" href="style.css">
         <base target="_blank">
         <base target="_blank">
-    <base target="_blank">
-</head>
+        <base target="_blank">
+    </head>
     <body>
-<div id="loading-screen" style="z-index: 10000;">
+        <div id="loading-screen" style="z-index: 10000;">
             <div class="loading-logo"><img src="images/logo.png"></div>
             <div class="loading-bar"><div class="loading-progress"></div></div>
             <div class="loading-text">Loading Power Quest...</div>
@@ -21,12 +21,14 @@
         <!-- INTRO SCREEN - Loading ke baad z-index 9998 -->
         <div id="intro-screen" class="screen" style="display: none;">
             <div class="intro-bg">
-                <img src="images/intro-bg.png" alt="Intro Background" id="intro-img">
+                <img src="images/intro-bg.png" alt="Intro Background"
+                    id="intro-img">
                 <button id="tap-to-play" class="tap-play-btn">
                     <img src="images/tap-to-play.png" alt="Tap to Play">
                 </button>
                 <div class="intro-timer-bar">
-                    <div class="intro-timer-progress" id="introTimerProgress"></div>
+                    <div class="intro-timer-progress"
+                        id="introTimerProgress"></div>
                 </div>
             </div>
         </div>
@@ -115,27 +117,33 @@
                     <div class="hud-left-group">
                         <div class="hud-item hud-score">
                             <div class="hud-bg-css hud-score-bg">
-                                <div class="hud-icon"><img src="images/hud-score1.png"></div>
+                                <div class="hud-icon"><img
+                                        src="images/hud-score1.png"></div>
                                 <div class="hud-info">
                                     <span class="hud-label">SCORE</span>
-                                    <span class="hud-value" id="scoreCount">000</span>
+                                    <span class="hud-value"
+                                        id="scoreCount">000</span>
                                 </div>
                             </div>
                         </div>
                         <div class="hud-item hud-super-coins">
                             <div class="hud-bg-css hud-super-bg">
-                                <div class="hud-icon"><img src="images/super-coin.png"></div>
+                                <div class="hud-icon"><img
+                                        src="images/super-coin.png"></div>
                                 <div class="hud-info">
                                     <span class="hud-label">SUPER</span>
-                                    <span class="hud-value" id="superCoinCount">0/8</span>
+                                    <span class="hud-value"
+                                        id="superCoinCount">0/8</span>
                                 </div>
                             </div>
                         </div>
                         <div class="hud-item hud-time">
                             <div class="hud-bg-css hud-time-bg">
-                                <div class="hud-icon hud-time-icon"><img src="images/hud-time1.png"></div>
+                                <div class="hud-icon hud-time-icon"><img
+                                        src="images/hud-time1.png"></div>
                                 <div class="hud-info">
-                                    <span class="hud-value" id="timeCount">00</span>
+                                    <span class="hud-value"
+                                        id="timeCount">00</span>
                                     <span class="hud-unit">SEC</span>
                                 </div>
                             </div>
@@ -187,17 +195,23 @@
                     Super Coins!</p>
                 <div class="mission-stats">
                     <div class="mission-stat super-coin-stat">
-                        <div class="stat-icon-box"><img src="images/super-coin.png" alt="Super Coins" class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img
+                                src="images/super-coin.png" alt="Super Coins"
+                                class="stat-icon-img"></div>
                         <div class="stat-value" id="finalSuperCoins">0</div>
-                        <div class="stat-label">Super Coins</div>
+                        <div class="stat-label">Nano Coins</div>
                     </div>
                     <div class="mission-stat time-stat">
-                        <div class="stat-icon-box"><img src="images/hud-time1.png" alt="Time" class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img
+                                src="images/hud-time1.png" alt="Time"
+                                class="stat-icon-img"></div>
                         <div class="stat-value" id="finalTime">0</div>
                         <div class="stat-label">Time (Seconds)</div>
                     </div>
                     <div class="mission-stat final-score">
-                        <div class="stat-icon-box"><img src="images/hud-score1.png" alt="Score" class="stat-icon-img"></div>
+                        <div class="stat-icon-box"><img
+                                src="images/hud-score1.png" alt="Score"
+                                class="stat-icon-img"></div>
                         <div class="stat-value" id="finalScore">0</div>
                         <div class="stat-label">Final Score</div>
                     </div>
@@ -217,7 +231,8 @@
                 </div>
                 <div class="leaderboard-table-wrapper">
                     <table class="leaderboard-table">
-                        <thead><tr><th>RANK</th><th>NAME</th><th>SUPER COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
+                        <thead><tr><th>RANK</th><th>NAME</th><th>SUPER
+                                    COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
                         <tbody id="leaderboardBody"></tbody>
                     </table>
                 </div>
