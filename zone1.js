@@ -28,7 +28,7 @@
         isJumping: false,
         isFalling: false,
         groundY: 768,
-        worldUp:120,
+        worldUp: 120,
         gravity: 0.7,
         jumpPower: -21,
         runSpeed: 6,
@@ -183,12 +183,12 @@
     };
 
     const castle = {
-    x: 0,
-    y: 0,
-    width: 500,
-    height: 500,
-    active: false
-};
+        x: 0,
+        y: 0,
+        width: 500,
+        height: 500,
+        active: false
+    };
 
     // ===== SOUND =====
     const coinSound = document.getElementById('coinSound');
@@ -417,9 +417,9 @@
         currentStairIndex = -1;
         stairMessageShown = false;
 
-               // TEMP DEBUG - game start pe brick show karne ke liye
-            // createSingleBrick();
-            // GAME.isMovingForward = false;
+        // TEMP DEBUG - game start pe brick show karne ke liye
+        // createSingleBrick();
+        // GAME.isMovingForward = false;
 
         updateHUD();
         startGameTimer();
@@ -489,13 +489,13 @@
             let y;
             const placementType = Math.random();
 
-        if (placementType < 0.4) {
-        y = playerGroundY - 90;      // Ground
-        } else if (placementType < 0.6) {
-        y = playerGroundY - 330;     // Medium jump
-        } else {
-        y = playerGroundY - 400;     // High jump
-        }
+            if (placementType < 0.4) {
+                y = playerGroundY - 90;      // Ground
+            } else if (placementType < 0.6) {
+                y = playerGroundY - 330;     // Medium jump
+            } else {
+                y = playerGroundY - 400;     // High jump
+            }
             superCoins.push({
                 x,
                 y,
@@ -508,46 +508,46 @@
         }
     }
 
-   function generateStairs() {
-    stairs = [];
+    function generateStairs() {
+        stairs = [];
 
-    const playerGroundY = getPlayerGroundY();
+        const playerGroundY = getPlayerGroundY();
 
-    let lastX = 900;
-    if (superCoins.length > 0) {
-        const lastCoin = superCoins[superCoins.length - 1];
-        lastX = lastCoin.x + 500;
+        let lastX = 900;
+        if (superCoins.length > 0) {
+            const lastCoin = superCoins[superCoins.length - 1];
+            lastX = lastCoin.x + 500;
+        }
+
+        const startX = lastX;
+        const startY = playerGroundY - 80;
+
+        for (let i = 0; i < stairCount; i++) {
+            stairs.push({
+                x: startX + (i * 90),
+                y: startY - (i * 55),
+                width: stairWidth,
+                height: stairHeight,
+                step: i + 1
+            });
+        }
+        const topStair = stairs[stairs.length - 1];
+
+        finishFlag.x = topStair.x + 160;
+        finishFlag.y = getPlayerGroundY() - finishFlag.height + 25;
+        finishFlag.flagY = 30;
+        finishFlag.active = true;
+        finishFlag.touched = false;
+        finishFlag.climbFrame = 0;
+        finishFlag.climbTimer = 0;
+        finishFlag.finishStarted = false;
+
+        stairsActive = true;
+        stairsCompleted = false;
+        onStairs = false;
+        currentStairIndex = -1;
+        stairMessageShown = false;
     }
-
-    const startX = lastX;
-    const startY = playerGroundY - 80;
-
-for (let i = 0; i < stairCount; i++) {
-    stairs.push({
-        x: startX + (i * 90),
-        y: startY - (i * 55),
-        width: stairWidth,
-        height: stairHeight,
-        step: i + 1
-    });
-}
-    const topStair = stairs[stairs.length - 1];
-
-    finishFlag.x = topStair.x + 160;
-    finishFlag.y = getPlayerGroundY() - finishFlag.height + 25;
-    finishFlag.flagY = 30;
-    finishFlag.active = true;
-    finishFlag.touched = false;
-    finishFlag.climbFrame = 0;
-    finishFlag.climbTimer = 0;
-    finishFlag.finishStarted = false;
-
-    stairsActive = true;
-    stairsCompleted = false;
-    onStairs = false;
-    currentStairIndex = -1;
-    stairMessageShown = false;
-}
 
     function setupFinishFlag() {
         const lastSuperCoin = superCoins[superCoins.length - 1];
@@ -603,31 +603,31 @@ for (let i = 0; i < stairCount; i++) {
         if (timeEl) timeEl.textContent = String(GAME.timeRemaining).padStart(2, '0');
     }
 
-function jump() {
-    if (!GAME.isJumping && !GAME.isFalling && GAME.state === 'playing') {
+    function jump() {
+        if (!GAME.isJumping && !GAME.isFalling && GAME.state === 'playing') {
 
-        if (jumpSound) {
-            jumpSound.currentTime = 0;
-            jumpSound.play().catch(() => {});
+            if (jumpSound) {
+                jumpSound.currentTime = 0;
+                jumpSound.play().catch(() => { });
+            }
+
+            GAME.isJumping = true;
+            GAME.isFalling = false;
+
+            let jumpPower = GAME.jumpPower;
+
+            // Brick ke paas small jump
+            if (
+                brickWall &&
+                brickWall.active &&
+                Math.abs(brickWall.x - player.x) < 600
+            ) {
+                jumpPower = -10;
+            }
+
+            player.vy = jumpPower;
         }
-
-        GAME.isJumping = true;
-        GAME.isFalling = false;
-
-        let jumpPower = GAME.jumpPower;
-
-        // Brick ke paas small jump
-        if (
-            brickWall &&
-            brickWall.active &&
-            Math.abs(brickWall.x - player.x) < 600
-        ) {
-            jumpPower = -10;
-        }
-
-        player.vy = jumpPower;
     }
-}
     function startMovingForward() {
         if (GAME.state === 'playing') {
             GAME.isMovingForward = true;
@@ -695,83 +695,83 @@ function jump() {
     }
 
     function checkStairCollision() {
-    if (!stairsActive || stairs.length === 0) return false;
+        if (!stairsActive || stairs.length === 0) return false;
 
-    const playerFoot = player.y + player.height;
-    const playerLeft = player.x + player.width * 0.25;
-    const playerRight = player.x + player.width * 0.75;
+        const playerFoot = player.y + player.height;
+        const playerLeft = player.x + player.width * 0.25;
+        const playerRight = player.x + player.width * 0.75;
 
-    for (let i = 0; i < stairs.length; i++) {
-        const stair = stairs[i];
+        for (let i = 0; i < stairs.length; i++) {
+            const stair = stairs[i];
 
-        if (!stair.isStep) continue;
+            if (!stair.isStep) continue;
 
-        if (
-            player.vy >= 0 &&
-            playerRight > stair.x &&
-            playerLeft < stair.x + stair.width &&
-            playerFoot >= stair.y - 15 &&
-            playerFoot <= stair.y + stair.height + 25
-        ) {
-            player.y = stair.y - player.height;
-            player.vy = 0;
-            GAME.isJumping = false;
-            GAME.isFalling = false;
-            onStairs = true;
-            currentStairIndex = i;
+            if (
+                player.vy >= 0 &&
+                playerRight > stair.x &&
+                playerLeft < stair.x + stair.width &&
+                playerFoot >= stair.y - 15 &&
+                playerFoot <= stair.y + stair.height + 25
+            ) {
+                player.y = stair.y - player.height;
+                player.vy = 0;
+                GAME.isJumping = false;
+                GAME.isFalling = false;
+                onStairs = true;
+                currentStairIndex = i;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    function checkFlagReach() {
+        if (!stairsActive || !finishFlag.active || finishFlag.touched) return false;
+
+        const playerRight = player.x + player.width;
+        const playerLeft = player.x;
+        const playerBottom = player.y + player.height;
+        const playerTop = player.y;
+
+        const poleLeft = finishFlag.x;
+        const poleRight = finishFlag.x + finishFlag.width;
+
+        const touchingPole =
+            playerRight >= poleLeft - 10 &&
+            playerLeft <= poleRight + 10 &&
+            playerBottom >= finishFlag.y &&
+            playerTop <= finishFlag.y + finishFlag.height;
+
+        if (touchingPole) {
+            startFlagSlide();
             return true;
         }
+
+        return false;
     }
 
-    return false;
-}
-function checkFlagReach() {
-    if (!stairsActive || !finishFlag.active || finishFlag.touched) return false;
+    function drawStairs() {
+        if (!stairsActive) return;
 
-    const playerRight = player.x + player.width;
-    const playerLeft = player.x;
-    const playerBottom = player.y + player.height;
-    const playerTop = player.y;
+        stairs.forEach(stair => {
 
-    const poleLeft = finishFlag.x;
-    const poleRight = finishFlag.x + finishFlag.width;
+            if (stair.isVisualBrick) {
+                ctx.drawImage(images.brick, stair.x, stair.y, stair.width, stair.height);
+            }
 
-    const touchingPole =
-        playerRight >= poleLeft - 10 &&
-        playerLeft <= poleRight + 10 &&
-        playerBottom >= finishFlag.y &&
-        playerTop <= finishFlag.y + finishFlag.height;
+            // TEMP DEBUG BORDER - invisible steps dekhne ke liye
+            // if (stair.isStep) {
+            //     ctx.save();
+            //     ctx.strokeStyle = 'red';
+            //     ctx.lineWidth = 3;
+            //     ctx.strokeRect(stair.x, stair.y, stair.width, stair.height);
 
-    if (touchingPole) {
-        startFlagSlide();
-        return true;
+            //     ctx.fillStyle = 'rgba(255, 0, 0, 0.15)';
+            //     ctx.fillRect(stair.x, stair.y, stair.width, stair.height);
+            //     ctx.restore();
+            // }
+        });
     }
-
-    return false;
-}
-
-function drawStairs() {
-    if (!stairsActive) return;
-
-    stairs.forEach(stair => {
-
-        if (stair.isVisualBrick) {
-            ctx.drawImage(images.brick, stair.x, stair.y, stair.width, stair.height);
-        }
-
-        // TEMP DEBUG BORDER - invisible steps dekhne ke liye
-        // if (stair.isStep) {
-        //     ctx.save();
-        //     ctx.strokeStyle = 'red';
-        //     ctx.lineWidth = 3;
-        //     ctx.strokeRect(stair.x, stair.y, stair.width, stair.height);
-
-        //     ctx.fillStyle = 'rgba(255, 0, 0, 0.15)';
-        //     ctx.fillRect(stair.x, stair.y, stair.width, stair.height);
-        //     ctx.restore();
-        // }
-    });
-}
     function updateFlagSlide() {
         GAME.frameCount++;
 
@@ -792,38 +792,38 @@ function drawStairs() {
             player.y = getPlayerGroundY() - player.height;
 
             GAME.state = 'finishWait';
-if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins) {
-    GAME.superMode = true;
-    GAME.superModeAnimation = 0;
-}        setTimeout(() => {
+            if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins) {
+                GAME.superMode = true;
+                GAME.superModeAnimation = 0;
+            } setTimeout(() => {
                 gameOver();
             }, 5000);
         }
     }
 
     function updateFinishWait() {
-    GAME.frameCount++;
+        GAME.frameCount++;
 
-    if (GAME.superMode && GAME.superModeAnimation < 1) {
-        GAME.superModeAnimation += 0.015;
+        if (GAME.superMode && GAME.superModeAnimation < 1) {
+            GAME.superModeAnimation += 0.015;
 
-        if (GAME.superModeAnimation > 1) {
-            GAME.superModeAnimation = 1;
+            if (GAME.superModeAnimation > 1) {
+                GAME.superModeAnimation = 1;
+            }
+        }
+
+        // Boy bada hone ke baad automatically aage chale
+        if (GAME.superModeAnimation >= 1) {
+            player.x += 2.5;
+
+            player.frameTimer++;
+
+            if (player.frameTimer >= player.frameInterval) {
+                player.frameTimer = 0;
+                player.frame = (player.frame + 1) % runFrames.length;
+            }
         }
     }
-
-    // Boy bada hone ke baad automatically aage chale
-    if (GAME.superModeAnimation >= 1) {
-        player.x += 2.5;
-
-        player.frameTimer++;
-
-if (player.frameTimer >= player.frameInterval) {
-    player.frameTimer = 0;
-    player.frame = (player.frame + 1) % runFrames.length;
-}
-    }
-}
 
     function update() {
         if (GAME.state === 'flagSlide') {
@@ -940,20 +940,20 @@ if (player.frameTimer >= player.frameInterval) {
             let standingOnPlatform = false;
 
             if (stairsActive) {
-    const playerFoot = player.y + player.height;
-    const playerLeft = player.x + player.width * 0.25;
-    const playerRight = player.x + player.width * 0.75;
+                const playerFoot = player.y + player.height;
+                const playerLeft = player.x + player.width * 0.25;
+                const playerRight = player.x + player.width * 0.75;
 
-    stairs.forEach((s) => {
-        if (
-            playerRight > s.x &&
-            playerLeft < s.x + s.width &&
-            Math.abs(playerFoot - s.y) < 25
-        ) {
-            standingOnPlatform = true;
-        }
-    });
-}
+                stairs.forEach((s) => {
+                    if (
+                        playerRight > s.x &&
+                        playerLeft < s.x + s.width &&
+                        Math.abs(playerFoot - s.y) < 25
+                    ) {
+                        standingOnPlatform = true;
+                    }
+                });
+            }
 
             platforms.forEach((p) => {
                 if (
@@ -986,80 +986,80 @@ if (player.frameTimer >= player.frameInterval) {
             }
 
             if (castle.active) {
-    castle.x -= moveSpeed;
-}
-            
+                castle.x -= moveSpeed;
+            }
+
             if (stairsActive) {
                 stairs.forEach((s) => { s.x -= moveSpeed; });
             }
 
-        if (brickWall && brickWall.active) {
-        brickWall.x -= moveSpeed;
+            if (brickWall && brickWall.active) {
+                brickWall.x -= moveSpeed;
+            }
+
+
+
+            if (brickWall && brickWall.active && GAME.isMovingForward) {
+                const playerRight = player.x + player.width;
+                const playerFoot = player.y + player.height;
+
+                const onStep =
+                    stairs.some(s =>
+                        s.isStep &&
+                        playerRight > s.x &&
+                        player.x < s.x + s.width &&
+                        Math.abs(playerFoot - s.y) < 20
+                    );
+
+                const nearFlagPole =
+                    playerRight > finishFlag.x - 50;
+
+                const hittingBrickSide =
+                    playerRight > brickWall.x + 10 &&
+                    playerRight < brickWall.x + 70 &&
+                    playerFoot > brickWall.y + 20;
+
+                if (hittingBrickSide && !onStep) {
+                    stairs.forEach((s) => { s.x += moveSpeed; });
+                    if (finishFlag.active) finishFlag.x += moveSpeed;
+                    brickWall.x += moveSpeed;
+                    bg.x += bg.speed;
+                }
+            }
+
         }
 
+        // FLAG POLE JUMP COMPULSORY
+        if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
 
-        
-if (brickWall && brickWall.active && GAME.isMovingForward) {
-    const playerRight = player.x + player.width;
-    const playerFoot = player.y + player.height;
+            const playerRight = player.x + player.width;
+            const playerFoot = player.y + player.height;
 
-    const onStep =
-        stairs.some(s =>
-            s.isStep &&
-            playerRight > s.x &&
-            player.x < s.x + s.width &&
-            Math.abs(playerFoot - s.y) < 20
-        );
+            const onGround =
+                Math.abs(playerFoot - getPlayerGroundY()) < 5;
 
-  const nearFlagPole =
-    playerRight > finishFlag.x - 50;
+            // Ground pe pole cross nahi kar sakta
+            if (onGround && playerRight >= finishFlag.x - 10) {
 
-const hittingBrickSide =
-    playerRight > brickWall.x + 10 &&
-    playerRight < brickWall.x + 70 &&
-    playerFoot > brickWall.y + 20;
+                if (finishFlag.active) finishFlag.x += moveSpeed;
+                if (castle.active) {
+                    castle.x -= moveSpeed;
+                }
+                if (brickWall) brickWall.x += moveSpeed;
 
-    if (hittingBrickSide && !onStep) {
-        stairs.forEach((s) => { s.x += moveSpeed; });
-        if (finishFlag.active) finishFlag.x += moveSpeed;
-        brickWall.x += moveSpeed;
-        bg.x += bg.speed;
-    }
-}
+                stairs.forEach((s) => {
+                    s.x += moveSpeed;
+                });
 
-}
+                bg.x += bg.speed;
+            }
 
-// FLAG POLE JUMP COMPULSORY
-if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
-
-    const playerRight = player.x + player.width;
-    const playerFoot = player.y + player.height;
-
-    const onGround =
-        Math.abs(playerFoot - getPlayerGroundY()) < 5;
-
-    // Ground pe pole cross nahi kar sakta
-    if (onGround && playerRight >= finishFlag.x - 10) {
-
-        if (finishFlag.active) finishFlag.x += moveSpeed;
-        if (castle.active) {
-    castle.x -= moveSpeed;
-}
-        if (brickWall) brickWall.x += moveSpeed;
-
-        stairs.forEach((s) => {
-            s.x += moveSpeed;
-        });
-
-        bg.x += bg.speed;
-    }
-
-    // Jump karke pole touch kare to flag slide
-    if (!onGround && playerRight >= finishFlag.x - 10) {
-        startFlagSlide();
-        return;
-    }
-}
+            // Jump karke pole touch kare to flag slide
+            if (!onGround && playerRight >= finishFlag.x - 10) {
+                startFlagSlide();
+                return;
+            }
+        }
 
 
         // Coin floating animation
@@ -1106,7 +1106,7 @@ if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
         // Generate new platforms
         const lastP = platforms[platforms.length - 1];
 
-       if (!stairsActive && (!lastP || lastP.x < 900)) {
+        if (!stairsActive && (!lastP || lastP.x < 900)) {
             const type = platformTypes[Math.floor(Math.random() * platformTypes.length)];
             const width = platformWidths[type];
             const y = playerGroundY - 140 - Math.random() * 120;
@@ -1135,7 +1135,7 @@ if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
         const groundCoins = coins.filter((c) => !c.collected && c.baseY > playerGroundY - 100);
         const lastCoin = groundCoins[groundCoins.length - 1];
 
-       if (!stairsActive && (!lastCoin || lastCoin.x < 500)) {
+        if (!stairsActive && (!lastCoin || lastCoin.x < 500)) {
             coins.push({
                 x: 1100 + Math.random() * 200,
                 y: playerGroundY - 70,
@@ -1215,9 +1215,9 @@ if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
                     GAME.score = (GAME.superCoins * GAME.superCoinValue);
                     updateHUD();
 
-                   if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins && !stairsActive) {
-    createSingleBrick();
-}
+                    if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins && !stairsActive) {
+                        createSingleBrick();
+                    }
 
                     floatingTexts.push({
                         x: sc.x + superCoinSize / 2,
@@ -1237,68 +1237,69 @@ if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
     }
 
 
- function createSingleBrick() {
-    // coins = [];
-    // platforms = [];
-    // superCoins = [];
+    function createSingleBrick() {
+        // coins = [];
+        // platforms = [];
+        // superCoins = [];
 
-    stairs = [];
+        stairs = [];
 
-    const ground = getPlayerGroundY();
+        const ground = getPlayerGroundY();
 
-    const brickX = player.x + 1400; // Brick and flag screen ke bahar create hoga
-    const brickY = ground - 330;
-    const brickW = 410;
-    const brickH = 350;
+        const brickX = player.x + 1400; // Brick and flag screen ke bahar create hoga
+        platforms = platforms.filter(p => p.x < brickX - 500);
+        const brickY = ground - 330;
+        const brickW = 410;
+        const brickH = 350;
 
-    // blocker wall
-    brickWall = {
-        x: brickX,
-        y: brickY,
-        width: brickW,
-        height: brickH,
-        active: true
-    };
+        // blocker wall
+        brickWall = {
+            x: brickX,
+            y: brickY,
+            width: brickW,
+            height: brickH,
+            active: true
+        };
 
-    // single visible brick image
-    stairs.push({
-        x: brickX,
-        y: brickY,
-        width: brickW,
-        height: brickH,
-        isVisualBrick: true
-    });
+        // single visible brick image
+        stairs.push({
+            x: brickX,
+            y: brickY,
+            width: brickW,
+            height: brickH,
+            isVisualBrick: true
+        });
 
-    // 8 invisible steps
-    const stepHeight = 35;
+        // 8 invisible steps
+        const stepHeight = 35;
 
-stairs.push(
-    { x: brickX - -10, y: ground - 30,  width: 30, height: 40, isStep: true },
-    { x: brickX - -50, y: ground - 75,  width: 30, height: 40, isStep: true },
-    { x: brickX + 92, y: ground - 117,  width: 50, height: 40, isStep: true },
-    { x: brickX + 145, y: ground - 160, width: 50, height: 40, isStep: true },
-    { x: brickX + 195, y: ground - 200, width: 50, height: 40, isStep: true },
-    { x: brickX + 247, y: ground - 242, width: 50, height: 40, isStep: true },
-    { x: brickX + 300, y: ground - 282, width: 50, height: 40, isStep: true },
-    { x: brickX + 351, y: ground - 331, width: 50, height: 40, isStep: true }
-);
+        stairs.push(
+            { x: brickX - -10, y: ground - 30, width: 30, height: 40, isStep: true },
+            { x: brickX - -50, y: ground - 75, width: 30, height: 40, isStep: true },
+            { x: brickX + 92, y: ground - 117, width: 50, height: 40, isStep: true },
+            { x: brickX + 145, y: ground - 160, width: 50, height: 40, isStep: true },
+            { x: brickX + 195, y: ground - 200, width: 50, height: 40, isStep: true },
+            { x: brickX + 247, y: ground - 242, width: 50, height: 40, isStep: true },
+            { x: brickX + 300, y: ground - 282, width: 50, height: 40, isStep: true },
+            { x: brickX + 351, y: ground - 331, width: 50, height: 40, isStep: true }
+        );
 
-window.debugStairsStart = JSON.parse(JSON.stringify(stairs));
-window.debugStairs = stairs;
+        window.debugStairsStart = JSON.parse(JSON.stringify(stairs));
+        window.debugStairs = stairs;
 
-    stairsActive = true;
-    // DEBUG
-    window.debugStairs = stairs;
+        stairsActive = true;
+        // DEBUG
+        window.debugStairs = stairs;
 
-    finishFlag.x = brickX + brickW + 180;
-    finishFlag.y = getPlayerGroundY() - finishFlag.height + 28;
-    finishFlag.flagY = 30;
-    finishFlag.active = true;
-    finishFlag.touched = false;
+        finishFlag.x = brickX + brickW + 180;
+        finishFlag.y = getPlayerGroundY() - finishFlag.height + 28;
+        finishFlag.flagY = 30;
+        finishFlag.active = true;
+        finishFlag.touched = false;
 
-    castle.x = finishFlag.x + 500;
-    castle.y = getPlayerGroundY() - 440;
-    castle.active = true;
+        castle.x = finishFlag.x + 500;
+        castle.y = getPlayerGroundY() - 440;
+        castle.active = true;
     }
 
     function drawFloatingTexts() {
@@ -1512,7 +1513,7 @@ window.debugStairs = stairs;
                     finishFlag.x,
                     finishFlag.y,
                     finishFlag.width,
-    finishFlag.height
+                    finishFlag.height
                 );
             } else {
                 ctx.fillStyle = '#777';
@@ -1538,19 +1539,19 @@ window.debugStairs = stairs;
 
             // Draw Castle
             if (castle.active) {
-            if (
-            images.castle &&
-            images.castle.complete &&
-            images.castle.naturalWidth > 0
-            ) {
-            ctx.drawImage(
-            images.castle,
-            castle.x,
-            castle.y,
-            castle.width,
-            castle.height
-            );
-            }
+                if (
+                    images.castle &&
+                    images.castle.complete &&
+                    images.castle.naturalWidth > 0
+                ) {
+                    ctx.drawImage(
+                        images.castle,
+                        castle.x,
+                        castle.y,
+                        castle.width,
+                        castle.height
+                    );
+                }
             }
         }
 
@@ -1581,60 +1582,60 @@ window.debugStairs = stairs;
         }
 
         if (playerImg && playerImg.complete && playerImg.naturalWidth > 0) {
-    const footVisualFix = 18;
+            const footVisualFix = 18;
 
-    if (GAME.superMode) {
-        const newWidth = player.width * superScale;
-        const newHeight = player.height * superScale;
-        const newX = player.x - (newWidth - player.width) / 2;
-        const newY = player.y - (newHeight - player.height);
+            if (GAME.superMode) {
+                const newWidth = player.width * superScale;
+                const newHeight = player.height * superScale;
+                const newX = player.x - (newWidth - player.width) / 2;
+                const newY = player.y - (newHeight - player.height);
 
-        // IMPORTANT: boy ko yaha draw karna hai
-        ctx.drawImage(
-            playerImg,
-            newX,
-            newY + footVisualFix,
-            newWidth,
-            newHeight
-        );
-    } else {
+                // IMPORTANT: boy ko yaha draw karna hai
+                ctx.drawImage(
+                    playerImg,
+                    newX,
+                    newY + footVisualFix,
+                    newWidth,
+                    newHeight
+                );
+            } else {
 
-        let drawW = player.width;
-        let drawH = player.height;
-        let drawX = player.x;
-        let drawY = player.y + footVisualFix;
+                let drawW = player.width;
+                let drawH = player.height;
+                let drawX = player.x;
+                let drawY = player.y + footVisualFix;
 
-        if (GAME.isJumping) {
-            drawW = 120;
-            drawH = 124;
-            drawX = player.x - 7;
-            drawY = player.y + footVisualFix - 15;
-        } else if (GAME.isFalling) {
-            drawW = 100;
-            drawH = 121;
-            drawX = player.x - 5;
-            drawY = player.y + footVisualFix - 10;
-        }
+                if (GAME.isJumping) {
+                    drawW = 120;
+                    drawH = 124;
+                    drawX = player.x - 7;
+                    drawY = player.y + footVisualFix - 15;
+                } else if (GAME.isFalling) {
+                    drawW = 100;
+                    drawH = 121;
+                    drawX = player.x - 5;
+                    drawY = player.y + footVisualFix - 10;
+                }
 
-        ctx.drawImage(playerImg, drawX, drawY, drawW, drawH);
-    }
-} else {
+                ctx.drawImage(playerImg, drawX, drawY, drawW, drawH);
+            }
+        } else {
             ctx.fillStyle = '#fdbcb4';
 
-           if (GAME.superMode) {
-    const newWidth = player.width * superScale;
-    const newHeight = player.height * superScale;
-    const newX = player.x - (newWidth - player.width) / 2;
-    const newY = player.y - (newHeight - player.height);
+            if (GAME.superMode) {
+                const newWidth = player.width * superScale;
+                const newHeight = player.height * superScale;
+                const newX = player.x - (newWidth - player.width) / 2;
+                const newY = player.y - (newHeight - player.height);
 
-    ctx.drawImage(
-        playerImg,
-        newX,
-        newY + footVisualFix,
-        newWidth,
-        newHeight
-    );
-} else {
+                ctx.drawImage(
+                    playerImg,
+                    newX,
+                    newY + footVisualFix,
+                    newWidth,
+                    newHeight
+                );
+            } else {
                 ctx.fillRect(player.x, player.y, player.width, player.height);
             }
         }
@@ -2028,7 +2029,7 @@ window.debugStairs = stairs;
         currentStairIndex = -1;
         stairMessageShown = false;
 
- 
+
 
         signBoard.x = 900;
         signBoard.y = getPlayerGroundY() - 100;
