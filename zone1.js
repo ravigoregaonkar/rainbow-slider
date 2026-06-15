@@ -1866,7 +1866,7 @@
             <div class="game-name" style="font-size: 20px; color: #1a237e; font-weight: 800; margin: 15px 0;">Vitamin D Challenge</div>
             <div class="score-outer" style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
                 <div class="score-box" style="width: 200px; background: #fff3e0; border: 2px solid #FF6B00; border-radius: 15px; padding: 15px 10px;">
-                    <divclass="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
+                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Super Coins</div>
                 </div>
                 <div class="score-box" style="width: 200px; background: #e0ebf1; border: 2px solid #0539d2; border-radius: 15px; padding: 15px 10px;">
@@ -2329,6 +2329,9 @@
 
     const downloadCertBtn = document.getElementById('downloadCertBtn');
     if (downloadCertBtn) downloadCertBtn.addEventListener('click', downloadCertificate);
+
+    const downloadCertBtnMob = document.getElementById('downloadCertBtnMob');
+    if (downloadCertBtnMob) downloadCertBtnMob.addEventListener('click', downloadCertificate);
 
     const certPopupClose = document.getElementById('certPopupClose');
 
