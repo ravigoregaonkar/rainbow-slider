@@ -33,7 +33,7 @@
         jumpPower: -21,
         runSpeed: 6,
         coinValue: 10,
-        superCoinValue: 20,
+        superCoinValue: 5,
         lastTime: 0,
         frameCount: 0,
         gameLoopId: null,
@@ -119,6 +119,8 @@
 
         flagPole: 'images/flag-pole.png',
         finishFlag: 'images/finish-flag.png',
+        brick: 'images/brick.png',
+        castle: 'images/castle.png',
 
         climb1: 'images/boy-climb-1.png',
         climb2: 'images/boy-climb-2.png',
@@ -152,12 +154,26 @@
         'climb8'
     ];
 
+    // ===== STAIRS SYSTEM =====
+    let stairs = [];
+    let brickWall = null;
+    const stairWidth = 300;
+    const stairHeight = 256;
+    const stairCount = 6;
+    let stairsActive = false;
+    let stairsCompleted = false;
+    let stairBaseX = 0;
+    let stairBaseY = 0;
+    let stairMessageShown = false;
+    let onStairs = false;
+    let currentStairIndex = -1;
+
     // ===== FINISH FLAG =====
     const finishFlag = {
         x: 0,
         y: 0,
-        width: 58,
-        height: 504,
+        width: 60,
+        height: 515,
         flagY: 10,
         active: false,
         touched: false,
@@ -165,6 +181,14 @@
         climbTimer: 0,
         finishStarted: false
     };
+
+    const castle = {
+    x: 0,
+    y: 0,
+    width: 500,
+    height: 500,
+    active: false
+};
 
     // ===== SOUND =====
     const coinSound = document.getElementById('coinSound');
@@ -188,7 +212,7 @@
                 musicIcon.src = 'images/music-off.svg';
                 musicOn = false;
             } else {
-                bgMusic.volume = 0.15;
+                bgMusic.volume = 0.3;
                 bgMusic.play().catch(() => { });
                 musicIcon.src = 'images/music-on.svg';
                 musicOn = true;
@@ -384,6 +408,19 @@
         finishFlag.climbTimer = 0;
         finishFlag.finishStarted = false;
 
+        // Reset stairs
+        stairs = [];
+        stairsActive = false;
+        brickWall = null;
+        stairsCompleted = false;
+        onStairs = false;
+        currentStairIndex = -1;
+        stairMessageShown = false;
+
+               // TEMP DEBUG - game start pe brick show karne ke liye
+            // createSingleBrick();
+            // GAME.isMovingForward = false;
+
         updateHUD();
         startGameTimer();
 
@@ -418,7 +455,7 @@
     function generateCoins() {
         coins = [];
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 6; i++) {
             const yOffset = Math.sin(i * 0.8) * 5;
 
             coins.push({
@@ -431,7 +468,7 @@
         }
 
         platforms.forEach((p) => {
-            if (Math.random() > 0.4) {
+            if (Math.random() > 0.7) {
                 coins.push({
                     x: p.x + p.width / 2 - coinSize / 2,
                     y: p.y - 70,
@@ -452,14 +489,13 @@
             let y;
             const placementType = Math.random();
 
-            if (placementType < 0.4) {
-                y = playerGroundY - 80 - Math.random() * 30;
-            } else if (placementType < 0.7) {
-                y = playerGroundY - 200 - Math.random() * 150;
-            } else {
-                y = playerGroundY - 350 - Math.random() * 100;
-            }
-
+        if (placementType < 0.4) {
+        y = playerGroundY - 90;      // Ground
+        } else if (placementType < 0.6) {
+        y = playerGroundY - 330;     // Medium jump
+        } else {
+        y = playerGroundY - 400;     // High jump
+        }
             superCoins.push({
                 x,
                 y,
@@ -471,6 +507,47 @@
             });
         }
     }
+
+   function generateStairs() {
+    stairs = [];
+
+    const playerGroundY = getPlayerGroundY();
+
+    let lastX = 900;
+    if (superCoins.length > 0) {
+        const lastCoin = superCoins[superCoins.length - 1];
+        lastX = lastCoin.x + 500;
+    }
+
+    const startX = lastX;
+    const startY = playerGroundY - 80;
+
+for (let i = 0; i < stairCount; i++) {
+    stairs.push({
+        x: startX + (i * 90),
+        y: startY - (i * 55),
+        width: stairWidth,
+        height: stairHeight,
+        step: i + 1
+    });
+}
+    const topStair = stairs[stairs.length - 1];
+
+    finishFlag.x = topStair.x + 160;
+    finishFlag.y = getPlayerGroundY() - finishFlag.height + 25;
+    finishFlag.flagY = 30;
+    finishFlag.active = true;
+    finishFlag.touched = false;
+    finishFlag.climbFrame = 0;
+    finishFlag.climbTimer = 0;
+    finishFlag.finishStarted = false;
+
+    stairsActive = true;
+    stairsCompleted = false;
+    onStairs = false;
+    currentStairIndex = -1;
+    stairMessageShown = false;
+}
 
     function setupFinishFlag() {
         const lastSuperCoin = superCoins[superCoins.length - 1];
@@ -526,19 +603,31 @@
         if (timeEl) timeEl.textContent = String(GAME.timeRemaining).padStart(2, '0');
     }
 
-    function jump() {
-        if (!GAME.isJumping && !GAME.isFalling && GAME.state === 'playing') {
-            if (jumpSound) {
-                jumpSound.currentTime = 0;
-                jumpSound.play().catch(() => { });
-            }
+function jump() {
+    if (!GAME.isJumping && !GAME.isFalling && GAME.state === 'playing') {
 
-            GAME.isJumping = true;
-            GAME.isFalling = false;
-            player.vy = GAME.jumpPower;
+        if (jumpSound) {
+            jumpSound.currentTime = 0;
+            jumpSound.play().catch(() => {});
         }
-    }
 
+        GAME.isJumping = true;
+        GAME.isFalling = false;
+
+        let jumpPower = GAME.jumpPower;
+
+        // Brick ke paas small jump
+        if (
+            brickWall &&
+            brickWall.active &&
+            Math.abs(brickWall.x - player.x) < 600
+        ) {
+            jumpPower = -10;
+        }
+
+        player.vy = jumpPower;
+    }
+}
     function startMovingForward() {
         if (GAME.state === 'playing') {
             GAME.isMovingForward = true;
@@ -558,25 +647,143 @@
         GAME.isFalling = false;
 
         player.vy = 0;
-        player.x = finishFlag.x - 35;
+        player.x = finishFlag.x - 60;
 
         if (GAME.gameTimerInterval) {
             clearInterval(GAME.gameTimerInterval);
         }
     }
 
+    function showStairsMessage() {
+        if (stairMessageShown) return;
+        stairMessageShown = true;
+
+        const msg = document.createElement('div');
+        msg.id = 'stairs-message';
+        msg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FF6B00, #FFD700);
+            color: #fff;
+            padding: 30px 50px;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: 900;
+            text-align: center;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 4px solid #fff;
+            animation: popIn 0.5s ease;
+            font-family: 'Calibri', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        `;
+        msg.innerHTML = `
+            <div style="font-size: 50px; margin-bottom: 10px;">🏰</div>
+            <div>STAIRS APPEAR!</div>
+            <div style="font-size: 16px; color: #fff; margin-top: 10px;">Use Forward + Jump to Climb!</div>
+        `;
+        document.body.appendChild(msg);
+
+        setTimeout(() => {
+            msg.style.animation = 'popOut 0.5s ease forwards';
+            setTimeout(() => {
+                if (msg.parentNode) msg.remove();
+            }, 500);
+        }, 2000);
+    }
+
+    function checkStairCollision() {
+    if (!stairsActive || stairs.length === 0) return false;
+
+    const playerFoot = player.y + player.height;
+    const playerLeft = player.x + player.width * 0.25;
+    const playerRight = player.x + player.width * 0.75;
+
+    for (let i = 0; i < stairs.length; i++) {
+        const stair = stairs[i];
+
+        if (!stair.isStep) continue;
+
+        if (
+            player.vy >= 0 &&
+            playerRight > stair.x &&
+            playerLeft < stair.x + stair.width &&
+            playerFoot >= stair.y - 15 &&
+            playerFoot <= stair.y + stair.height + 25
+        ) {
+            player.y = stair.y - player.height;
+            player.vy = 0;
+            GAME.isJumping = false;
+            GAME.isFalling = false;
+            onStairs = true;
+            currentStairIndex = i;
+            return true;
+        }
+    }
+
+    return false;
+}
+function checkFlagReach() {
+    if (!stairsActive || !finishFlag.active || finishFlag.touched) return false;
+
+    const playerRight = player.x + player.width;
+    const playerLeft = player.x;
+    const playerBottom = player.y + player.height;
+    const playerTop = player.y;
+
+    const poleLeft = finishFlag.x;
+    const poleRight = finishFlag.x + finishFlag.width;
+
+    const touchingPole =
+        playerRight >= poleLeft - 10 &&
+        playerLeft <= poleRight + 10 &&
+        playerBottom >= finishFlag.y &&
+        playerTop <= finishFlag.y + finishFlag.height;
+
+    if (touchingPole) {
+        startFlagSlide();
+        return true;
+    }
+
+    return false;
+}
+
+function drawStairs() {
+    if (!stairsActive) return;
+
+    stairs.forEach(stair => {
+
+        if (stair.isVisualBrick) {
+            ctx.drawImage(images.brick, stair.x, stair.y, stair.width, stair.height);
+        }
+
+        // TEMP DEBUG BORDER - invisible steps dekhne ke liye
+        // if (stair.isStep) {
+        //     ctx.save();
+        //     ctx.strokeStyle = 'red';
+        //     ctx.lineWidth = 3;
+        //     ctx.strokeRect(stair.x, stair.y, stair.width, stair.height);
+
+        //     ctx.fillStyle = 'rgba(255, 0, 0, 0.15)';
+        //     ctx.fillRect(stair.x, stair.y, stair.width, stair.height);
+        //     ctx.restore();
+        // }
+    });
+}
     function updateFlagSlide() {
         GAME.frameCount++;
 
         finishFlag.climbTimer++;
 
-        if (finishFlag.climbTimer > 6) {
+        if (finishFlag.climbTimer > 3) {
             finishFlag.climbTimer = 0;
             finishFlag.climbFrame = (finishFlag.climbFrame + 1) % climbFrames.length;
         }
 
-        if (finishFlag.flagY < finishFlag.height - 100) {
-            finishFlag.flagY += 3;
+        if (finishFlag.flagY < finishFlag.height - 80) {
+            finishFlag.flagY += 5;
         }
 
         player.y += 3;
@@ -585,29 +792,38 @@
             player.y = getPlayerGroundY() - player.height;
 
             GAME.state = 'finishWait';
-
-            if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins) {
-                GAME.superMode = true;
-                GAME.superModeAnimation = 0;
-            }
-
-            setTimeout(() => {
+if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins) {
+    GAME.superMode = true;
+    GAME.superModeAnimation = 0;
+}        setTimeout(() => {
                 gameOver();
             }, 5000);
         }
     }
 
     function updateFinishWait() {
-        GAME.frameCount++;
+    GAME.frameCount++;
 
-        if (GAME.superMode && GAME.superModeAnimation < 1) {
-            GAME.superModeAnimation += 0.015;
+    if (GAME.superMode && GAME.superModeAnimation < 1) {
+        GAME.superModeAnimation += 0.015;
 
-            if (GAME.superModeAnimation > 1) {
-                GAME.superModeAnimation = 1;
-            }
+        if (GAME.superModeAnimation > 1) {
+            GAME.superModeAnimation = 1;
         }
     }
+
+    // Boy bada hone ke baad automatically aage chale
+    if (GAME.superModeAnimation >= 1) {
+        player.x += 2.5;
+
+        player.frameTimer++;
+
+if (player.frameTimer >= player.frameInterval) {
+    player.frameTimer = 0;
+    player.frame = (player.frame + 1) % runFrames.length;
+}
+    }
+}
 
     function update() {
         if (GAME.state === 'flagSlide') {
@@ -652,6 +868,13 @@
             player.y += player.vy;
 
             let onPlatform = false;
+
+            // Check stair collision first
+            if (stairsActive && player.vy > 0) {
+                if (checkStairCollision()) {
+                    onPlatform = true;
+                }
+            }
 
             platforms.forEach((p) => {
                 const playerLeft = player.x + player.width * 0.25;
@@ -716,6 +939,22 @@
             const playerFoot = player.y + player.height;
             let standingOnPlatform = false;
 
+            if (stairsActive) {
+    const playerFoot = player.y + player.height;
+    const playerLeft = player.x + player.width * 0.25;
+    const playerRight = player.x + player.width * 0.75;
+
+    stairs.forEach((s) => {
+        if (
+            playerRight > s.x &&
+            playerLeft < s.x + s.width &&
+            Math.abs(playerFoot - s.y) < 25
+        ) {
+            standingOnPlatform = true;
+        }
+    });
+}
+
             platforms.forEach((p) => {
                 if (
                     player.x + player.width * 0.3 > p.x &&
@@ -745,7 +984,83 @@
             if (finishFlag.active) {
                 finishFlag.x -= moveSpeed;
             }
+
+            if (castle.active) {
+    castle.x -= moveSpeed;
+}
+            
+            if (stairsActive) {
+                stairs.forEach((s) => { s.x -= moveSpeed; });
+            }
+
+        if (brickWall && brickWall.active) {
+        brickWall.x -= moveSpeed;
         }
+
+
+        
+if (brickWall && brickWall.active && GAME.isMovingForward) {
+    const playerRight = player.x + player.width;
+    const playerFoot = player.y + player.height;
+
+    const onStep =
+        stairs.some(s =>
+            s.isStep &&
+            playerRight > s.x &&
+            player.x < s.x + s.width &&
+            Math.abs(playerFoot - s.y) < 20
+        );
+
+  const nearFlagPole =
+    playerRight > finishFlag.x - 50;
+
+const hittingBrickSide =
+    playerRight > brickWall.x + 10 &&
+    playerRight < brickWall.x + 70 &&
+    playerFoot > brickWall.y + 20;
+
+    if (hittingBrickSide && !onStep) {
+        stairs.forEach((s) => { s.x += moveSpeed; });
+        if (finishFlag.active) finishFlag.x += moveSpeed;
+        brickWall.x += moveSpeed;
+        bg.x += bg.speed;
+    }
+}
+
+}
+
+// FLAG POLE JUMP COMPULSORY
+if (finishFlag.active && !finishFlag.touched && GAME.isMovingForward) {
+
+    const playerRight = player.x + player.width;
+    const playerFoot = player.y + player.height;
+
+    const onGround =
+        Math.abs(playerFoot - getPlayerGroundY()) < 5;
+
+    // Ground pe pole cross nahi kar sakta
+    if (onGround && playerRight >= finishFlag.x - 10) {
+
+        if (finishFlag.active) finishFlag.x += moveSpeed;
+        if (castle.active) {
+    castle.x -= moveSpeed;
+}
+        if (brickWall) brickWall.x += moveSpeed;
+
+        stairs.forEach((s) => {
+            s.x += moveSpeed;
+        });
+
+        bg.x += bg.speed;
+    }
+
+    // Jump karke pole touch kare to flag slide
+    if (!onGround && playerRight >= finishFlag.x - 10) {
+        startFlagSlide();
+        return;
+    }
+}
+
 
         // Coin floating animation
         coins.forEach((c) => {
@@ -781,21 +1096,17 @@
             return;
         }
 
-        // Flag touch detection
-        if (
-            finishFlag.active &&
-            !finishFlag.touched &&
-            player.x + player.width > finishFlag.x + 25 &&
-            player.x < finishFlag.x + finishFlag.width
-        ) {
-            startFlagSlide();
-            return;
+        // Flag reach detection (manual - player must jump to flag)
+        if (stairsActive && finishFlag.active && !finishFlag.touched) {
+            if (checkFlagReach()) {
+                return;
+            }
         }
 
         // Generate new platforms
         const lastP = platforms[platforms.length - 1];
 
-        if (!lastP || lastP.x < 900) {
+       if (!stairsActive && (!lastP || lastP.x < 900)) {
             const type = platformTypes[Math.floor(Math.random() * platformTypes.length)];
             const width = platformWidths[type];
             const y = playerGroundY - 140 - Math.random() * 120;
@@ -824,7 +1135,7 @@
         const groundCoins = coins.filter((c) => !c.collected && c.baseY > playerGroundY - 100);
         const lastCoin = groundCoins[groundCoins.length - 1];
 
-        if (!lastCoin || lastCoin.x < 900) {
+       if (!stairsActive && (!lastCoin || lastCoin.x < 500)) {
             coins.push({
                 x: 1100 + Math.random() * 200,
                 y: playerGroundY - 70,
@@ -862,18 +1173,18 @@
                     GAME.coins++;
                     updateHUD();
 
-                    floatingTexts.push({
-                        x: coin.x + coinSize / 2,
-                        y: coin.y,
-                        text: '+10',
-                        color: '#FFD700',
-                        strokeColor: '#000000',
-                        life: 1.0,
-                        maxLife: 1.0,
-                        vy: -2.5,
-                        scale: 0.5,
-                        targetScale: 1.2
-                    });
+                    // floatingTexts.push({
+                    //     x: coin.x + coinSize / 2,
+                    //     y: coin.y,
+                    //     text: '+10',
+                    //     color: '#FFD700',
+                    //     strokeColor: '#000000',
+                    //     life: 1.0,
+                    //     maxLife: 1.0,
+                    //     vy: -2.5,
+                    //     scale: 0.5,
+                    //     targetScale: 1.2
+                    // });
                 }
             }
         });
@@ -904,16 +1215,16 @@
                     GAME.score = (GAME.superCoins * GAME.superCoinValue);
                     updateHUD();
 
-                    if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins && !finishFlag.active) {
-                        setupFinishFlag();
-                    }
+                   if (GAME.totalSuperCoinsCollected >= GAME.totalSuperCoins && !stairsActive) {
+    createSingleBrick();
+}
 
                     floatingTexts.push({
                         x: sc.x + superCoinSize / 2,
                         y: sc.y,
-                        text: '+20',
-                        color: '#FF6B00',
-                        strokeColor: '#FFFFFF',
+                        text: '+5',
+                        color: '#FFD700',
+                        strokeColor: '#000000',
                         life: 1.0,
                         maxLife: 1.0,
                         vy: -3,
@@ -923,6 +1234,71 @@
                 }
             }
         });
+    }
+
+
+ function createSingleBrick() {
+    // coins = [];
+    // platforms = [];
+    // superCoins = [];
+
+    stairs = [];
+
+    const ground = getPlayerGroundY();
+
+    const brickX = player.x + 1400; // Brick and flag screen ke bahar create hoga
+    const brickY = ground - 330;
+    const brickW = 410;
+    const brickH = 350;
+
+    // blocker wall
+    brickWall = {
+        x: brickX,
+        y: brickY,
+        width: brickW,
+        height: brickH,
+        active: true
+    };
+
+    // single visible brick image
+    stairs.push({
+        x: brickX,
+        y: brickY,
+        width: brickW,
+        height: brickH,
+        isVisualBrick: true
+    });
+
+    // 8 invisible steps
+    const stepHeight = 35;
+
+stairs.push(
+    { x: brickX - -10, y: ground - 30,  width: 30, height: 40, isStep: true },
+    { x: brickX - -50, y: ground - 75,  width: 30, height: 40, isStep: true },
+    { x: brickX + 92, y: ground - 117,  width: 50, height: 40, isStep: true },
+    { x: brickX + 145, y: ground - 160, width: 50, height: 40, isStep: true },
+    { x: brickX + 195, y: ground - 200, width: 50, height: 40, isStep: true },
+    { x: brickX + 247, y: ground - 242, width: 50, height: 40, isStep: true },
+    { x: brickX + 300, y: ground - 282, width: 50, height: 40, isStep: true },
+    { x: brickX + 351, y: ground - 331, width: 50, height: 40, isStep: true }
+);
+
+window.debugStairsStart = JSON.parse(JSON.stringify(stairs));
+window.debugStairs = stairs;
+
+    stairsActive = true;
+    // DEBUG
+    window.debugStairs = stairs;
+
+    finishFlag.x = brickX + brickW + 180;
+    finishFlag.y = getPlayerGroundY() - finishFlag.height + 28;
+    finishFlag.flagY = 30;
+    finishFlag.active = true;
+    finishFlag.touched = false;
+
+    castle.x = finishFlag.x + 500;
+    castle.y = getPlayerGroundY() - 440;
+    castle.active = true;
     }
 
     function drawFloatingTexts() {
@@ -1135,8 +1511,8 @@
                     images.flagPole,
                     finishFlag.x,
                     finishFlag.y,
-                    80,
-                    finishFlag.height
+                    finishFlag.width,
+    finishFlag.height
                 );
             } else {
                 ctx.fillStyle = '#777';
@@ -1146,8 +1522,8 @@
             if (images.finishFlag && images.finishFlag.complete && images.finishFlag.naturalWidth > 0) {
                 ctx.drawImage(
                     images.finishFlag,
-                    finishFlag.x + 45,
-                    finishFlag.y + finishFlag.flagY + 20, //niche//upar
+                    finishFlag.x + 33,
+                    finishFlag.y + finishFlag.flagY + 2, //niche//upar
                     90,
                     70
                 );
@@ -1159,7 +1535,27 @@
                 ctx.font = 'bold 22px Arial';
                 ctx.fillText('D', finishFlag.x + 85, finishFlag.y + finishFlag.flagY + 35);
             }
+
+            // Draw Castle
+            if (castle.active) {
+            if (
+            images.castle &&
+            images.castle.complete &&
+            images.castle.naturalWidth > 0
+            ) {
+            ctx.drawImage(
+            images.castle,
+            castle.x,
+            castle.y,
+            castle.width,
+            castle.height
+            );
+            }
+            }
         }
+
+        // Draw Stairs
+        drawStairs();
 
         // Draw Player
         let playerImg;
@@ -1170,13 +1566,13 @@
             playerImg = images.boyJump;
         } else if (GAME.isFalling) {
             playerImg = images.boyFall;
-        } else if (GAME.isMovingForward) {
+        } else if (GAME.isMovingForward || GAME.state === 'finishWait') {
             playerImg = images[runFrames[player.frame]];
         } else {
             playerImg = images.boyRun1;
         }
 
-        const superScale = 1 + (GAME.superModeAnimation * 0.25);
+        const superScale = 1 + (GAME.superModeAnimation * 0.40);
 
         if (GAME.superMode) {
             ctx.save();
@@ -1185,56 +1581,60 @@
         }
 
         if (playerImg && playerImg.complete && playerImg.naturalWidth > 0) {
-            const footVisualFix = 18;
+    const footVisualFix = 18;
 
-            if (GAME.superMode) {
-                const newWidth = player.width * superScale;
-                const newHeight = player.height * superScale;
-                const newX = player.x - (newWidth - player.width) / 2;
-                const newY = player.y - (newHeight - player.height);
+    if (GAME.superMode) {
+        const newWidth = player.width * superScale;
+        const newHeight = player.height * superScale;
+        const newX = player.x - (newWidth - player.width) / 2;
+        const newY = player.y - (newHeight - player.height);
 
-                ctx.drawImage(playerImg, newX, newY + footVisualFix, newWidth, newHeight);
-            } else {
+        // IMPORTANT: boy ko yaha draw karna hai
+        ctx.drawImage(
+            playerImg,
+            newX,
+            newY + footVisualFix,
+            newWidth,
+            newHeight
+        );
+    } else {
 
-                let drawW = player.width;
-                let drawH = player.height;
-                let drawX = player.x;
-                let drawY = player.y + footVisualFix;
+        let drawW = player.width;
+        let drawH = player.height;
+        let drawX = player.x;
+        let drawY = player.y + footVisualFix;
 
-                if (GAME.isJumping) {
-                    drawW = 120;
-                    drawH = 124;
-                    drawX = player.x - 7;
-                    drawY = player.y + footVisualFix - 15;
-                }
+        if (GAME.isJumping) {
+            drawW = 120;
+            drawH = 124;
+            drawX = player.x - 7;
+            drawY = player.y + footVisualFix - 15;
+        } else if (GAME.isFalling) {
+            drawW = 100;
+            drawH = 121;
+            drawX = player.x - 5;
+            drawY = player.y + footVisualFix - 10;
+        }
 
-                else if (GAME.isFalling) {
-                    drawW = 100;   // fall image width
-                    drawH = 121;   // fall image height
-                    drawX = player.x - 5;
-                    drawY = player.y + footVisualFix - 10;
-                }
-
-                ctx.drawImage(
-                    playerImg,
-                    drawX,
-                    drawY,
-                    drawW,
-                    drawH
-                );
-            }
-
-        } else {
+        ctx.drawImage(playerImg, drawX, drawY, drawW, drawH);
+    }
+} else {
             ctx.fillStyle = '#fdbcb4';
 
-            if (GAME.superMode) {
-                const newWidth = player.width * superScale;
-                const newHeight = player.height * superScale;
-                const newX = player.x - (newWidth - player.width) / 2;
-                const newY = player.y - (newHeight - player.height);
+           if (GAME.superMode) {
+    const newWidth = player.width * superScale;
+    const newHeight = player.height * superScale;
+    const newX = player.x - (newWidth - player.width) / 2;
+    const newY = player.y - (newHeight - player.height);
 
-                ctx.fillRect(newX, newY, newWidth, newHeight);
-            } else {
+    ctx.drawImage(
+        playerImg,
+        newX,
+        newY + footVisualFix,
+        newWidth,
+        newHeight
+    );
+} else {
                 ctx.fillRect(player.x, player.y, player.width, player.height);
             }
         }
@@ -1409,7 +1809,7 @@
         const tbody = document.getElementById('leaderboardBody');
 
         let leaderboard = JSON.parse(localStorage.getItem('arakitol_leaderboard') || '[]');
-        // Show all entries, no filter
+        // Show all entries
 
         if (tbody) tbody.innerHTML = '';
 
@@ -1619,6 +2019,16 @@
         finishFlag.climbFrame = 0;
         finishFlag.climbTimer = 0;
         finishFlag.finishStarted = false;
+
+        // Reset stairs
+        stairs = [];
+        stairsActive = false;
+        stairsCompleted = false;
+        onStairs = false;
+        currentStairIndex = -1;
+        stairMessageShown = false;
+
+ 
 
         signBoard.x = 900;
         signBoard.y = getPlayerGroundY() - 100;

@@ -5,6 +5,94 @@
 (function() {
     'use strict';
 
+    // ===== FULL SCREEN FUNCTION =====
+    function goFullScreen() {
+        const elem = document.documentElement;
+        
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.log('FS error:', err);
+                handleIOSFallback();
+            });
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        } else {
+            handleIOSFallback();
+        }
+    }
+
+    // iOS Fallback
+    function handleIOSFallback() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        if (isIOS) {
+            document.body.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                -webkit-overflow-scrolling: touch;
+            `;
+            
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+            
+            const metaViewport = document.querySelector('meta[name="viewport"]');
+            if (metaViewport) {
+                metaViewport.setAttribute('content', 
+                    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui');
+            }
+        }
+    }
+
+    // ===== INTRO SCREEN LOGIC =====
+    const introScreen = document.getElementById('intro-screen');
+    const tapToPlayBtn = document.getElementById('tap-to-play');
+    let introAutoTimer = null;
+
+    // Go to Login from Intro - FIXED
+   function goToLoginFromIntro() {
+    goFullScreen();
+
+    if (introAutoTimer) {
+        clearTimeout(introAutoTimer);
+        introAutoTimer = null;
+    }
+
+    if (introScreen) {
+        introScreen.classList.remove('active');
+
+        setTimeout(() => {
+
+            // Pehle login ready karo
+            document.body.classList.add('show-game');
+
+            if (loginScreen) {
+                loginScreen.style.display = 'flex';
+                loginScreen.classList.add('active');
+            }
+
+            // Fir intro hatao
+            introScreen.style.display = 'none';
+
+        }, 300);
+    }
+}
+
+    // Tap to play button click
+    if (tapToPlayBtn) {
+        tapToPlayBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            goToLoginFromIntro();
+        });
+    }
+
     // ===== AUDIO ELEMENTS =====
     const bgMusic = document.getElementById('bgMusic');
 
@@ -53,11 +141,22 @@
 
     // ===== LOADING SCREEN =====
     function hideLoadingScreen() {
-        setTimeout(function() {
-            document.body.classList.add('loaded');
-            setTimeout(function() {
-                loadingScreen.style.display = 'none';
+        setTimeout(() => {
+            loadingScreen.classList.add('hide');
+            setTimeout(() => {
+                // PEHLE INTRO SHOW KARO
+                if (introScreen) {
+                    introScreen.style.display = 'flex';
+                    void introScreen.offsetWidth;
+                    introScreen.classList.add('active');
+                }
+                // FIR LOADING HATAO
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 50);
+
             }, 600);
+
         }, 2200);
     }
 
@@ -69,20 +168,28 @@
 
     // ===== SCREEN TRANSITION =====
     function goToScreen(screenName) {
+        // Pehle sab ko hide karo with display none
         loginScreen.classList.remove('active');
         startScreen.classList.remove('active');
         gameplayScreen.classList.remove('active');
+        
+        // Small delay for transition
+        setTimeout(function() {
+            if (screenName !== 'login') loginScreen.style.display = 'none';
+            if (screenName !== 'start') startScreen.style.display = 'none';
+            if (screenName !== 'gameplay') gameplayScreen.style.display = 'none';
+        }, 300);
 
         if (screenName === 'start') {
             setTimeout(function() {
+                startScreen.style.display = 'flex';
+                void startScreen.offsetWidth;
                 startScreen.classList.add('active');
-            }, 300);
-        } else if (screenName === 'login') {
-            setTimeout(function() {
-                loginScreen.classList.add('active');
-            }, 300);
+            }, 350);
         } else if (screenName === 'gameplay') {
             setTimeout(function() {
+                gameplayScreen.style.display = 'flex';
+                void gameplayScreen.offsetWidth;
                 gameplayScreen.classList.add('active');
                 const playerName = localStorage.getItem('arakitol_player_name') || 'Champion';
                 const event = new CustomEvent('arakitol:startGameplay', {
@@ -92,7 +199,7 @@
                     }
                 });
                 document.dispatchEvent(event);
-            }, 300);
+            }, 350);
         }
     }
 
@@ -109,6 +216,9 @@
             yourNameInput.focus();
             return;
         }
+
+        // Full screen on login (agar abhi tak nahi hua)
+        goFullScreen();
 
         // Generate unique participant ID (only if not already exists for this session)
         let participantId = localStorage.getItem('arakitol_participant_id');
@@ -376,8 +486,6 @@
     }
 
     preloadImages();
-
-
 
     // ===== CONSOLE WELCOME =====
     console.log('%c Arakitol Power Quest ', 'background: linear-gradient(90deg, #1a5fb4, #FFD700); color: #fff; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 10px;');

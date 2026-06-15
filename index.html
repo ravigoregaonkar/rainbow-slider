@@ -10,13 +10,25 @@
         <base target="_blank">
         <base target="_blank">
     <base target="_blank">
-<base target="_blank">
 </head>
     <body>
-        <div id="loading-screen">
+<div id="loading-screen" style="z-index: 10000;">
             <div class="loading-logo"><img src="images/logo.png"></div>
             <div class="loading-bar"><div class="loading-progress"></div></div>
             <div class="loading-text">Loading Power Quest...</div>
+        </div>
+
+        <!-- INTRO SCREEN - Loading ke baad z-index 9998 -->
+        <div id="intro-screen" class="screen" style="display: none;">
+            <div class="intro-bg">
+                <img src="images/intro-bg.png" alt="Intro Background" id="intro-img">
+                <button id="tap-to-play" class="tap-play-btn">
+                    <img src="images/tap-to-play.png" alt="Tap to Play">
+                </button>
+                <div class="intro-timer-bar">
+                    <div class="intro-timer-progress" id="introTimerProgress"></div>
+                </div>
+            </div>
         </div>
 
         <div id="game-container">
@@ -44,7 +56,7 @@
             <div class="sun-container" id="menu-sun"><img src="images/sun.png"
                     alt="sun icon"></div>
 
-            <div id="login-screen" class="screen active">
+            <div id="login-screen" class="screen">
                 <div class="login-box">
                     <div class="login-box-bg">
                         <div class="login-box-header">
@@ -97,13 +109,6 @@
                 </div>
             </div>
 
-            <!-- <div class="benefits-bar" id="menu-benefits">
-            <div class="benefit-item"><img src="images/icon1.png" alt="Strong Bones" class="benefit-img"></div>
-            <div class="benefit-item"><img src="images/icon2.png" alt="Muscle Function" class="benefit-img"></div>
-            <div class="benefit-item"><img src="images/icon3.png" alt="Energy Support" class="benefit-img"></div>
-            <div class="benefit-item"><img src="images/icon4.png" alt="Immunity Support" class="benefit-img"></div>
-        </div> -->
-
             <div id="gameplay-screen" class="screen">
                 <canvas id="gameCanvas"></canvas>
                 <div class="hud-layer">
@@ -142,10 +147,6 @@
                                 alt="Music"></button>
                         <button class="pause-btn" id="pauseBtn"><img
                                 src="images/pause-btn.svg" alt="Pause"></button>
-                        <button class="fullscreen-btn" id="fullscreenBtn" title="Fullscreen">
-                            <svg id="fsIconEnter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-                            <svg id="fsIconExit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28" style="display:none"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
-                        </button>
                     </div>
                 </div>
                 <button class="forward-btn" id="forwardBtn"><img
@@ -253,7 +254,6 @@
         <audio id="bgMusic" src="sounds/game-music.mp3" loop></audio>
 
         <script src="login.js"></script>
-        <script src="db.js"></script>
         <script src="zone1.js"></script>
 
         <div id="rotate-overlay">
