@@ -1855,26 +1855,26 @@
         const headerSize = forDownload ? '14px' : '12px';
         const subtitleSize = forDownload ? '16px' : '14px';
 
-        return `<div style="${containerStyle} background: linear-gradient(135deg, #fff9f0 0%, #fff 50%, #f0f8ff 100%); border: ${borderWidth} solid #1a5fb4; border-radius: 25px; padding: ${padding}; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; overflow: hidden; font-family: calibri; box-sizing: border-box; margin: 0 auto;">
+        return `<div class="outer-cert" style="${containerStyle} background: linear-gradient(135deg, #fff9f0 0%, #fff 50%, #f0f8ff 100%); border: ${borderWidth} solid #1a5fb4; border-radius: 25px; padding: ${padding}; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; overflow: hidden; font-family: calibri; box-sizing: border-box; margin: 0 auto;">
             <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 3px dashed #FFD700; border-radius: 18px; pointer-events: none;"></div>
             <div style="font-size: ${headerSize}; color: #1a5fb4; letter-spacing: 5px; font-weight: 700; text-transform: uppercase; margin-bottom: 5px;">ARAKITOL POWER QUEST</div>
-            <div style="font-size: ${titleSize}; color: #1a237e; font-weight: 900; margin: 5px 0; letter-spacing: 2px;">CERTIFICATE</div>
-            <div style="font-size: ${subtitleSize}; color: #666; letter-spacing: 8px; margin-bottom: 15px; text-transform: uppercase;">OF ACHIEVEMENT</div>
-            <div style="font-size: 16px; color: #555; margin: 15px 0 5px;">This is to certify that</div>
-            <div style="font-size: ${nameSize}; color: #e65100; font-weight: bold; margin: 10px 0;">${yourName}</div>
-            <div style="font-size: 16px; color: #555; margin: 15px 0 5px;">has successfully completed the</div>
-            <div style="font-size: 20px; color: #1a237e; font-weight: 800; margin: 15px 0;">Vitamin D Challenge</div>
-            <div style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
-                <div style="width: 200px; background: #fff3e0; border: 2px solid #FF6B00; border-radius: 15px; padding: 15px 10px;">
-                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
+            <div class="cert-title" style="font-size: ${titleSize}; color: #1a237e; font-weight: 900; margin: 5px 0; letter-spacing: 2px;">CERTIFICATE</div>
+            <div class="achive-text" style="font-size: ${subtitleSize}; color: #666; letter-spacing: 8px; margin-bottom: 15px; text-transform: uppercase;">OF ACHIEVEMENT</div>
+            <div class="certify-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">This is to certify that</div>
+            <div class="user-name" style="font-size: ${nameSize}; color: #e65100; font-weight: bold; margin: 10px 0;">${yourName}</div>
+            <div class="sucess-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">has successfully completed the</div>
+            <div class="game-name" style="font-size: 20px; color: #1a237e; font-weight: 800; margin: 15px 0;">Vitamin D Challenge</div>
+            <div class="score-outer" style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
+                <div class="score-box" style="width: 200px; background: #fff3e0; border: 2px solid #FF6B00; border-radius: 15px; padding: 15px 10px;">
+                    <divclass="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #FF6B00;">${superCoins}</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Super Coins</div>
                 </div>
-                <div style="width: 200px; background: #e0ebf1; border: 2px solid #0539d2; border-radius: 15px; padding: 15px 10px;">
-                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #1565c0;">${time}s</div>
+                <div class="score-box" style="width: 200px; background: #e0ebf1; border: 2px solid #0539d2; border-radius: 15px; padding: 15px 10px;">
+                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #1565c0;">${time}s</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Time</div>
                 </div>
-                <div style="width: 200px; background: #e8efcf; border: 2px solid #1b7801; border-radius: 15px; padding: 15px 10px;">
-                    <div style="font-size: ${statValueSize}; font-weight: 900; color: #2e7d32;">${totalScore}</div>
+                <div class="score-box" style="width: 200px; background: #e8efcf; border: 2px solid #1b7801; border-radius: 15px; padding: 15px 10px;">
+                    <div class="score-count" style="font-size: ${statValueSize}; font-weight: 900; color: #2e7d32;">${totalScore}</div>
                     <div style="font-size: 10px; color: #666; text-transform: uppercase;">Final Score</div>
                 </div>
             </div>
@@ -1901,56 +1901,180 @@
         if (certPopup) certPopup.classList.add('active');
     }
 
+    // async function downloadCertificate() {
+    //     const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
+    //     const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
+    //     const time = parseInt(localStorage.getItem('arakitol_current_time')) || GAME.timeElapsed || 0;
+    //     const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
+    //     const date = new Date().toLocaleDateString('en-IN');
+
+    //     const certContainer = document.createElement('div');
+    //     certContainer.style.cssText = 'position: fixed; top: -9999px; left: -9999px; z-index: -1; overflow: hidden;';
+    //     certContainer.innerHTML = generateCertificateHTML(yourName, superCoins, time, totalScore, date, true);
+    //     document.body.appendChild(certContainer);
+
+    //     try {
+    //         if (typeof html2canvas === 'undefined') {
+    //             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    //         }
+
+    //         if (typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined') {
+    //             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    //         }
+
+    //         const canvas = await html2canvas(certContainer, {
+    //             scale: 2,
+    //             useCORS: true,
+    //             allowTaint: true,
+    //             backgroundColor: '#fff'
+    //         });
+
+    //         const imgData = canvas.toDataURL('image/png');
+    //         const { jsPDF } = jspdf;
+    //         const pdf = new jsPDF('l', 'mm', 'a4');
+
+    //         const pdfWidth = pdf.internal.pageSize.getWidth();
+    //         const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    //         const imgWidth = canvas.width;
+    //         const imgHeight = canvas.height;
+
+    //         const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+    //         const imgX = (pdfWidth - imgWidth * ratio) / 2;
+    //         const imgY = (pdfHeight - imgHeight * ratio) / 2;
+
+    //         pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+    //         pdf.save('Arakitol_Certificate_' + yourName.replace(/\s+/g, '_') + '.pdf');
+    //     } catch (err) {
+    //         console.error('PDF download failed:', err);
+    //         alert('Certificate download failed. Please try again.');
+    //     } finally {
+    //         document.body.removeChild(certContainer);
+    //     }
+    // }
+
     async function downloadCertificate() {
         const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
-        const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
-        const time = parseInt(localStorage.getItem('arakitol_current_time')) || GAME.timeElapsed || 0;
-        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
+        const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 0;
+        const time = parseInt(localStorage.getItem('arakitol_current_time')) || 0;
+        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 0;
         const date = new Date().toLocaleDateString('en-IN');
 
-        const certContainer = document.createElement('div');
-        certContainer.style.cssText = 'position: fixed; top: -9999px; left: -9999px; z-index: -1; overflow: hidden;';
-        certContainer.innerHTML = generateCertificateHTML(yourName, superCoins, time, totalScore, date, true);
-        document.body.appendChild(certContainer);
-
-        try {
-            if (typeof html2canvas === 'undefined') {
-                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-            }
-
-            if (typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined') {
-                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-            }
-
-            const canvas = await html2canvas(certContainer, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: '#fff'
-            });
-
-            const imgData = canvas.toDataURL('image/png');
-            const { jsPDF } = jspdf;
-            const pdf = new jsPDF('l', 'mm', 'a4');
-
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-
-            const imgWidth = canvas.width;
-            const imgHeight = canvas.height;
-
-            const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-            const imgX = (pdfWidth - imgWidth * ratio) / 2;
-            const imgY = (pdfHeight - imgHeight * ratio) / 2;
-
-            pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-            pdf.save('Arakitol_Certificate_' + yourName.replace(/\s+/g, '_') + '.pdf');
-        } catch (err) {
-            console.error('PDF download failed:', err);
-            alert('Certificate download failed. Please try again.');
-        } finally {
-            document.body.removeChild(certContainer);
+        if (typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined') {
+            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
         }
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('l', 'mm', 'a4');
+
+        const w = pdf.internal.pageSize.getWidth();
+        const h = pdf.internal.pageSize.getHeight();
+
+        // ===== Background =====
+        pdf.setFillColor(245, 247, 250); // light grey
+        pdf.rect(0, 0, w, h, 'F');
+
+        // ===== Outer Blue Border =====
+        pdf.setDrawColor(30, 90, 170);
+        pdf.setLineWidth(6);
+        pdf.roundedRect(6, 6, w - 12, h - 12, 8, 8);
+
+        // ===== Dashed inner border =====
+        pdf.setDrawColor(255, 180, 0);
+        pdf.setLineWidth(1.5);
+        pdf.setLineDashPattern([3, 2], 0);
+        pdf.roundedRect(15, 15, w - 30, h - 30, 6, 6);
+
+        pdf.setLineDashPattern([], 0); // reset
+
+        // ===== Header =====
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(10);
+        pdf.setTextColor(60, 120, 200);
+        pdf.text('ARAKITOL POWER QUEST', w / 2, 30, { align: 'center' });
+
+        pdf.setFontSize(36);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setTextColor(40, 50, 120);
+        pdf.text('CERTIFICATE', w / 2, 50, { align: 'center' });
+
+        pdf.setFontSize(14);
+        pdf.setTextColor(120);
+        pdf.text('OF ACHIEVEMENT', w / 2, 60, { align: 'center' });
+
+        // ===== Body =====
+        pdf.setFontSize(14);
+        pdf.setTextColor(100);
+        pdf.text('This is to certify that', w / 2, 80, { align: 'center' });
+
+        // Name
+        pdf.setFontSize(28);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setTextColor(230, 90, 20);
+        pdf.text(yourName, w / 2, 100, { align: 'center' });
+
+        pdf.setFontSize(14);
+        pdf.setTextColor(100);
+        pdf.text('has successfully completed the', w / 2, 115, { align: 'center' });
+
+        pdf.setFontSize(18);
+        pdf.setTextColor(30, 50, 140);
+        pdf.text('Vitamin D Challenge', w / 2, 130, { align: 'center' });
+
+        // ===== Score Boxes =====
+        const boxY = 150;
+        const boxW = 60;
+        const gap = 20;
+        const startX = (w - (boxW * 3 + gap * 2)) / 2;
+
+        // Orange box (coins)
+        pdf.setDrawColor(255, 110, 0);
+        pdf.setFillColor(255, 245, 235);
+        pdf.roundedRect(startX, boxY, boxW, 30, 8, 8, 'FD');
+
+        pdf.setTextColor(255, 110, 0);
+        pdf.setFontSize(22);
+        pdf.text(String(superCoins), startX + boxW / 2, boxY + 15, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(120);
+        pdf.text('SUPER COINS', startX + boxW / 2, boxY + 25, { align: 'center' });
+
+        // Blue box (time)
+        let x2 = startX + boxW + gap;
+        pdf.setDrawColor(40, 100, 220);
+        pdf.setFillColor(235, 242, 255);
+        pdf.roundedRect(x2, boxY, boxW, 30, 8, 8, 'FD');
+
+        pdf.setTextColor(40, 100, 220);
+        pdf.setFontSize(22);
+        pdf.text(time + 's', x2 + boxW / 2, boxY + 15, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(120);
+        pdf.text('TIME', x2 + boxW / 2, boxY + 25, { align: 'center' });
+
+        // Green box (score)
+        let x3 = x2 + boxW + gap;
+        pdf.setDrawColor(40, 130, 50);
+        pdf.setFillColor(235, 245, 235);
+        pdf.roundedRect(x3, boxY, boxW, 30, 8, 8, 'FD');
+
+        pdf.setTextColor(40, 130, 50);
+        pdf.setFontSize(22);
+        pdf.text(String(totalScore), x3 + boxW / 2, boxY + 15, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(120);
+        pdf.text('FINAL SCORE', x3 + boxW / 2, boxY + 25, { align: 'center' });
+
+        // ===== Date =====
+        pdf.setFontSize(10);
+        pdf.setTextColor(120);
+        pdf.text(`Date: ${date}`, w - 30, h - 15, { align: 'right' });
+
+        // ===== Save =====
+        pdf.save(`Arakitol_Certificate_${yourName.replace(/\s+/g, '_')}.pdf`);
     }
 
     function loadScript(src) {
