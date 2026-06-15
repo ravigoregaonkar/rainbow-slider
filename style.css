@@ -1140,9 +1140,9 @@ body.show-game #game-container {
     transform: translate(-50%, -55%);
 }
 
-.keyboard-open .character-container {
+/* .keyboard-open .character-container {
     opacity: 0.2;
-}
+} */
 
 .keyboard-open .benefits-bar {
     opacity: 0.3;
@@ -1632,6 +1632,9 @@ body.show-game #game-container {
 .quiz-result.wrong {
     color: #ff4444;
 }
+.download-btn{
+    display: none;
+}
 
 @keyframes overlayFadeIn {
     from {
@@ -1815,6 +1818,10 @@ body.show-game #game-container {
     .leaderboard-table thead{
         position: sticky;
         top: 0;
+    }
+    .certificate-actions{display: none;}
+    .download-btn{
+        display: flex !important;
     }
     .certificate-view-content .cert-popup-close{
         top: 30px;
