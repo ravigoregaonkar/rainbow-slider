@@ -1827,6 +1827,12 @@ body.show-game #game-container {
     }
 }
 @media (max-width: 991px) {
+    .loading-text{
+        margin-top: 8px;
+    }
+    .coreate-logo{
+        top: 5px;
+    }
     .login-box-bg{
         border: 2px solid rgb(255 215 0);
     }
@@ -1915,6 +1921,19 @@ body.show-game #game-container {
     .certificate-actions{display: none;}
     .download-btn{
         display: flex !important;
+    }
+    .download-btn{
+        position: absolute;
+        bottom: 25px;
+        right: -10vw;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; 
+        z-index: 999;
+    }
+    .download-btn p{
+        color: #fff;
     }
     .certificate-view-content .cert-popup-close{
         top: 30px;
@@ -2043,18 +2062,7 @@ body.show-game #game-container {
         flex-direction: column;
         justify-content: center;
     }
-    .download-btn{
-        position: absolute;
-        bottom: 25px;
-        right: -20%;
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column; 
-    }
-    .download-btn p{
-        color: #fff;
-    }
+    
     .small-download{
         width: 40px;
         height: 40px;
