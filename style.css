@@ -1655,6 +1655,9 @@ body.show-game #game-container {
 .download-btn{
     display: none;
 }
+.forward-btn, .jump-btn{
+    display: none;
+}
 
 @keyframes overlayFadeIn {
     from {
@@ -1790,6 +1793,9 @@ body.show-game #game-container {
     }
 }
 @media (max-width: 1025px) {
+    .forward-btn, .jump-btn{
+        display: flex !important;
+    }
     .logo-container{
         top: 10%;
         width: 37vh;
