@@ -1886,11 +1886,11 @@
                     ${winlossText};
                 </div>
                 <div style="
-                    font-size: 32px;
-                    font-weight: 900;
+                    font-size: 20px;
+                    font-weight: 700;
                     color: ${messageColor};
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                    letter-spacing: 2px;
+                    letter-spacing: 1px;
                 ">
                     ${messageText}
                 </div>
@@ -2275,7 +2275,7 @@
         pdf.roundedRect(x2, boxY, boxW, 30, 8, 8, 'FD');
         pdf.setTextColor(40, 100, 220);
         pdf.setFontSize(22);
-        pdf.text(time, x2 + boxW / 2, boxY + 15, { align: 'center' });
+        pdf.text(String(time) , x2 + boxW / 2, boxY + 15, { align: 'center' });
         pdf.setFontSize(10);
         pdf.setTextColor(120);
         pdf.text('SECONDS', x2 + boxW / 2, boxY + 25, { align: 'center' });
