@@ -1464,7 +1464,7 @@ body.show-game #game-container {
 }
 
 /* yogesh code - extend forward-btn hit area upward and to the left for easier mobile tap */
-.forward-btn::before {
+.jump-btn::before {
     content: '';
     position: absolute;
     top: -80px;
@@ -1514,7 +1514,7 @@ body.show-game #game-container {
 }
 
 /* yogesh code - extend jump-btn hit area upward and to the right for easier mobile tap */
-.jump-btn::before {
+.forward-btn::before {
     content: '';
     position: absolute;
     top: -80px;

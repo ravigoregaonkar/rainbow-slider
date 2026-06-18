@@ -67,14 +67,14 @@
             <div class="intro-bg">
                 <img src="images/intro-bg.png" alt="Intro Background"
                     id="intro-img" class="desktop-img">
-                    <img src="images/ipad-intro-screen.png" alt="Intro Background"
+                <img src="images/ipad-intro-screen.png" alt="Intro Background"
                     id="intro-img" class="tab-img">
-                    <div class="tap-play-outer">
-                        <button id="tap-to-play" class="tap-play-btn">
-                            <img src="images/tap-to-play.png" alt="Tap to Play">
-                        </button>
-                    </div>
-                
+                <div class="tap-play-outer">
+                    <button id="tap-to-play" class="tap-play-btn">
+                        <img src="images/tap-to-play.png" alt="Tap to Play">
+                    </button>
+                </div>
+
                 <div class="intro-timer-bar">
                     <div class="intro-timer-progress"
                         id="introTimerProgress"></div>
@@ -201,13 +201,15 @@
                                 src="images/pause-btn.svg" alt="Pause"></button>
                     </div>
                 </div>
-                <button class="forward-btn" id="forwardBtn"><img
-                        src="images/forward-btn.svg" alt="Forward"></button>
+                
                 <button class="jump-btn" id="jumpBtn"><img
                         src="images/jump-button.svg" alt="Jump"></button>
+                        <button class="forward-btn" id="forwardBtn"><img
+                        src="images/forward-btn.svg" alt="Forward"></button>
                 <!-- yogesh code - full screen left/right touch zones for forward and jump -->
-                <div id="leftZone" class="touch-zone touch-zone-left"></div>
+               
                 <div id="rightZone" class="touch-zone touch-zone-right"></div>
+                 <div id="leftZone" class="touch-zone touch-zone-left"></div>
                 <!-- yogesh code end -->
             </div>
         </div>
@@ -313,8 +315,8 @@
                             class="btn-icon">&#11015;</span> DOWNLOAD
                         CERTIFICATE</button>
                     <button class="overlay-btn back-btn" id="certBackBtn"><span
-                            class="btn-icon">&#8592;</span> BACK TO
-                        LEADERBOARD</button>
+                            class="btn-icon">&#8592;</span>  PLAY AGAIN
+                        </button>
                 </div>
                 <div id="downloadCertBtnMob" class="download-btn">
                     <p>Downlod</p>
@@ -344,7 +346,7 @@
                 <div class="rotate-icon">&#128241;</div>
                 <div class="rotate-arrow">&#128260;</div>
                 <h2>Please Rotate Your Device</h2>
-                <p>This game works best in landscape mode</p>
+                <!-- <p>This game works best in landscape mode</p> -->
             </div>
         </div>
     </body>

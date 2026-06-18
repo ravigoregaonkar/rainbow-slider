@@ -2516,11 +2516,12 @@
 
     if (certBackBtn) {
         certBackBtn.addEventListener('click', () => {
-            const certPopup = document.getElementById('certificate-popup');
-            const leaderboardOverlay = document.getElementById('leaderboard-overlay');
+            window.location.reload();
+            // const certPopup = document.getElementById('certificate-popup');
+            // const leaderboardOverlay = document.getElementById('leaderboard-overlay');
 
-            if (certPopup) certPopup.classList.remove('active');
-            if (leaderboardOverlay) leaderboardOverlay.classList.add('active');
+            // if (certPopup) certPopup.classList.remove('active');
+            // if (leaderboardOverlay) leaderboardOverlay.classList.add('active');
         });
     }
 
