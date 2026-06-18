@@ -1744,6 +1744,24 @@ body.show-game #game-container {
     display: none;
 }
 
+/* yogesh code - full screen touch zones for forward and jump */
+.touch-zone {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 19;
+    pointer-events: auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.touch-zone-left  { left: 0; }
+.touch-zone-right { right: 0; }
+/* yogesh code end */
+
 @keyframes overlayFadeIn {
     from {
         opacity: 0;
@@ -1908,6 +1926,10 @@ body.show-game #game-container {
     .jump-btn {
         display: flex !important;
     }
+
+    .touch-zone {
+        display: block !important;
+    }
 }
 
 @media (max-width: 1025px) {
@@ -1915,6 +1937,10 @@ body.show-game #game-container {
     .forward-btn,
     .jump-btn {
         display: flex !important;
+    }
+
+    .touch-zone {
+        display: block !important;
     }
 
     .logo-container {

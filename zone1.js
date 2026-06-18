@@ -2495,6 +2495,21 @@
         });
     }
 
+    // yogesh code - full screen left/right touch zones
+    const leftZone = document.getElementById('leftZone');
+    const rightZone = document.getElementById('rightZone');
+
+    if (leftZone) {
+        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') startMovingForward(); }, { passive: false });
+        leftZone.addEventListener('touchend', (e) => { e.preventDefault(); stopMovingForward(); }, { passive: false });
+        leftZone.addEventListener('touchcancel', () => stopMovingForward());
+    }
+
+    if (rightZone) {
+        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') jump(); }, { passive: false });
+    }
+    // yogesh code end
+
     const pauseBtn = document.getElementById('pauseBtn');
     if (pauseBtn) pauseBtn.addEventListener('click', pauseGame);
 
