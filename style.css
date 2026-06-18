@@ -1,7 +1,10 @@
 /* ===== RESET & BASE ===== */
+/* yogesh code - html fill-available so Safari calculates height without its toolbar */
 html {
+    height: -webkit-fill-available;
     -webkit-text-size-adjust: 100%
 }
+/* yogesh code end */
 
 html:focus-within {
     scroll-behavior: smooth
@@ -13,10 +16,11 @@ body {
     text-size-adjust: 100%;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-    position: relative;
+    /* yogesh code - position fixed prevents any scroll so Safari toolbar stays hidden */
+    position: fixed;
+    width: 100%;
+    /* yogesh code end */
     text-rendering: optimizeSpeed;
-    width: 100%
 }
 
 
@@ -1445,8 +1449,6 @@ body.show-game #game-container {
     left: 20px;
     width: 100px;
     height: 100px;
-    /* background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(46, 125, 50, 0.9)); */
-    /* border: 3px solid rgba(255, 255, 255, 0.5); */
     border-radius: 50%;
     cursor: pointer;
     pointer-events: auto;
@@ -1456,16 +1458,30 @@ body.show-game #game-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.3); */
     background: none;
     border: none;
+    /* yogesh code - touch-action prevents 300ms tap delay on iOS/Android */
+    touch-action: manipulation;
 }
+
+/* yogesh code - extend forward-btn hit area upward and to the left for easier mobile tap */
+.forward-btn::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: -20px;
+    right: -10px;
+    bottom: -20px;
+    border-radius: 16px;
+}
+/* yogesh code end */
 
 .forward-btn img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
 }
 
 .forward-btn:hover {
@@ -1494,13 +1510,28 @@ body.show-game #game-container {
     justify-content: center;
     background: none;
     border: none;
+    /* yogesh code - touch-action prevents 300ms tap delay on iOS/Android */
+    touch-action: manipulation;
 }
+
+/* yogesh code - extend jump-btn hit area upward and to the right for easier mobile tap */
+.jump-btn::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: -10px;
+    right: -20px;
+    bottom: -20px;
+    border-radius: 16px;
+}
+/* yogesh code end */
 
 .jump-btn img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
 }
 
 .jump-btn:hover {
@@ -3687,6 +3718,19 @@ body.show-game #game-container {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
+
+/* yogesh code - suppress iOS long-press callout on all images (prevents Save/Open in new tab popup) */
+img {
+    -webkit-touch-callout: none;
+    pointer-events: none;
+}
+
+.game-btn img,
+.pause-overlay-btn img,
+.tap-play-btn img {
+    pointer-events: none;
+}
+/* yogesh code end */
 
 input,
 textarea,

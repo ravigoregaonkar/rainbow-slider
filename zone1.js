@@ -512,16 +512,11 @@
 
         for (let i = 0; i < 8; i++) {
             const x = 800 + i * 500 + Math.random() * 200;
-            let y;
-            const placementType = Math.random();
+            // Only ground level or high jump - never mid-height where platforms sit
+            const y = Math.random() < 0.5
+                ? playerGroundY - 90      // Ground level (run to collect)
+                : playerGroundY - 410;    // High jump (must jump to collect)
 
-            if (placementType < 0.4) {
-                y = playerGroundY - 90;      // Ground
-            } else if (placementType < 0.6) {
-                y = playerGroundY - 330;     // Medium jump
-            } else {
-                y = playerGroundY - 400;     // High jump
-            }
             superCoins.push({
                 x,
                 y,
@@ -917,12 +912,13 @@
                 }
             }
 
-            // Run animation
-            player.frameTimer++;
-
-            if (player.frameTimer >= player.frameInterval) {
-                player.frameTimer = 0;
-                player.frame = (player.frame + 1) % runFrames.length;
+            // Run animation only while walking to castle, stop once arrived
+            if (player.x < castleTargetX) {
+                player.frameTimer++;
+                if (player.frameTimer >= player.frameInterval) {
+                    player.frameTimer = 0;
+                    player.frame = (player.frame + 1) % runFrames.length;
+                }
             }
         }
 
@@ -948,6 +944,7 @@
 
         const playerGroundY = getPlayerGroundY();
         const moveSpeed = GAME.isMovingForward ? GAME.runSpeed : 0;
+
 
         // Background scrolls only when moving forward
         if (GAME.isMovingForward &&
@@ -1098,6 +1095,7 @@
             superCoins.forEach((sc) => { sc.x -= moveSpeed; });
             signBoard.x -= moveSpeed;
 
+
             if (finishFlag.active) {
                 finishFlag.x -= moveSpeed;
             }
@@ -1127,19 +1125,23 @@
                         Math.abs(playerFoot - s.y) < 20
                     );
 
-                const nearFlagPole =
-                    playerRight > finishFlag.x - 50;
-
                 const hittingBrickSide =
                     playerRight > brickWall.x + 10 &&
                     playerRight < brickWall.x + 70 &&
                     playerFoot > brickWall.y + 20;
 
                 if (hittingBrickSide && !onStep) {
+                    // Undo all world movement - player is blocked
+                    platforms.forEach((p) => { p.x += moveSpeed; });
+                    coins.forEach((c) => { c.x += moveSpeed; });
+                    superCoins.forEach((sc) => { sc.x += moveSpeed; });
+                    signBoard.x += moveSpeed;
                     stairs.forEach((s) => { s.x += moveSpeed; });
                     if (finishFlag.active) finishFlag.x += moveSpeed;
+                    if (castle.active) castle.x += moveSpeed;
                     brickWall.x += moveSpeed;
                     bg.x += bg.speed;
+                    groundScroll.x += groundScroll.speed;
                 }
             }
 
@@ -1310,17 +1312,25 @@
         // Check Super Coin collection
         superCoins.forEach((sc) => {
             if (!sc.collected && !sc.missed) {
-                const scx = sc.x + superCoinSize / 2;
-                const scy = sc.y + superCoinSize / 2;
-                const px = player.x + player.width / 2;
-                const py = player.y + player.height / 2;
-                const dist = Math.sqrt((px - scx) ** 2 + (py - scy) ** 2);
+                const scLeft = sc.x + 10;
+                const scRight = sc.x + superCoinSize - 10;
+                const scTop = sc.y + 10;
+                const scBottom = sc.y + superCoinSize - 10;
 
-                const boyIsBelowCoin = py > scy + 20;
-                if (
-                    dist < (player.width + superCoinSize) / 2.5 &&
-                    !boyIsBelowCoin
-                ) {
+                const pLeft = player.x + player.width * 0.2;
+                const pRight = player.x + player.width * 0.8;
+                const pTop = player.y;
+                const pBottom = player.y + player.height;
+
+                const overlaps =
+                    pRight > scLeft &&
+                    pLeft < scRight &&
+                    pBottom > scTop &&
+                    pTop < scBottom;
+
+                // Only block collection if player foot is clearly below coin top
+                const boyIsBelowCoin = (player.y + player.height) < sc.y - 10;
+                if (overlaps && !boyIsBelowCoin) {
                     sc.collected = true;
 
                     if (superCoinSound) {
@@ -1358,6 +1368,9 @@
     function createSingleBrick() {
 
         GAME.stopWorldScroll = true;
+
+        bg.speed = 0;
+        groundScroll.speed = 0;
 
         // coins = [];
         // platforms = [];
@@ -2121,132 +2134,132 @@
     }
 
     async function downloadCertificate() {
-    const yourName = localStorage.getItem('arakitol_player_name') || 'Ravi';
-    const playerId = localStorage.getItem('arakitol_db_player_id') || '#RA-576733-629';
-    const nanoCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 8;
-    const time = parseInt(localStorage.getItem('arakitol_current_time')) || 39;
-    const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 40;
+        const yourName = localStorage.getItem('arakitol_player_name') || 'Ravi';
+        const playerId = localStorage.getItem('arakitol_db_player_id') || '#RA-576733-629';
+        const nanoCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 8;
+        const time = parseInt(localStorage.getItem('arakitol_current_time')) || 39;
+        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 40;
 
-    // ✅ Format date as DD-MM-YYYY
-    const today = new Date();
-    const date = String(today.getDate()).padStart(2, '0') + '-' +
-                 String(today.getMonth() + 1).padStart(2, '0') + '-' +
-                 today.getFullYear();
+        // ✅ Format date as DD-MM-YYYY
+        const today = new Date();
+        const date = String(today.getDate()).padStart(2, '0') + '-' +
+            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+            today.getFullYear();
 
-    if (!window.jspdf) {
-        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        if (!window.jspdf) {
+            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        }
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('l', 'mm', 'a4');
+
+        const w = pdf.internal.pageSize.getWidth();
+        const h = pdf.internal.pageSize.getHeight();
+
+        // ===== Background =====
+        pdf.setFillColor(250, 240, 225);
+        pdf.rect(0, 0, w, h, 'F');
+
+        // ===== Outer Blue Border =====
+        // pdf.setDrawColor(30, 90, 170);
+        // pdf.setLineWidth(4);
+        // pdf.roundedRect(5, 5, w - 10, h - 10, 12, 12);
+
+        // ===== Inner Yellow Dashed Border =====
+        pdf.setDrawColor(117, 125, 138);
+        pdf.setLineWidth(1);
+        pdf.setLineDashPattern([3, 2], 0);
+        pdf.roundedRect(12, 12, w - 24, h - 24, 10, 10);
+        pdf.setLineDashPattern([], 0);
+
+        // ===== Title =====
+        pdf.setFont('helvetica', 'bold')
+        pdf.setFontSize(32);
+        pdf.setTextColor(28, 43, 57);
+        pdf.text('CERTIFICATE OF COMPLETION', w / 2, 40, { align: 'center' });
+
+        // ===== Subtitle =====
+        pdf.setFontSize(24);
+        pdf.setFont('helvetica', 'bold')
+        pdf.setTextColor(255, 106, 0);
+        pdf.text('CATCH THE SMART D', w / 2, 55, { align: 'center' });
+
+        // ===== Award text =====
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(15);
+        pdf.setTextColor(90);
+        pdf.text('Is hereby awarded to', w / 2, 70, { align: 'center' });
+
+        // ===== Name =====
+        pdf.setFontSize(30);
+        pdf.setFont('helvetica', 'bold')
+        pdf.setTextColor(230, 90, 10);
+        pdf.text(yourName, w / 2, 85, { align: 'center' });
+
+        // ===== ID =====
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(13);
+        pdf.setTextColor(120);
+        pdf.text(`ID : ${playerId}`, w / 2, 95, { align: 'center' });
+
+        // ===== Score Boxes =====
+        const boxY = 115;
+        const boxW = 70;
+        const boxH = 35;
+        const gap = 25;
+
+        const totalWidth = boxW * 3 + gap * 2;
+        const startX = (w - totalWidth) / 2;
+
+        // ===== Box 1 (Nano Coins) =====
+        pdf.setDrawColor(255, 110, 0);
+        pdf.setFillColor(250, 240, 225);
+        pdf.roundedRect(startX, boxY, boxW, boxH, 10, 10, 'FD');
+
+        pdf.setTextColor(255, 110, 0);
+        pdf.setFontSize(24);
+        pdf.text(String(nanoCoins), startX + boxW / 2, boxY + 18, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(100);
+        pdf.text('NANO COINS', startX + boxW / 2, boxY + 28, { align: 'center' });
+
+        // ===== Box 2 (Seconds) =====
+        const x2 = startX + boxW + gap;
+        pdf.setDrawColor(30, 80, 200);
+        pdf.setFillColor(225, 235, 250);
+        pdf.roundedRect(x2, boxY, boxW, boxH, 10, 10, 'FD');
+
+        pdf.setTextColor(40, 100, 200);
+        pdf.setFontSize(24);
+        pdf.text(String(time), x2 + boxW / 2, boxY + 18, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(100);
+        pdf.text('SECONDS', x2 + boxW / 2, boxY + 28, { align: 'center' });
+
+        // ===== Box 3 (Points) =====
+        const x3 = x2 + boxW + gap;
+        pdf.setDrawColor(30, 120, 40);
+        pdf.setFillColor(230, 240, 220);
+        pdf.roundedRect(x3, boxY, boxW, boxH, 10, 10, 'FD');
+
+        pdf.setTextColor(40, 120, 50);
+        pdf.setFontSize(24);
+        pdf.text(String(totalScore), x3 + boxW / 2, boxY + 18, { align: 'center' });
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(100);
+        pdf.text('POINTS SCORED', x3 + boxW / 2, boxY + 28, { align: 'center' });
+
+        // ===== Date (DD-MM-YYYY) =====
+        pdf.setFontSize(11);
+        pdf.setTextColor(120);
+        pdf.text(`Date: ${date}`, w - 20, h - 15, { align: 'right' });
+
+        // ===== Save =====
+        pdf.save(`Certificate_${yourName.replace(/\s+/g, '_')}.pdf`);
     }
-
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('l', 'mm', 'a4');
-
-    const w = pdf.internal.pageSize.getWidth();
-    const h = pdf.internal.pageSize.getHeight();
-
-    // ===== Background =====
-    pdf.setFillColor(250, 240, 225);
-    pdf.rect(0, 0, w, h, 'F');
-
-    // ===== Outer Blue Border =====
-    // pdf.setDrawColor(30, 90, 170);
-    // pdf.setLineWidth(4);
-    // pdf.roundedRect(5, 5, w - 10, h - 10, 12, 12);
-
-    // ===== Inner Yellow Dashed Border =====
-    pdf.setDrawColor(117, 125, 138);
-    pdf.setLineWidth(1);
-    pdf.setLineDashPattern([3, 2], 0);
-    pdf.roundedRect(12, 12, w - 24, h - 24, 10, 10);
-    pdf.setLineDashPattern([], 0);
-
-    // ===== Title =====
-    pdf.setFont('helvetica', 'bold')
-    pdf.setFontSize(32);
-    pdf.setTextColor(28, 43, 57);
-    pdf.text('CERTIFICATE OF COMPLETION', w / 2, 40, { align: 'center' });
-
-    // ===== Subtitle =====
-    pdf.setFontSize(24);
-    pdf.setFont('helvetica', 'bold')
-    pdf.setTextColor(255, 106, 0);
-    pdf.text('CATCH THE SMART D', w / 2, 55, { align: 'center' });
-
-    // ===== Award text =====
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(15);
-    pdf.setTextColor(90);
-    pdf.text('Is hereby awarded to', w / 2, 70, { align: 'center' });
-
-    // ===== Name =====
-    pdf.setFontSize(30);
-    pdf.setFont('helvetica', 'bold')
-    pdf.setTextColor(230, 90, 10);
-    pdf.text(yourName, w / 2, 85, { align: 'center' });
-
-    // ===== ID =====
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(13);
-    pdf.setTextColor(120);
-    pdf.text(`ID : ${playerId}`, w / 2, 95, { align: 'center' });
-
-    // ===== Score Boxes =====
-    const boxY = 115;
-    const boxW = 70;
-    const boxH = 35;
-    const gap = 25;
-
-    const totalWidth = boxW * 3 + gap * 2;
-    const startX = (w - totalWidth) / 2;
-
-    // ===== Box 1 (Nano Coins) =====
-    pdf.setDrawColor(255, 110, 0);
-    pdf.setFillColor(250, 240, 225);
-    pdf.roundedRect(startX, boxY, boxW, boxH, 10, 10, 'FD');
-
-    pdf.setTextColor(255, 110, 0);
-    pdf.setFontSize(24);
-    pdf.text(String(nanoCoins), startX + boxW / 2, boxY + 18, { align: 'center' });
-
-    pdf.setFontSize(10);
-    pdf.setTextColor(100);
-    pdf.text('NANO COINS', startX + boxW / 2, boxY + 28, { align: 'center' });
-
-    // ===== Box 2 (Seconds) =====
-    const x2 = startX + boxW + gap;
-    pdf.setDrawColor(30, 80, 200);
-    pdf.setFillColor(225, 235, 250);
-    pdf.roundedRect(x2, boxY, boxW, boxH, 10, 10, 'FD');
-
-    pdf.setTextColor(40, 100, 200);
-    pdf.setFontSize(24);
-    pdf.text(String(time), x2 + boxW / 2, boxY + 18, { align: 'center' });
-
-    pdf.setFontSize(10);
-    pdf.setTextColor(100);
-    pdf.text('SECONDS', x2 + boxW / 2, boxY + 28, { align: 'center' });
-
-    // ===== Box 3 (Points) =====
-    const x3 = x2 + boxW + gap;
-    pdf.setDrawColor(30, 120, 40);
-    pdf.setFillColor(230, 240, 220);
-    pdf.roundedRect(x3, boxY, boxW, boxH, 10, 10, 'FD');
-
-    pdf.setTextColor(40, 120, 50);
-    pdf.setFontSize(24);
-    pdf.text(String(totalScore), x3 + boxW / 2, boxY + 18, { align: 'center' });
-
-    pdf.setFontSize(10);
-    pdf.setTextColor(100);
-    pdf.text('POINTS SCORED', x3 + boxW / 2, boxY + 28, { align: 'center' });
-
-    // ===== Date (DD-MM-YYYY) =====
-    pdf.setFontSize(11);
-    pdf.setTextColor(120);
-    pdf.text(`Date: ${date}`, w - 20, h - 15, { align: 'right' });
-
-    // ===== Save =====
-    pdf.save(`Certificate_${yourName.replace(/\s+/g, '_')}.pdf`);
-}
 
 
 

@@ -28,35 +28,54 @@
         return window.navigator.standalone === true;
     }
 
-    // yogesh code - scroll trick: adds 1px body height, scrolls to 1, then resets
-    // This forces Safari to hide its nav/search bar on iPhone
+    // yogesh code - iOS Safari full-screen trick
+    // Safari blocks requestFullscreen entirely. The only in-browser approach:
+    // 1. Use -webkit-fill-available so content fills behind the toolbar
+    // 2. On first user tap, scroll to 1px then back — this collapses Safari's toolbar
+    // 3. Lock html/body so the page can never be scrolled (toolbar stays hidden)
     function hideSafariUI() {
         if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
-        document.body.style.height = (window.innerHeight + 1) + 'px';
-        window.scrollTo(0, 1);
+
+        // Lock scroll on html and body so toolbar can't reappear
+        document.documentElement.style.cssText = 'height: -webkit-fill-available; overflow: hidden; position: fixed; width: 100%;';
+        document.body.style.height = '-webkit-fill-available';
+
+        // Scroll trick — collapses the Safari nav bar
+        document.documentElement.style.height = (window.innerHeight + 60) + 'px';
+        window.scrollTo(0, 60);
         setTimeout(() => {
             window.scrollTo(0, 0);
-            document.body.style.height = '';
-        }, 50);
+            document.documentElement.style.height = '-webkit-fill-available';
+            // Resize game container to the now-collapsed viewport
+            scaleContainer();
+        }, 100);
     }
     // yogesh code end
 
     window.addEventListener("load", () => {
-        // yogesh code - hide Safari toolbar on iPhone when not in standalone
-        hideSafariUI();
-        // yogesh code end
-
+        // yogesh code - on iPhone show install popup; no auto-hide since scroll trick
+        // needs a user gesture to work reliably (wired to first tap below)
         if (isIPhone() && !isInStandaloneMode()) {
-            document.getElementById("iosInstallPopup").style.display = "flex";
+            // yogesh code - removed Add to Home Screen popup since we now handle it in-browser
+            // Just hide the popup element entirely
+            const popup = document.getElementById("iosInstallPopup");
+            if (popup) popup.style.display = "none";
+            // yogesh code end
         }
+
+        // yogesh code - first-touch handler: fires hideSafariUI on very first tap
+        // Must be a real user gesture for Safari to collapse its toolbar
+        document.addEventListener('touchstart', function firstTouch() {
+            hideSafariUI();
+            document.removeEventListener('touchstart', firstTouch);
+        }, { once: true, passive: true });
+        // yogesh code end
 
         document
             .getElementById("closeIosPopup")
             .addEventListener("click", () => {
                 document.getElementById("iosInstallPopup").style.display = "none";
-                // yogesh code - try hiding toolbar again after popup close
                 hideSafariUI();
-                // yogesh code end
             });
     });
 
@@ -64,25 +83,7 @@
     // iOS Fallback
     function handleIOSFallback() {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-        if (isIOS) {
-            // yogesh code - use fixed positioning + fill-available for iPhone
-            document.documentElement.style.cssText = `
-                height: -webkit-fill-available;
-            `;
-            document.body.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                height: -webkit-fill-available;
-                overflow: hidden;
-                -webkit-overflow-scrolling: touch;
-            `;
-            hideSafariUI();
-            // yogesh code end
-        }
+        if (isIOS) hideSafariUI();
     }
 
     // ===== INTRO SCREEN LOGIC =====
@@ -124,6 +125,9 @@
         tapToPlayBtn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
+            // yogesh code - user gesture here, best moment to collapse Safari toolbar
+            hideSafariUI();
+            // yogesh code end
             goToLoginFromIntro();
         });
     }
