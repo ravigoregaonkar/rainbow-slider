@@ -2208,6 +2208,9 @@ body.show-game #game-container {
     .certificate-view-content .cert-popup-close {
         display: block;
     }
+    .tap-play-outer{
+        left: 47% !important;
+    }
 }
 
 @media (max-width: 860px) {
@@ -2225,6 +2228,9 @@ body.show-game #game-container {
 
     .download-btn {
         right: -4vw;
+    }
+    .tap-play-outer{
+        left: 47% !important;
     }
 }
 
@@ -2246,7 +2252,10 @@ body.show-game #game-container {
 
     .login-box {
         top: 52%;
-        ;
+    }
+    .tap-play-outer{
+        bottom: 40% !important;
+        left: 51% !important;
     }
 
     .mission-stats {
@@ -3809,20 +3818,22 @@ select {
 }
 
 .tap-play-btn {
+    width: 100%;
+    animation: tapPulse 1.5s ease-in-out infinite;
+    transition: transform 0.2s ease;
+}
+.tap-play-outer{
     position: absolute;
-    bottom: 50%;
-    left: 52%;
-    transform: translateX(-50%);
+    bottom: 40%;
+    left: 42%;
+    transform: translate(-50%, -50%);
     background: none;
     border: none;
     cursor: pointer;
     z-index: 2;
-    animation: tapPulse 1.5s ease-in-out infinite;
-    transition: transform 0.2s ease;
     padding: 0;
     width: 147px;
 }
-
 .tap-play-btn img {
     width: 190px;
     height: auto;
