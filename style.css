@@ -1821,6 +1821,7 @@ body.show-game #game-container {
         top: 17%;
         left: 10%;
     }
+
     .forward-btn,
     .jump-btn {
         display: flex !important;
@@ -2019,6 +2020,16 @@ body.show-game #game-container {
     .download-btn p {
         color: #fff;
     }
+    .small-download {
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+        border-radius: 50%;
+        background: #1565c0;
+        color: #fff;
+        border: none;
+        margin-top: 5px;
+    }
 
     .certificate-view-content .cert-popup-close {
         top: 30px;
@@ -2087,6 +2098,20 @@ body.show-game #game-container {
 
     .certificate-view-content .cert-popup-close {
         display: block;
+    }
+}
+@media (max-width: 790px) {
+    .outer-cert{
+        width: 75vw !important;
+    }
+    .mission-stat{
+        padding: 0px 10px !important;
+    }
+    .certificate-view-content .cert-popup-close{
+        right: 40px;
+    }
+    .download-btn {
+        right: -10px;
     }
 }
 
@@ -2208,6 +2233,9 @@ body.show-game #game-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+    .download-btn{
+        right: -70px;
     }
 
     .small-download {
