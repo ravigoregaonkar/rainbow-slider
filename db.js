@@ -23,9 +23,11 @@ const db = getFirestore(app);
 window.saveGameResult = async function (uniqueId, playerName, elapsedMs, superCoins, score) {
   try {
     const playersRef = collection(db, "players");
+    // yogesh code: use timestamp-based unique doc ID to avoid overwrites on concurrent saves
+    const docId = Date.now() + "_" + Math.random().toString(36).slice(2, 7);
     const existingSnapshot = await getDocs(playersRef);
     const newId = existingSnapshot.size + 1;
-    await setDoc(doc(playersRef, String(newId)), {
+    await setDoc(doc(playersRef, docId), {
       newId: newId,
       uniqueId: uniqueId,
       name: playerName,
@@ -56,11 +58,9 @@ window.getTop10Players = async function () {
 window.getPlayers = async function () {
   try {
     const playersRef = collection(db, "players");
-    //   const rankScore = score * 100000 - elapsedMs;
-    //   const q = query(playersRef, orderBy("rankScore", "desc"), limit(10));
-    // const q = query(playersRef, where("score", "==", 8), orderBy("elapsedMs", "asc"), limit(10));
-    //   const q = query(playersRef, orderBy("score", "desc"), orderBy("elapsedMs", "asc"), limit(10));
-    const snapshot = await getDocs(playersRef);
+    // yogesh code: fetch all players sorted by score desc, elapsedMs asc
+    const q = query(playersRef, orderBy("score", "desc"), orderBy("elapsedMs", "asc"));
+    const snapshot = await getDocs(q);
     return snapshot.docs.map(d => d.data());
   } catch (err) {
     console.error("Leaderboard fetch error:", err);
@@ -69,13 +69,14 @@ window.getPlayers = async function () {
 };
 const tbody = document.getElementById('leaderboardBody2');
 
+// yogesh code: load players and populate table, then init DataTables
 window.getPlayers().then(function (players) {
   if (tbody) tbody.innerHTML = '';
 
   if (players.length === 0) {
     if (tbody) {
       const row = document.createElement('tr');
-      row.innerHTML = '<td colspan="5" style="padding: 30px; color: #a0c4e8; font-size: 16px;">No completed games yet. Be the first!</td>';
+      row.innerHTML = '<td colspan="6" style="padding: 30px; color: #a0c4e8; font-size: 16px;">No completed games yet. Be the first!</td>';
       tbody.appendChild(row);
     }
   } else {
@@ -95,6 +96,11 @@ window.getPlayers().then(function (players) {
 
       if (tbody) tbody.appendChild(row);
     });
+  }
+
+  // yogesh code: init DataTables after data is loaded into table
+  if (window.$ && $.fn.DataTable) {
+    $('#leaderboardTable').DataTable({ responsive: true, destroy: true });
   }
 });
 
