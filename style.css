@@ -3722,13 +3722,6 @@ body.show-game #game-container {
 /* yogesh code - suppress iOS long-press callout on all images (prevents Save/Open in new tab popup) */
 img {
     -webkit-touch-callout: none;
-    pointer-events: none;
-}
-
-.game-btn img,
-.pause-overlay-btn img,
-.tap-play-btn img {
-    pointer-events: none;
 }
 /* yogesh code end */
 
