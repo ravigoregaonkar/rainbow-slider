@@ -1249,7 +1249,7 @@ body.show-game #game-container {
     left: 0;
     width: 100%;
     height: auto;
-    z-index: 10;
+    z-index: 21;
     pointer-events: none;
     display: flex;
     justify-content: space-between;
@@ -1445,7 +1445,7 @@ body.show-game #game-container {
 .forward-btn {
     position: absolute;
     bottom: 44px;
-    left: 20px;
+    right: 20px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -1495,7 +1495,7 @@ body.show-game #game-container {
 .jump-btn {
     position: absolute;
     bottom: 44px;
-    right: 20px;
+    left: 20px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -2171,6 +2171,18 @@ body.show-game #game-container {
         margin-top: 5px;
     }
 
+    .small-playagain {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 50%;
+        background: #2e7d32;
+        color: #fff;
+        border: none;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+
     .certificate-view-content .cert-popup-close {
         top: 30px;
         right: 20px;
@@ -2596,7 +2608,7 @@ body.show-game #game-container {
         width: 55px;
         height: 55px;
         bottom: 12px;
-        left: 12px;
+        right: 12px;
         padding: 10px;
     }
 
@@ -2604,7 +2616,7 @@ body.show-game #game-container {
         width: 55px;
         height: 55px;
         bottom: 12px;
-        right: 12px;
+        left: 12px;
         padding: 10px;
     }
 
@@ -3526,7 +3538,7 @@ body.show-game #game-container {
         width: 85px;
         height: 85px;
         bottom: 20px;
-        right: 20px;
+        left: 20px;
         padding: 14px;
     }
 
@@ -3608,7 +3620,7 @@ body.show-game #game-container {
         width: 65px;
         height: 65px;
         bottom: 15px;
-        right: 15px;
+        left: 15px;
         padding: 10px;
     }
 
@@ -3751,7 +3763,7 @@ body.show-game #game-container {
         width: 55px;
         height: 55px;
         bottom: 10px;
-        right: 10px;
+        left: 10px;
         padding: 8px;
     }
 

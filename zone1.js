@@ -2498,7 +2498,13 @@
     if (downloadCertBtn) downloadCertBtn.addEventListener('click', downloadCertificate);
 
     const downloadCertBtnMob = document.getElementById('downloadCertBtnMob');
-    if (downloadCertBtnMob) downloadCertBtnMob.addEventListener('click', downloadCertificate);
+    if (downloadCertBtnMob) {
+        const smallDownload = downloadCertBtnMob.querySelector('.small-download');
+        if (smallDownload) smallDownload.addEventListener('click', downloadCertificate);
+    }
+
+    const mobPlayAgainBtn = document.getElementById('mobPlayAgainBtn');
+    if (mobPlayAgainBtn) mobPlayAgainBtn.addEventListener('click', () => window.location.reload());
 
     const certPopupClose = document.getElementById('certPopupClose');
 
