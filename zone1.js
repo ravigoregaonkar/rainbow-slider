@@ -23,6 +23,7 @@
         gameOverDelay: 0,
         gameOverPending: false,
         gameOverStarted: false,
+        stopWorldScroll: false,
 
         timeElapsed: 0,
         isJumping: false,
@@ -391,6 +392,8 @@
         GAME.gameOverPending = false;
         GAME.gameOverDelay = 0;
         GAME.gameOverStarted = false;
+        GAME.stopWorldScroll = false;
+
 
         GAME.timeElapsed = 0;
         GAME.isJumping = false;
@@ -947,7 +950,8 @@
         const moveSpeed = GAME.isMovingForward ? GAME.runSpeed : 0;
 
         // Background scrolls only when moving forward
-        if (GAME.isMovingForward) {
+        if (GAME.isMovingForward &&
+            !GAME.stopWorldScroll) {
             bg.x -= bg.speed;
 
             if (bg.x <= -bg.width) {
@@ -1352,6 +1356,9 @@
 
 
     function createSingleBrick() {
+
+        GAME.stopWorldScroll = true;
+
         // coins = [];
         // platforms = [];
         // superCoins = [];
@@ -2113,193 +2120,135 @@
         if (certPopup) certPopup.classList.add('active');
     }
 
-    // async function downloadCertificate() {
-    //     const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
-    //     // yogesh code - read player unique ID for certificate download
-    //     const playerId = localStorage.getItem('arakitol_db_player_id') || '—';
-    //     // yogesh code end
-    //     const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
-    //     const time = parseInt(localStorage.getItem('arakitol_current_time')) || GAME.timeElapsed || 0;
-    //     const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
-    //     const date = new Date().toLocaleDateString('en-IN');
-
-    //     const certContainer = document.createElement('div');
-    //     certContainer.style.cssText = 'position: fixed; top: -9999px; left: -9999px; z-index: -1; overflow: hidden;';
-    //     certContainer.innerHTML = generateCertificateHTML(yourName, playerId, superCoins, time, totalScore, date, true);
-    //     document.body.appendChild(certContainer);
-
-    //     try {
-    //         if (typeof html2canvas === 'undefined') {
-    //             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-    //         }
-
-    //         if (typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined') {
-    //             await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-    //         }
-
-    //         const canvas = await html2canvas(certContainer, {
-    //             scale: 2,
-    //             useCORS: true,
-    //             allowTaint: true,
-    //             backgroundColor: '#fff'
-    //         });
-
-    //         const imgData = canvas.toDataURL('image/png');
-    //         const { jsPDF } = jspdf;
-    //         const pdf = new jsPDF('l', 'mm', 'a4');
-
-    //         const pdfWidth = pdf.internal.pageSize.getWidth();
-    //         const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    //         const imgWidth = canvas.width;
-    //         const imgHeight = canvas.height;
-
-    //         const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    //         const imgX = (pdfWidth - imgWidth * ratio) / 2;
-    //         const imgY = (pdfHeight - imgHeight * ratio) / 2;
-
-    //         pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-    //         pdf.save('Arackitol_Certificate_' + yourName.replace(/\s+/g, '_') + '.pdf');
-    //     } catch (err) {
-    //         console.error('PDF download failed:', err);
-    //         alert('Certificate download failed. Please try again.');
-    //     } finally {
-    //         document.body.removeChild(certContainer);
-    //     }
-    // }
-
     async function downloadCertificate() {
-        const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
-        const playerId = localStorage.getItem('arakitol_db_player_id') || '—';
-        const date = new Date().toLocaleDateString('en-IN');
+    const yourName = localStorage.getItem('arakitol_player_name') || 'Ravi';
+    const playerId = localStorage.getItem('arakitol_db_player_id') || '#RA-576733-629';
+    const nanoCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 8;
+    const time = parseInt(localStorage.getItem('arakitol_current_time')) || 39;
+    const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 40;
 
-        const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 0;
-        const time = parseInt(localStorage.getItem('arakitol_current_time')) || 0;
-        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 0;
+    // ✅ Format date as DD-MM-YYYY
+    const today = new Date();
+    const date = String(today.getDate()).padStart(2, '0') + '-' +
+                 String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                 today.getFullYear();
 
-        // Load jsPDF
-        if (typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined') {
-            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-        }
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('l', 'mm', 'a4');
-
-        const w = pdf.internal.pageSize.getWidth();
-        const h = pdf.internal.pageSize.getHeight();
-
-        // ================== Orange BACKGROUND ==================
-        pdf.setFillColor(255, 106, 0);
-        pdf.rect(0, 0, w, h, 'F');
-
-        // ================== WHITE AREA ==================
-        pdf.setFillColor(255, 255, 255);
-        pdf.rect(0, 85, w, h - 85, 'F'); // full width
-
-        // ================== LOAD LOGO ==================
-        async function getBase64FromUrl(url) {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-        }
-
-        const abbottLogoBase64 = await getBase64FromUrl('/images/abbott-white-logo.png');
-
-        // ================== LOGO (SMALLER) ==================
-        const logoWidth = 32; // ✅ reduced size
-
-        const imgProps = pdf.getImageProperties(abbottLogoBase64);
-        const logoHeight = (imgProps.height * logoWidth) / imgProps.width;
-
-        const logoX = (w - logoWidth) / 2;
-        const logoY = 18;
-
-        pdf.addImage(abbottLogoBase64, 'PNG', logoX, logoY, logoWidth, logoHeight);
-
-        // ================== HEADING BELOW LOGO ==================
-        function spacedText(text) {
-            return text.split('').join(' ');
-        }
-
-        const headingY = logoY + logoHeight + 12; // ✅ tighter spacing
-
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(20);
-        pdf.setTextColor(255, 255, 255);
-
-        pdf.text(
-            spacedText('CERTIFICATE OF PARTICIPATION'),
-            w / 2,
-            headingY,
-            { align: 'center' }
-        );
-
-        // ================== BODY ==================
-        pdf.setFontSize(12);
-        pdf.setTextColor(0);
-        pdf.text('Presented to', w / 2, 105, { align: 'center' });
-
-        pdf.setFontSize(26);
-        pdf.setTextColor(255, 106, 0);
-        pdf.text(yourName, w / 2, 120, { align: 'center' });
-
-        pdf.setFontSize(14);
-        pdf.text(playerId, w / 2, 130, { align: 'center' });
-
-        // ================== SCORE BOXES ==================
-        const boxY = 165;
-        const boxW = 60;
-        const gap = 20;
-        const startX = (w - (boxW * 3 + gap * 2)) / 2;
-
-        // Coins
-        pdf.setDrawColor(255, 110, 0);
-        pdf.setFillColor(255, 245, 235);
-        pdf.roundedRect(startX, boxY, boxW, 30, 8, 8, 'FD');
-        pdf.setTextColor(255, 110, 0);
-        pdf.setFontSize(22);
-        pdf.text(String(superCoins), startX + boxW / 2, boxY + 15, { align: 'center' });
-        pdf.setFontSize(10);
-        pdf.setTextColor(120);
-        pdf.text('SUPER COINS', startX + boxW / 2, boxY + 25, { align: 'center' });
-
-        // Time
-        let x2 = startX + boxW + gap;
-        pdf.setDrawColor(40, 100, 220);
-        pdf.setFillColor(235, 242, 255);
-        pdf.roundedRect(x2, boxY, boxW, 30, 8, 8, 'FD');
-        pdf.setTextColor(40, 100, 220);
-        pdf.setFontSize(22);
-        pdf.text(String(time) , x2 + boxW / 2, boxY + 15, { align: 'center' });
-        pdf.setFontSize(10);
-        pdf.setTextColor(120);
-        pdf.text('SECONDS', x2 + boxW / 2, boxY + 25, { align: 'center' });
-
-        // Score
-        let x3 = x2 + boxW + gap;
-        pdf.setDrawColor(40, 130, 50);
-        pdf.setFillColor(235, 245, 235);
-        pdf.roundedRect(x3, boxY, boxW, 30, 8, 8, 'FD');
-        pdf.setTextColor(40, 130, 50);
-        pdf.setFontSize(22);
-        pdf.text(String(totalScore), x3 + boxW / 2, boxY + 15, { align: 'center' });
-        pdf.setFontSize(10);
-        pdf.setTextColor(120);
-        pdf.text('POINTS SCORED', x3 + boxW / 2, boxY + 25, { align: 'center' });
-
-        // ================== DATE ==================
-        pdf.setFontSize(10);
-        pdf.setTextColor(120);
-        pdf.text(`Date: ${date}`, w - 10, h - 10, { align: 'right' });
-
-        // ================== SAVE ==================
-        pdf.save(`Certificate_${yourName.replace(/\s+/g, '_')}.pdf`);
+    if (!window.jspdf) {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
     }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('l', 'mm', 'a4');
+
+    const w = pdf.internal.pageSize.getWidth();
+    const h = pdf.internal.pageSize.getHeight();
+
+    // ===== Background =====
+    pdf.setFillColor(250, 240, 225);
+    pdf.rect(0, 0, w, h, 'F');
+
+    // ===== Outer Blue Border =====
+    // pdf.setDrawColor(30, 90, 170);
+    // pdf.setLineWidth(4);
+    // pdf.roundedRect(5, 5, w - 10, h - 10, 12, 12);
+
+    // ===== Inner Yellow Dashed Border =====
+    pdf.setDrawColor(117, 125, 138);
+    pdf.setLineWidth(1);
+    pdf.setLineDashPattern([3, 2], 0);
+    pdf.roundedRect(12, 12, w - 24, h - 24, 10, 10);
+    pdf.setLineDashPattern([], 0);
+
+    // ===== Title =====
+    pdf.setFont('helvetica', 'bold')
+    pdf.setFontSize(32);
+    pdf.setTextColor(28, 43, 57);
+    pdf.text('CERTIFICATE OF COMPLETION', w / 2, 40, { align: 'center' });
+
+    // ===== Subtitle =====
+    pdf.setFontSize(24);
+    pdf.setFont('helvetica', 'bold')
+    pdf.setTextColor(255, 106, 0);
+    pdf.text('CATCH THE SMART D', w / 2, 55, { align: 'center' });
+
+    // ===== Award text =====
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(15);
+    pdf.setTextColor(90);
+    pdf.text('Is hereby awarded to', w / 2, 70, { align: 'center' });
+
+    // ===== Name =====
+    pdf.setFontSize(30);
+    pdf.setFont('helvetica', 'bold')
+    pdf.setTextColor(230, 90, 10);
+    pdf.text(yourName, w / 2, 85, { align: 'center' });
+
+    // ===== ID =====
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(13);
+    pdf.setTextColor(120);
+    pdf.text(`ID : ${playerId}`, w / 2, 95, { align: 'center' });
+
+    // ===== Score Boxes =====
+    const boxY = 115;
+    const boxW = 70;
+    const boxH = 35;
+    const gap = 25;
+
+    const totalWidth = boxW * 3 + gap * 2;
+    const startX = (w - totalWidth) / 2;
+
+    // ===== Box 1 (Nano Coins) =====
+    pdf.setDrawColor(255, 110, 0);
+    pdf.setFillColor(250, 240, 225);
+    pdf.roundedRect(startX, boxY, boxW, boxH, 10, 10, 'FD');
+
+    pdf.setTextColor(255, 110, 0);
+    pdf.setFontSize(24);
+    pdf.text(String(nanoCoins), startX + boxW / 2, boxY + 18, { align: 'center' });
+
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text('NANO COINS', startX + boxW / 2, boxY + 28, { align: 'center' });
+
+    // ===== Box 2 (Seconds) =====
+    const x2 = startX + boxW + gap;
+    pdf.setDrawColor(30, 80, 200);
+    pdf.setFillColor(225, 235, 250);
+    pdf.roundedRect(x2, boxY, boxW, boxH, 10, 10, 'FD');
+
+    pdf.setTextColor(40, 100, 200);
+    pdf.setFontSize(24);
+    pdf.text(String(time), x2 + boxW / 2, boxY + 18, { align: 'center' });
+
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text('SECONDS', x2 + boxW / 2, boxY + 28, { align: 'center' });
+
+    // ===== Box 3 (Points) =====
+    const x3 = x2 + boxW + gap;
+    pdf.setDrawColor(30, 120, 40);
+    pdf.setFillColor(230, 240, 220);
+    pdf.roundedRect(x3, boxY, boxW, boxH, 10, 10, 'FD');
+
+    pdf.setTextColor(40, 120, 50);
+    pdf.setFontSize(24);
+    pdf.text(String(totalScore), x3 + boxW / 2, boxY + 18, { align: 'center' });
+
+    pdf.setFontSize(10);
+    pdf.setTextColor(100);
+    pdf.text('POINTS SCORED', x3 + boxW / 2, boxY + 28, { align: 'center' });
+
+    // ===== Date (DD-MM-YYYY) =====
+    pdf.setFontSize(11);
+    pdf.setTextColor(120);
+    pdf.text(`Date: ${date}`, w - 20, h - 15, { align: 'right' });
+
+    // ===== Save =====
+    pdf.save(`Certificate_${yourName.replace(/\s+/g, '_')}.pdf`);
+}
+
+
 
     function loadScript(src) {
         return new Promise((resolve, reject) => {
