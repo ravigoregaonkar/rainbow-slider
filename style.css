@@ -1878,19 +1878,19 @@ body.show-game #game-container {
         display: none;
     }
     .tab-img{
-        display: none;
+        display: none !important;
     }
     .desktop-img{
-        display: block;
+        display: block !important;
     }
 }
 
 @media (max-width: 1200px) {
     .tab-img{
-        display: block;
+        display: block !important;
     }
     .desktop-img{
-        display: none;
+        display: none !important;
     }
     .character-container {
         bottom: -20%;
@@ -2003,9 +2003,21 @@ body.show-game #game-container {
         left: 5%;
         width: 10vh;
     }
+    .tab-img{
+        display: block !important;
+    }
+    .desktop-img{
+        display: none !important;
+    }
 }
 
 @media (max-width: 991px) {
+    .tab-img{
+        display: none !important;
+    }
+    .desktop-img{
+        display: block !important;
+    }
     .loading-text {
         margin-top: 8px;
     }
@@ -2228,7 +2240,7 @@ body.show-game #game-container {
         display: block;
     }
     .tap-play-outer{
-        left: 47% !important;
+        left: 43% !important;
         width: 13vw !important;
     }
 }
@@ -2250,12 +2262,24 @@ body.show-game #game-container {
         right: -4vw;
     }
     .tap-play-outer{
-        left: 47% !important;
+        left: 43% !important;
         width: 13vw !important;
+    }
+    .tab-img{
+        display: none !important;
+    }
+    .desktop-img{
+        display: block !important;
     }
 }
 
 @media (max-width: 768px) {
+    .tab-img{
+        display: none !important;
+    }
+    .desktop-img{
+        display: block !important;
+    }
 
     .start-game-btn,
     .how-to-play-btn {
@@ -2276,7 +2300,7 @@ body.show-game #game-container {
     }
     .tap-play-outer{
         bottom: 40% !important;
-        left: 51% !important;
+        left: 47% !important;
         width: 17vw !important;
     }
 
