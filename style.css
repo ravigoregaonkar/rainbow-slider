@@ -1652,10 +1652,13 @@ body.show-game #game-container {
 .quiz-result.wrong {
     color: #ff4444;
 }
-.download-btn{
+
+.download-btn {
     display: none;
 }
-.forward-btn, .jump-btn{
+
+.forward-btn,
+.jump-btn {
     display: none;
 }
 
@@ -1685,382 +1688,516 @@ body.show-game #game-container {
 /* Ravi CSS Start  */
 
 @media (max-width: 1925px) {
-    .logo-container{
+    .logo-container {
         top: 20%;
         width: 16vw;
         height: auto;
         transform: translate(-50%, -15%);
     }
-    .login-box{
+
+    .login-box {
         width: 33vw;
     }
-    .character-container{
+
+    .character-container {
         left: 15%;
         bottom: -40%;
         transform: translate(0%, -46%);
         width: 15vw;
     }
-    .d-icon-container.d-icon2{
+
+    .d-icon-container.d-icon2 {
         top: 15%;
         left: 27%;
         width: 7vw;
     }
-    .sun-container{
+
+    .sun-container {
         width: 17vw;
         top: 17%;
         left: 10%;
     }
-    .d-icon-container.d-icon3{
+
+    .d-icon-container.d-icon3 {
         top: 45%;
         left: 10%;
         width: 6vw;
     }
-    .d-icon-container.d-icon1{
+
+    .d-icon-container.d-icon1 {
         width: 10vw;
     }
-    .d-icon-container.d-icon4{
+
+    .d-icon-container.d-icon4 {
         right: 20%;
         width: 7vw;
     }
-    .sparkle{display: none;}
+
+    .sparkle {
+        display: none;
+    }
 }
+
 @media (max-width: 1440px) {
-    .logo-container{
+    .logo-container {
         top: 15%;
     }
-    .login-box{
+
+    .login-box {
         width: 33vw;
     }
-    .character-container{
+
+    .character-container {
         left: 15%;
         bottom: -40%;
         transform: translate(0%, -46%);
         width: 15vw;
     }
-    .d-icon-container.d-icon2{
+
+    .d-icon-container.d-icon2 {
         top: 15%;
         left: 27%;
         width: 7vw;
     }
-    .sun-container{
+
+    .sun-container {
         width: 17vw;
         top: 17%;
         left: 10%;
     }
-    .d-icon-container.d-icon3{
+
+    .d-icon-container.d-icon3 {
         top: 45%;
         left: 10%;
         width: 6vw;
     }
-    .sparkle{display: none;}
+
+    .sparkle {
+        display: none;
+    }
 }
+
 @media (max-width: 1200px) {
-    .character-container{
+    .character-container {
         bottom: -20%;
         width: 17vw;
         left: 12%;
     }
-    .logo-container{
+
+    .logo-container {
         top: 10vw;
         width: 18vw;
         transform: translate(-50%, -10%);
     }
-    .d-icon-container.d-icon1{
+
+    .d-icon-container.d-icon1 {
         top: 184px;
         right: 222px;
         width: 107px;
     }
-    .d-icon-container.d-icon2{
+
+    .d-icon-container.d-icon2 {
         top: 14%;
         left: 26%;
         width: 7vw;
     }
-    .d-icon-container.d-icon3{
+
+    .d-icon-container.d-icon3 {
         width: 6vw;
         top: 36%;
         left: 5%;
     }
-    .d-icon-container.d-icon4{
+
+    .d-icon-container.d-icon4 {
         right: 18vw;
     }
+
     .login-box {
         width: 38vw;
     }
-    .sun-container{
+
+    .sun-container {
         width: 17vw;
         top: 17%;
         left: 10%;
     }
 }
+
 @media (max-width: 1025px) {
-    .forward-btn, .jump-btn{
+
+    .forward-btn,
+    .jump-btn {
         display: flex !important;
     }
-    .logo-container{
+
+    .logo-container {
         top: 10%;
         width: 37vh;
         height: auto;
     }
-    .login-box{
+
+    .login-box {
         width: 41vw;
     }
-    .character-container{
+
+    .character-container {
         left: 10%;
         bottom: 13%;
         width: 25vh;
         height: auto;
         transform: translate(-5%, -5%);
     }
-    .d-icon-container.d-icon1{
+
+    .d-icon-container.d-icon1 {
         top: 24%;
         right: 18%;
         width: 13vh;
     }
-    .d-icon-container.d-icon2{
+
+    .d-icon-container.d-icon2 {
         top: 10%;
         left: 27%;
         width: 11vh;
     }
-    .sun-container{
+
+    .sun-container {
         width: 30vh;
         top: 17%;
         left: 9%;
     }
-    .d-icon-container.d-icon3{
+
+    .d-icon-container.d-icon3 {
         top: 40%;
         left: 5%;
         width: 10vh;
     }
 }
+
 @media (max-width: 991px) {
-    .loading-text{
+    .loading-text {
         margin-top: 8px;
     }
-    .coreate-logo{
+
+    .coreate-logo {
         top: 5px;
     }
-    .login-box-bg{
+
+    .login-box-bg {
         border: 2px solid rgb(255 215 0);
     }
-    .login-box{
+
+    .login-box {
         width: 40vw;
     }
-    .login-box-title{
+
+    .login-box-title {
         font-size: 2.5vw;
     }
-    .logo-container{
+
+    .logo-container {
         top: 5%;
         width: 36vh;
     }
-    .d-icon-container.d-icon4{
+
+    .d-icon-container.d-icon4 {
         bottom: 10%;
         width: 8vw;
         right: 16%;
     }
-    .character-container{
+
+    .character-container {
         width: 15vw;
     }
-    .login-box-header{
+
+    .login-box-header {
         padding: 10px 0 5px;
     }
-    .continue-btn{
+
+    .continue-btn {
         padding: 1vw 2vw;
     }
-    .form-content{
+
+    .form-content {
         padding: 10px 25px 20px;
     }
+
     .input-group {
         margin-bottom: 10px;
     }
-    .input-field{
+
+    .input-field {
         padding: 8px 14px 8px 37px;
     }
-    .input-icon{
+
+    .input-icon {
         width: 20px;
         height: 20px;
     }
-    .continue-btn{
+
+    .continue-btn {
         margin-top: 5px;
         box-shadow: 0 4px 0 #cc8400, 0 8px 20px rgba(0, 0, 0, 0.3);
     }
-    .character-container{
+
+    .character-container {
         left: 9%;
         bottom: 3%;
     }
-    #how-to-play-popup .popup-content{
+
+    #how-to-play-popup .popup-content {
         width: 40vw;
         max-width: 60vw;
     }
-    .mission-stats{
+
+    .mission-stats {
         margin-top: 7px !important;
         margin-bottom: 0px !important;
     }
-    .stat-icon-box{
+
+    .stat-icon-box {
         width: 5vw !important;
         margin-bottom: 0px !important;
     }
-    .stat-value{
+
+    .stat-value {
         font-size: 3vw !important;
     }
-    .mission-complete-content{padding: 20px 25px !important;}
-    .mission-complete-content .leaderboard-btn{
+
+    .mission-complete-content {
+        padding: 20px 25px !important;
+    }
+
+    .mission-complete-content .leaderboard-btn {
         font-size: 3vw !important;
         padding: 10px 70px !important;
         margin-top: 15px !important;
         margin-bottom: 0px !important;
     }
-    .leaderboard-content .leaderboard-header h2{
+
+    .leaderboard-content .leaderboard-header h2 {
         font-size: 30px;
     }
-    .leaderboard-content .leaderboard-table-wrapper{
+
+    .leaderboard-content .leaderboard-table-wrapper {
         max-height: 120px;
-        scrollbar-width: none; 
-        -ms-overflow-style: none; 
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
+
     .scroll-container::-webkit-scrollbar {
         display: none;
     }
-    .leaderboard-table thead{
+
+    .leaderboard-table thead {
         position: sticky;
         top: 0;
     }
-    .certificate-actions{display: none;}
-    .download-btn{
+
+    .certificate-actions {
+        display: none;
+    }
+
+    .download-btn {
         display: flex !important;
     }
-    .download-btn{
+
+    .download-btn {
         position: absolute;
         bottom: 25px;
         right: -10vw;
         display: flex !important;
         justify-content: center;
         align-items: center;
-        flex-direction: column; 
+        flex-direction: column;
         z-index: 999;
     }
-    .download-btn p{
+
+    .download-btn p {
         color: #fff;
     }
-    .certificate-view-content .cert-popup-close{
+
+    .certificate-view-content .cert-popup-close {
         top: 30px;
         right: 20px;
         width: 50px;
         height: 50px;
     }
-    .cert-title{
+
+    .cert-title {
         font-size: 4vw !important;
         margin: 0 !important;
         line-height: 1 !important;
     }
-    .achive-text, .certify-text{
+
+    .achive-text,
+    .certify-text {
         margin-top: 5px !important;
         margin-bottom: 5px !important;
     }
-    .outer-cert{padding: 20px !important;}
-    .sucess-text{margin-top: 5px !important;}
-    .user-name{line-height: 1 !important;}
-    .game-name{
+
+    .outer-cert {
+        padding: 20px !important;
+    }
+
+    .sucess-text {
+        margin-top: 5px !important;
+    }
+
+    .user-name {
+        line-height: 1 !important;
+    }
+
+    .game-name {
         margin-top: 10px !important;
         margin-bottom: 10px !important;
     }
-    .score-outer{margin-top: 10px !important; margin-bottom: 10px !important;}
-    .score-count{font-size: 20px !important;}
-    .score-box{
+
+    .score-outer {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .score-count {
+        font-size: 20px !important;
+    }
+
+    .score-box {
         padding: 0 !important;
         width: 16vw !important;
     }
-    .certificate-actions{
+
+    .certificate-actions {
         display: none !important;
     }
-    .certificate-frame{
+
+    .certificate-frame {
         margin-bottom: 0 !important;
     }
-    .certificate-view-content{
+
+    .certificate-view-content {
         padding: 0 !important;
         border: none !important;
         background: transparent !important;
         overflow: inherit !important;
     }
-    .certificate-view-content .cert-popup-close{
+
+    .certificate-view-content .cert-popup-close {
         display: block;
     }
 }
+
 @media (max-width: 768px) {
+
     .start-game-btn,
     .how-to-play-btn {
         width: 40vw;
     }
-    .sun-container{
+
+    .sun-container {
         top: 9%;
     }
-    .character-container{
+
+    .character-container {
         left: 10%;
         width: 18vw;
     }
-    .login-box{
-        top: 52%;;
+
+    .login-box {
+        top: 52%;
+        ;
     }
-    .mission-stats{
+
+    .mission-stats {
         margin-top: 7px !important;
         margin-bottom: 0px !important;
     }
-    .stat-icon-box{
+
+    .stat-icon-box {
         width: 5vw !important;
         margin-bottom: 0px !important;
     }
-    .stat-value{
+
+    .stat-value {
         font-size: 3vw !important;
     }
-    .mission-complete-content .leaderboard-btn{
+
+    .mission-complete-content .leaderboard-btn {
         font-size: 3vw !important;
         padding: 10px 70px !important;
         margin-top: 15px !important;
         margin-bottom: 0px !important;
     }
-    .leaderboard-content .leaderboard-header h2{
+
+    .leaderboard-content .leaderboard-header h2 {
         font-size: 30px;
     }
-    .leaderboard-buttons{
+
+    .leaderboard-buttons {
         margin-top: 0px !important;
     }
-    .leaderboard-content .leaderboard-table-wrapper{
+
+    .leaderboard-content .leaderboard-table-wrapper {
         max-height: 155px;
-        scrollbar-width: none; 
-        -ms-overflow-style: none; 
+        scrollbar-width: none;
+        -ms-overflow-style: none;
         margin-bottom: 0px;
     }
+
     .scroll-container::-webkit-scrollbar {
         display: none;
     }
-    .leaderboard-table thead{
+
+    .leaderboard-table thead {
         position: sticky;
         top: 0;
     }
-    .certificate-view-content .cert-popup-close{
+
+    .certificate-view-content .cert-popup-close {
         top: -15px;
         right: -15px;
         width: 40px;
         height: 40px;
     }
-    .cert-title{
+
+    .cert-title {
         font-size: 4vw !important;
         margin: 0 !important;
         line-height: 1 !important;
     }
-    .achive-text, .certify-text{
+
+    .achive-text,
+    .certify-text {
         margin-top: 5px !important;
         margin-bottom: 5px !important;
     }
-    .outer-cert{padding: 20px !important;}
-    .sucess-text{margin-top: 5px !important;}
-    .user-name{line-height: 1 !important;}
-    .game-name{
+
+    .outer-cert {
+        padding: 20px !important;
+    }
+
+    .sucess-text {
+        margin-top: 5px !important;
+    }
+
+    .user-name {
+        line-height: 1 !important;
+    }
+
+    .game-name {
         margin-top: 10px !important;
         margin-bottom: 10px !important;
     }
-    .score-outer{margin-top: 10px !important; margin-bottom: 10px !important;}
-    .score-count{font-size: 20px !important;}
-    .score-box{
+
+    .score-outer {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .score-count {
+        font-size: 20px !important;
+    }
+
+    .score-box {
         padding: 0 !important;
         width: 16vw !important;
         height: 10vw;
@@ -2068,8 +2205,8 @@ body.show-game #game-container {
         flex-direction: column;
         justify-content: center;
     }
-    
-    .small-download{
+
+    .small-download {
         width: 40px;
         height: 40px;
         font-size: 25px;
@@ -2080,6 +2217,7 @@ body.show-game #game-container {
         margin-top: 5px;
     }
 }
+
 /* Ravi CSS End  */
 @media (max-width: 600px) {
     .logo-container {
@@ -2643,6 +2781,13 @@ body.show-game #game-container {
     position: relative;
 }
 
+.leaderboard-content,
+.certificate-view-content {
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
 .leaderboard-content::before {
     content: '';
     position: absolute;
@@ -2682,9 +2827,20 @@ body.show-game #game-container {
     padding: 0;
     margin-bottom: 20px;
     border: 2px solid #1a5fb4;
-    max-height: 400px;
+    max-height: 290px;
     overflow-y: auto;
     overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.leaderboard-table thead {
+    position: sticky;
+    top: 0;
 }
 
 .leaderboard-table {
@@ -2695,7 +2851,7 @@ body.show-game #game-container {
 }
 
 .leaderboard-table thead {
-    background: #1a237e;
+    background: #005a84;
     color: #fff;
 }
 
@@ -2784,7 +2940,7 @@ body.show-game #game-container {
 }
 
 .cert-btn {
-    background: linear-gradient(180deg, #1565c0 0%, #0d47a1 100%) !important;
+    background: #005a84 !important;
     font-size: 16px !important;
     padding: 14px 30px !important;
     border-radius: 12px !important;
@@ -2918,7 +3074,7 @@ body.show-game #game-container {
 }
 
 .download-cert-btn {
-    background: linear-gradient(180deg, #43a047 0%, #2e7d32 100%) !important;
+    background: #005a84 !important;
     font-size: 16px !important;
     padding: 14px 30px !important;
     border-radius: 12px !important;
@@ -3499,7 +3655,7 @@ select {
 
 .tap-play-btn {
     position: absolute;
-    bottom: 17%;
+    bottom: 50%;
     left: 52%;
     transform: translateX(-50%);
     background: none;
