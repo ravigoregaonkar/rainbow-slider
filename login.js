@@ -10,10 +10,7 @@
         const elem = document.documentElement;
 
         if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(err => {
-                console.log('FS error:', err);
-                handleIOSFallback();
-            });
+            elem.requestFullscreen().catch(() => handleIOSFallback());
         } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
         } else if (elem.msRequestFullscreen) {
@@ -31,18 +28,35 @@
         return window.navigator.standalone === true;
     }
 
+    // yogesh code - scroll trick: adds 1px body height, scrolls to 1, then resets
+    // This forces Safari to hide its nav/search bar on iPhone
+    function hideSafariUI() {
+        if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
+        document.body.style.height = (window.innerHeight + 1) + 'px';
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.body.style.height = '';
+        }, 50);
+    }
+    // yogesh code end
+
     window.addEventListener("load", () => {
+        // yogesh code - hide Safari toolbar on iPhone when not in standalone
+        hideSafariUI();
+        // yogesh code end
 
         if (isIPhone() && !isInStandaloneMode()) {
-
             document.getElementById("iosInstallPopup").style.display = "flex";
         }
 
         document
             .getElementById("closeIosPopup")
             .addEventListener("click", () => {
-
                 document.getElementById("iosInstallPopup").style.display = "none";
+                // yogesh code - try hiding toolbar again after popup close
+                hideSafariUI();
+                // yogesh code end
             });
     });
 
@@ -52,25 +66,22 @@
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
         if (isIOS) {
+            // yogesh code - use fixed positioning + fill-available for iPhone
+            document.documentElement.style.cssText = `
+                height: -webkit-fill-available;
+            `;
             document.body.style.cssText = `
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
                 height: 100vh;
+                height: -webkit-fill-available;
                 overflow: hidden;
                 -webkit-overflow-scrolling: touch;
             `;
-
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 100);
-
-            const metaViewport = document.querySelector('meta[name="viewport"]');
-            if (metaViewport) {
-                metaViewport.setAttribute('content',
-                    'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui');
-            }
+            hideSafariUI();
+            // yogesh code end
         }
     }
 
@@ -145,10 +156,11 @@
 
     // ===== SCALE CONTAINER =====
     function scaleContainer() {
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
+        // yogesh code - use visualViewport height on iOS to avoid nav bar overlap
+        const windowWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+        const windowHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        // yogesh code end
 
-        // Always full screen
         gameContainer.style.width = windowWidth + 'px';
         gameContainer.style.height = windowHeight + 'px';
         gameContainer.style.transform = 'none';
