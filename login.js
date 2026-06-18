@@ -23,6 +23,30 @@
         }
     }
 
+    function isIPhone() {
+        return /iPhone/i.test(navigator.userAgent);
+    }
+
+    function isInStandaloneMode() {
+        return window.navigator.standalone === true;
+    }
+
+    window.addEventListener("load", () => {
+
+        if (isIPhone() && !isInStandaloneMode()) {
+
+            document.getElementById("iosInstallPopup").style.display = "flex";
+        }
+
+        document
+            .getElementById("closeIosPopup")
+            .addEventListener("click", () => {
+
+                document.getElementById("iosInstallPopup").style.display = "none";
+            });
+    });
+
+
     // iOS Fallback
     function handleIOSFallback() {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;

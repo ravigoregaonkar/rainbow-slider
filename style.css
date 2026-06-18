@@ -19,6 +19,45 @@ body {
     width: 100%
 }
 
+
+/*iphoe popup css*/
+.ios-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.ios-popup-box {
+    width: 85%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    font-family: Calibri, sans-serif;
+}
+
+.ios-popup-box h2 {
+    margin: 0 0 10px;
+}
+
+.ios-popup-box button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #ff9800;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+
 *,
 :after,
 :before {
@@ -2020,6 +2059,7 @@ body.show-game #game-container {
     .download-btn p {
         color: #fff;
     }
+
     .small-download {
         width: 40px;
         height: 40px;
@@ -2100,18 +2140,22 @@ body.show-game #game-container {
         display: block;
     }
 }
-@media (max-width: 790px) {
-    .outer-cert{
+
+@media (max-width: 860px) {
+    .outer-cert {
         width: 75vw !important;
     }
-    .mission-stat{
+
+    .mission-stat {
         padding: 0px 10px !important;
     }
-    .certificate-view-content .cert-popup-close{
-        right: 40px;
+
+    .certificate-view-content .cert-popup-close {
+        right: 25px;
     }
+
     .download-btn {
-        right: -10px;
+        right: -4vw;
     }
 }
 
@@ -2234,7 +2278,8 @@ body.show-game #game-container {
         flex-direction: column;
         justify-content: center;
     }
-    .download-btn{
+
+    .download-btn {
         right: -70px;
     }
 
