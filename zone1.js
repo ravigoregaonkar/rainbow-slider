@@ -1875,50 +1875,19 @@
             animation: fadeIn 0.5s ease;
         `;
 
-        const isSuperMode = GAME.superMode;
-        const missed = GAME.totalSuperCoins - GAME.totalSuperCoinsCollected;
-        // yogesh code - dynamic miss message
-        const messageText = isSuperMode ? 'YOU GOT OPTIMUM SMART D POWER' : 'YOU MISSED CATCHING ' + missed + ' Smart D POWER!';
-        // yogesh code end
-        const messageColor = isSuperMode ? '#FFD700' : '#ff4444';
-        const iconText = isSuperMode ? '&#11088;' : '&#10060;';
-        const winlossText = isSuperMode ? 'Hurray!' : 'Sorry!';
+        const popupImg = GAME.superMode
+            ? 'images/vitamin-d-power-popup.png'
+            : 'images/vitamin-d-miss-popup.png';
 
         messageOverlay.innerHTML = `
-            <div style="
-                background: linear-gradient(135deg, #1a3a6b 0%, #0d1f3c 100%);
-                border: 4px solid ${messageColor};
-                border-radius: 25px;
-                padding: 40px 60px;
-                text-align: center;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-                animation: scaleIn 0.5s ease;
+            <img src="${popupImg}" style="
+                width: 90%;
+                max-width: 90vw;
+                height: auto;
+                display: block;
             ">
-                <div style="font-size: 60px; margin-bottom: 15px;">${iconText}</div>
-                <div style="
-                    font-size: 32px;
-                    font-weight: 900;
-                    text-align: center;
-                    color: ${messageColor};
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                    letter-spacing: 2px;
-                ">
-                    ${winlossText};
-                </div>
-                <div style="
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: ${messageColor};
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                    letter-spacing: 1px;
-                ">
-                    ${messageText}
-                </div>
-                <div style="font-size: 18px; color: #a0c4e8; margin-top: 15px;">
-                    ${isSuperMode ? 'All 8 Super Coins Collected!' : 'Mission Incompleted!'}
-                </div>
-            </div>
-        `;
+            `;
+
 
         document.body.appendChild(messageOverlay);
 
@@ -1943,6 +1912,8 @@
             }, 500);
         }, 3000);
     }
+
+
 
     function showScoreScreen() {
         const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
@@ -2562,6 +2533,15 @@
         console.log('Zone 1 Gameplay starting for:', e.detail.playerName);
         initGameplay();
     });
+    document.addEventListener('touchmove', function (e) {
+        if (e.touches.length > 1) e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+    }, { passive: false });
+
 
     console.log('%c Zone 1 Gameplay Engine Loaded ', 'color: #4CAF50; font-size: 14px;');
 })();
+

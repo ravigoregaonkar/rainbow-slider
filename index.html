@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <!-- yogesh code - single viewport meta with viewport-fit=cover for iPhone notch/safe area -->
         <meta name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
         <!-- yogesh code end -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,7 +55,9 @@
         <div id="intro-screen" class="screen" style="display: none;">
             <div class="intro-bg">
                 <img src="images/intro-bg.png" alt="Intro Background"
-                    id="intro-img">
+                    id="intro-img" class="desktop-img">
+                    <img src="images/ipad-intro-screen.png" alt="Intro Background"
+                    id="intro-img" class="tab-img">
                     <div class="tap-play-outer">
                         <button id="tap-to-play" class="tap-play-btn">
                             <img src="images/tap-to-play.png" alt="Tap to Play">

@@ -2,6 +2,7 @@
 /* yogesh code - html fill-available so Safari calculates height without its toolbar */
 html {
     height: -webkit-fill-available;
+    height: 100dvh;
     -webkit-text-size-adjust: 100%
 }
 /* yogesh code end */
@@ -1743,6 +1744,9 @@ body.show-game #game-container {
 .jump-btn {
     display: none;
 }
+.tab-img{
+    display: none;
+}
 
 /* yogesh code - full screen touch zones for forward and jump */
 .touch-zone {
@@ -1875,9 +1879,21 @@ body.show-game #game-container {
     .sparkle {
         display: none;
     }
+    .tab-img{
+        display: none;
+    }
+    .desktop-img{
+        display: block;
+    }
 }
 
 @media (max-width: 1200px) {
+    .tab-img{
+        display: block;
+    }
+    .desktop-img{
+        display: none;
+    }
     .character-container {
         bottom: -20%;
         width: 17vw;
@@ -1930,6 +1946,11 @@ body.show-game #game-container {
     .touch-zone {
         display: block !important;
     }
+    .tap-play-outer{
+        width: 30vw !important;
+        left: 65% !important;
+    }
+    
 }
 
 @media (max-width: 1025px) {
