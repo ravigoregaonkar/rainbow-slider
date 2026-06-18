@@ -1880,12 +1880,7 @@
             : 'images/vitamin-d-miss-popup.png';
 
         messageOverlay.innerHTML = `
-            <img src="${popupImg}" style="
-                width: 90%;
-                max-width: 90vw;
-                height: auto;
-                display: block;
-            ">
+            <img src="${popupImg}" class="power-popup-img">
             `;
 
 
@@ -2540,7 +2535,19 @@
     document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
     }, { passive: false });
+    function fixIOSHeight() {
+        const vh = window.innerHeight;
+        document.documentElement.style.setProperty('--real-vh', vh + 'px');
+        document.getElementById('game-container').style.height = vh + 'px';
+        const introScreen = document.getElementById('intro-screen');
+        if (introScreen) introScreen.style.height = vh + 'px';
+    }
 
+    fixIOSHeight();
+    window.addEventListener('resize', fixIOSHeight);
+    window.addEventListener('orientationchange', function () {
+        setTimeout(fixIOSHeight, 300);
+    });
 
     console.log('%c Zone 1 Gameplay Engine Loaded ', 'color: #4CAF50; font-size: 14px;');
 })();

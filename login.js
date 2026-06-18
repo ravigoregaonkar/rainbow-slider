@@ -93,7 +93,7 @@
 
     // Go to Login from Intro - FIXED
     function goToLoginFromIntro() {
-        goFullScreen();
+        // goFullScreen();
 
         if (introAutoTimer) {
             clearTimeout(introAutoTimer);

@@ -12,16 +12,15 @@ html:focus-within {
 }
 
 body {
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    /* yogesh code - position fixed prevents any scroll so Safari toolbar stays hidden */
-    position: fixed;
-    width: 100%;
-    /* yogesh code end */
-    text-rendering: optimizeSpeed;
+    font-family: 'Calibri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* yogesh code - use JS-set real viewport height to avoid iOS toolbar gap */
+    min-height: 100dvh;
+    min-height: var(--real-vh, 100dvh);
 }
 
 
@@ -470,18 +469,18 @@ template {
     box-sizing: border-box;
 }
 
-body {
+/* body {
     font-family: 'Calibri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
     background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* yogesh code - dvh fills visible area; -webkit-fill-available is the iPhone fix */
+    yogesh code - dvh fills visible area; -webkit-fill-available is the iPhone fix
     min-height: 100vh;
     min-height: -webkit-fill-available;
     min-height: 100dvh;
-}
+} */
 
 body.show-game #game-container {
     visibility: visible;
@@ -489,10 +488,9 @@ body.show-game #game-container {
 
 #game-container {
     width: 100vw;
-    /* yogesh code - cover full visible height including safe areas on iPhone */
-    height: 100vh;
-    height: -webkit-fill-available;
+    /* yogesh code - use JS-set real viewport height to avoid iOS toolbar gap */
     height: 100dvh;
+    height: var(--real-vh, 100dvh);
     position: fixed;
     top: 0;
     left: 0;
@@ -2231,6 +2229,7 @@ body.show-game #game-container {
     }
     .tap-play-outer{
         left: 47% !important;
+        width: 13vw !important;
     }
 }
 
@@ -2252,6 +2251,7 @@ body.show-game #game-container {
     }
     .tap-play-outer{
         left: 47% !important;
+        width: 13vw !important;
     }
 }
 
@@ -2277,6 +2277,7 @@ body.show-game #game-container {
     .tap-play-outer{
         bottom: 40% !important;
         left: 51% !important;
+        width: 17vw !important;
     }
 
     .mission-stats {
@@ -3794,10 +3795,9 @@ select {
     top: 0;
     left: 0;
     width: 100vw;
-    /* yogesh code - fill-available covers Safari URL bar on iPhone */
-    height: 100vh;
-    height: -webkit-fill-available;
+    /* yogesh code - use JS-set real viewport height to avoid iOS toolbar gap */
     height: 100dvh;
+    height: var(--real-vh, 100dvh);
     z-index: 9998;
     background: #000;
     display: none;
@@ -3946,3 +3946,49 @@ select {
     width: 100vw;
     height: 100vh;
 }
+#power-message-overlay {
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+}
+ 
+.power-popup-img {
+
+    width: min(700px, 90vw);
+
+    max-height: 85vh;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+ 
+@media (max-width: 768px) {
+
+    .power-popup-img {
+
+        width: 92vw;
+
+        max-height: 80vh;
+
+    }
+
+}
+ 
+@media (orientation: landscape) and (max-height: 500px) {
+
+    .power-popup-img {
+
+        width: auto;
+
+        max-width: 90vw;
+
+        max-height: 88vh;
+
+    }
+
+}
+ 
