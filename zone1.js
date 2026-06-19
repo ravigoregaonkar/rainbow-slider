@@ -1367,10 +1367,19 @@
 
     function createSingleBrick() {
 
-        GAME.stopWorldScroll = true;
+        // GAME.stopWorldScroll = true;
 
+        // bg.speed = 0;
+        // groundScroll.speed = 0;
+        if (brickWall && brickWall.active) {
+    const distance = brickWall.x - player.x;
+
+    if (distance <= 300) {
+        GAME.stopWorldScroll = true;
         bg.speed = 0;
         groundScroll.speed = 0;
+    }
+}
 
         // coins = [];
         // platforms = [];
