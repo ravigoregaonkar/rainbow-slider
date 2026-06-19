@@ -1966,8 +1966,12 @@ body.show-game #game-container {
         display: block !important;
     }
     .tap-play-outer{
-        width: 30vw !important;
-        left: 65% !important;
+        width: 40vw !important;
+        left: 75% !important;
+        bottom: 42% !important;
+    }
+    .tap-play-btn img{
+        width: 17vw !important;
     }
     
 }
