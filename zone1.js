@@ -1,4 +1,4 @@
-// ===== arachitol POWER QUEST - ZONE 1 GAMEPLAY =====
+// ===== ARAKITOL POWER QUEST - ZONE 1 GAMEPLAY =====
 (function () {
     'use strict';
 
@@ -299,48 +299,28 @@
     });
 
     // ===== LOAD IMAGES =====
-    function loadImages(onProgress) {
-    const promises = [];
-    let loaded = 0;
-    const total = Object.keys(imageSources).length;
+    function loadImages() {
+        const promises = [];
 
-    for (const [key, src] of Object.entries(imageSources)) {
-        const img = new Image();
+        for (const [key, src] of Object.entries(imageSources)) {
+            const img = new Image();
 
-        img.src = src;
-        img.decoding = "async";   // ✅ performance boost
-        img.loading = "eager";    // ✅ force preload
+            img.src = src;
+            images[key] = img;
 
-        images[key] = img;
+            promises.push(
+                new Promise((resolve) => {
+                    img.onload = () => resolve();
+                    img.onerror = () => {
+                        console.warn('Failed to load image:', src);
+                        resolve();
+                    };
+                })
+            );
+        }
 
-        const promise = new Promise((resolve) => {
-            img.onload = () => {
-                loaded++;
-
-                if (onProgress) {
-                    onProgress(loaded, total);
-                }
-
-                resolve();
-            };
-
-            img.onerror = () => {
-                console.warn('Failed to load:', src);
-                loaded++;
-
-                if (onProgress) {
-                    onProgress(loaded, total);
-                }
-
-                resolve();
-            };
-        });
-
-        promises.push(prompt = promise);
+        return Promise.all(promises);
     }
-
-    return Promise.all(promises);
-}
 
     // ===== MENU ELEMENTS =====
     const menuElements = [
@@ -1387,19 +1367,10 @@
 
     function createSingleBrick() {
 
-        // GAME.stopWorldScroll = true;
-
-        // bg.speed = 0;
-        // groundScroll.speed = 0;
-        if (brickWall && brickWall.active) {
-    const distance = brickWall.x - player.x;
-
-    if (distance <= 300) {
         GAME.stopWorldScroll = true;
+
         bg.speed = 0;
         groundScroll.speed = 0;
-    }
-}
 
         // coins = [];
         // platforms = [];
@@ -1940,11 +1911,11 @@
 
 
     function showScoreScreen() {
-        const yourName = localStorage.getItem('arachitol_player_name') || 'Player';
-        const participantId = localStorage.getItem('arachitol_participant_id') || 'VD0000';
+        const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
+        const participantId = localStorage.getItem('arakitol_participant_id') || 'VD0000';
         const totalScore = (GAME.superCoins * GAME.superCoinValue);
 
-        let leaderboard = JSON.parse(localStorage.getItem('arachitol_leaderboard') || '[]');
+        let leaderboard = JSON.parse(localStorage.getItem('arakitol_leaderboard') || '[]');
         const existingEntry = leaderboard.find(e => e.participantId === participantId);
 
         let bestScore = totalScore;
@@ -1985,10 +1956,10 @@
         leaderboard.sort((a, b) => b.bestScore - a.bestScore);
         leaderboard = leaderboard.slice(0, 50);
 
-        localStorage.setItem('arachitol_leaderboard', JSON.stringify(leaderboard));
-        localStorage.setItem('arachitol_current_super_coins', GAME.totalSuperCoinsCollected);
-        localStorage.setItem('arachitol_current_time', GAME.timeElapsed);
-        localStorage.setItem('arachitol_current_score', totalScore);
+        localStorage.setItem('arakitol_leaderboard', JSON.stringify(leaderboard));
+        localStorage.setItem('arakitol_current_super_coins', GAME.totalSuperCoinsCollected);
+        localStorage.setItem('arakitol_current_time', GAME.timeElapsed);
+        localStorage.setItem('arakitol_current_score', totalScore);
 
         const finalCoinsEl = document.getElementById('finalCoins');
         const finalSuperEl = document.getElementById('finalSuperCoins');
@@ -2018,8 +1989,8 @@
             }
         }
 
-        const uniqueId = localStorage.getItem('arachitol_db_player_id');
-        const playerName = localStorage.getItem('arachitol_player_name') || 'Player';
+        const uniqueId = localStorage.getItem('arakitol_db_player_id');
+        const playerName = localStorage.getItem('arakitol_player_name') || 'Player';
         const finalScore = GAME.totalSuperCoinsCollected * GAME.superCoinValue;
         if (uniqueId && typeof window.saveGameResult === 'function') {
             window.saveGameResult(uniqueId, playerName, GAME.gameElapsedMs, GAME.totalSuperCoinsCollected, finalScore);
@@ -2106,13 +2077,13 @@
     }
 
     function viewCertificate() {
-        const yourName = localStorage.getItem('arachitol_player_name') || 'Player';
+        const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
         // yogesh code - read player unique ID for certificate
-        const playerId = localStorage.getItem('arachitol_db_player_id') || '—';
+        const playerId = localStorage.getItem('arakitol_db_player_id') || '—';
         // yogesh code end
-        const superCoins = parseInt(localStorage.getItem('arachitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
-        const time = parseInt(localStorage.getItem('arachitol_current_time')) || GAME.timeElapsed || 0;
-        const totalScore = parseInt(localStorage.getItem('arachitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
+        const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
+        const time = parseInt(localStorage.getItem('arakitol_current_time')) || GAME.timeElapsed || 0;
+        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
         const date = new Date().toLocaleDateString('en-IN');
 
         const certFrame = document.getElementById('certificateFrame');
@@ -2129,11 +2100,11 @@
     }
 
     async function downloadCertificate() {
-        const yourName = localStorage.getItem('arachitol_player_name') || 'Ravi';
-        const playerId = localStorage.getItem('arachitol_db_player_id') || '#RA-576733-629';
-        const nanoCoins = parseInt(localStorage.getItem('arachitol_current_super_coins')) || 8;
-        const time = parseInt(localStorage.getItem('arachitol_current_time')) || 39;
-        const totalScore = parseInt(localStorage.getItem('arachitol_current_score')) || 40;
+        const yourName = localStorage.getItem('arakitol_player_name') || 'Ravi';
+        const playerId = localStorage.getItem('arakitol_db_player_id') || '#RA-576733-629';
+        const nanoCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 8;
+        const time = parseInt(localStorage.getItem('arakitol_current_time')) || 39;
+        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 40;
 
         // ✅ Format date as DD-MM-YYYY
         const today = new Date();
@@ -2494,14 +2465,14 @@
     const leftZone = document.getElementById('leftZone');
     const rightZone = document.getElementById('rightZone');
 
-    if (rightZone) {
-        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') startMovingForward(); }, { passive: false });
-        rightZone.addEventListener('touchend', (e) => { e.preventDefault(); stopMovingForward(); }, { passive: false });
-        rightZone.addEventListener('touchcancel', () => stopMovingForward());
+    if (leftZone) {
+        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') startMovingForward(); }, { passive: false });
+        leftZone.addEventListener('touchend', (e) => { e.preventDefault(); stopMovingForward(); }, { passive: false });
+        leftZone.addEventListener('touchcancel', () => stopMovingForward());
     }
 
-    if (leftZone) {
-        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') jump(); }, { passive: false });
+    if (rightZone) {
+        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') jump(); }, { passive: false });
     }
     // yogesh code end
 
@@ -2533,15 +2504,7 @@
     }
 
     const mobPlayAgainBtn = document.getElementById('mobPlayAgainBtn');
-    if (mobPlayAgainBtn) mobPlayAgainBtn.addEventListener('click', () => {
-        window.location.reload();
-        sessionStorage.clear();
-        localStorage.clear();
-        if ('caches' in window) {
-        const keys = await caches.keys();
-        await Promise.all(keys.map(key => caches.delete(key)));
-        }
-    });
+    if (mobPlayAgainBtn) mobPlayAgainBtn.addEventListener('click', () => window.location.reload());
 
     const certPopupClose = document.getElementById('certPopupClose');
 
@@ -2568,7 +2531,7 @@
         });
     }
 
-    document.addEventListener('arachitol:startGameplay', (e) => {
+    document.addEventListener('arakitol:startGameplay', (e) => {
         console.log('Zone 1 Gameplay starting for:', e.detail.playerName);
         initGameplay();
     });
