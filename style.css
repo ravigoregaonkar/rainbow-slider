@@ -1748,6 +1748,10 @@ body.show-game #game-container {
     display: none;
 }
 
+.play-again-btn{
+    display: none;
+}
+
 .forward-btn,
 .jump-btn {
     display: none;
@@ -2164,8 +2168,8 @@ body.show-game #game-container {
 
     .download-btn {
         position: absolute;
-        bottom: 25px;
-        right: -10vw;
+        bottom: 15vh;
+        right: -4vw;
         display: flex !important;
         justify-content: center;
         align-items: center;
@@ -2176,6 +2180,21 @@ body.show-game #game-container {
     .download-btn p {
         color: #fff;
     }
+    .play-again-btn{
+        position: absolute;
+        bottom: 41vh;
+        right: -2vw;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 999;
+    }
+    .play-again-btn p{
+        color: #fff;
+    }
+    
+
 
     .small-download {
         width: 40px;
@@ -2221,6 +2240,7 @@ body.show-game #game-container {
 
     .outer-cert {
         padding: 20px !important;
+        max-width: 600px !important;
     }
 
     .sucess-text {
@@ -2276,7 +2296,7 @@ body.show-game #game-container {
 
 @media (max-width: 860px) {
     .outer-cert {
-        width: 75vw !important;
+        width: 70vw !important;
     }
 
     .mission-stat {
@@ -2288,7 +2308,10 @@ body.show-game #game-container {
     }
 
     .download-btn {
-        right: -4vw;
+        right: -5Svw;
+    }
+    .play-again-btn{
+        right: -3vw;
     }
     .tap-play-outer{
         left: 43% !important;
@@ -2433,7 +2456,11 @@ body.show-game #game-container {
     }
 
     .download-btn {
+        bottom: 25px;
         right: -70px;
+    }
+    .play-again-btn {
+        right: -8vw;
     }
 
     .small-download {
