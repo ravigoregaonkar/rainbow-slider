@@ -15,11 +15,10 @@
         <title>Catch The D</title>
         <link rel="stylesheet" href="style.css">
         <!-- yogesh code -->
-        <link rel="preload" as="image" href="images/gameplay-bg2.png">
-        <link rel="preload" as="image" href="images/ground1.png">
         <link rel="preload" href="images/super-coin.png" as="image"
             type="image/png">
         <link rel="icon" href="images/super-coin.png" type="image/png">
+
         <script>
             (function () {
                 function setVH() {
@@ -197,21 +196,21 @@
                     </div>
                     <div class="hud-right-group">
                         <button id="musicBtn" class="music-btn"><img
-                                id="musicIcon" src="images/music-on.png"
+                                id="musicIcon" src="images/music-on.svg"
                                 alt="Music"></button>
                         <button class="pause-btn" id="pauseBtn"><img
-                                src="images/pause-btn.png" alt="Pause"></button>
+                                src="images/pause-btn.svg" alt="Pause"></button>
                     </div>
                 </div>
-                
+
                 <button class="forward-btn" id="forwardBtn"><img
-                        src="images/forward-btn.png" alt="Forward"></button>
-                        <button class="jump-btn" id="jumpBtn"><img
-                        src="images/jump-button.png" alt="Jump"></button>
+                        src="images/forward-btn.svg" alt="Forward"></button>
+                <button class="jump-btn" id="jumpBtn"><img
+                        src="images/jump-button.svg" alt="Jump"></button>
                 <!-- yogesh code - full screen left/right touch zones for forward and jump -->
-               
+
                 <div id="rightZone" class="touch-zone touch-zone-right"></div>
-                 <div id="leftZone" class="touch-zone touch-zone-left"></div>
+                <div id="leftZone" class="touch-zone touch-zone-left"></div>
                 <!-- yogesh code end -->
             </div>
         </div>
@@ -287,12 +286,16 @@
                     <table class="leaderboard-table">
                         <thead>
                             <tr>
-                                <th style="font-family: var(--main-font);">RANK</th>
-                                <th style="font-family: var(--main-font);">NAME</th>
+                                <th
+                                    style="font-family: var(--main-font);">RANK</th>
+                                <th
+                                    style="font-family: var(--main-font);">NAME</th>
                                 <th style="font-family: var(--main-font);">SUPER
                                     COINS</th>
-                                <th style="font-family: var(--main-font);">TIME</th>
-                                <th style="font-family: var(--main-font);">SCORE</th>
+                                <th
+                                    style="font-family: var(--main-font);">TIME</th>
+                                <th
+                                    style="font-family: var(--main-font);">SCORE</th>
                             </tr>
                         </thead>
                         <tbody id="leaderboardBody"></tbody>
@@ -317,13 +320,14 @@
                             class="btn-icon">&#11015;</span> DOWNLOAD
                         CERTIFICATE</button>
                     <button class="overlay-btn back-btn" id="certBackBtn"><span
-                            class="btn-icon">&#x27F3;</span>  PLAY AGAIN
-                        </button>
+                            class="btn-icon">&#x27F3;</span> PLAY AGAIN
+                    </button>
                 </div>
                 <div id="mobPlayAgainBtn" class="play-again-btn">
                     <p>Play</p>
                     <p>Again</p>
-                    <button class="small-playagain" id="mobPlayAgainBtn">&#9654;</button>
+                    <button class="small-playagain"
+                        id="mobPlayAgainBtn">&#9654;</button>
                 </div>
                 <div id="downloadCertBtnMob" class="download-btn">
                     <p>Download</p>
