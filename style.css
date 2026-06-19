@@ -1,5 +1,9 @@
 /* ===== RESET & BASE ===== */
 /* yogesh code - html fill-available so Safari calculates height without its toolbar */
+:root{
+    --main-font: Calibri;
+    --button-font: sans-serif;
+}
 html {
     height: -webkit-fill-available;
     height: 100dvh;
@@ -767,6 +771,7 @@ body.show-game #game-container {
     letter-spacing: 1px;
     text-shadow: 0 4px 2px rgb(0 0 0);
     border-bottom: 2px solid white;
+    font-family: var(--main-font);
 }
 
 .form-content {
@@ -790,6 +795,7 @@ body.show-game #game-container {
     margin-bottom: 5px;
     margin-left: 5px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: var(--main-font);
 }
 
 .input-wrapper {
@@ -831,6 +837,7 @@ body.show-game #game-container {
     transition: all 0.3s ease;
     outline: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: var(--main-font);
 }
 
 .input-field::placeholder {
@@ -883,6 +890,7 @@ body.show-game #game-container {
     justify-content: center;
     gap: 10px;
     box-shadow: 0 6px 0 #cc8400, 0 8px 20px rgba(0, 0, 0, 0.3);
+    font-family: var(--button-font);
 }
 
 .continue-btn-text {
@@ -1362,6 +1370,7 @@ body.show-game #game-container {
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: var(--main-font);
 }
 
 .hud-value {
@@ -1381,6 +1390,7 @@ body.show-game #game-container {
     font-size: 9px;
     font-weight: 700;
     margin-left: 3px;
+    font-family: var(--main-font);
 }
 
 /* Pause Button */
@@ -1790,6 +1800,13 @@ body.show-game #game-container {
 /* Ravi CSS Start  */
 
 @media (max-width: 1925px) {
+    .tap-play-outer{
+        left: 40% !important;
+        width: 10vw !important;
+    }
+    .tap-play-btn img{
+        width: 10vw !important;
+    }
     .logo-container {
         top: 20%;
         width: 16vw;
@@ -2862,6 +2879,7 @@ body.show-game #game-container {
     letter-spacing: 2px;
     margin: 0;
     line-height: 1.1;
+    font-family: var(--main-font);
 }
 
 .mission-star {
@@ -2874,6 +2892,7 @@ body.show-game #game-container {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 20px;
+    font-family: var(--main-font);
 }
 
 .mission-stats {
@@ -2916,6 +2935,7 @@ body.show-game #game-container {
     letter-spacing: 1px;
     text-transform: uppercase;
     margin-bottom: 5px;
+    font-family: var(--main-font);
 }
 
 .mission-stat .stat-value {
@@ -2962,6 +2982,7 @@ body.show-game #game-container {
     gap: 10px;
     width: auto !important;
     min-width: 280px;
+    font-family: var(--main-font);
 }
 
 .leaderboard-btn:hover {
@@ -3027,6 +3048,7 @@ body.show-game #game-container {
     font-weight: 900;
     letter-spacing: 2px;
     margin: 0;
+    font-family: var(--main-font);
 }
 
 .lb-star {
@@ -3076,6 +3098,7 @@ body.show-game #game-container {
     text-transform: uppercase;
     border-bottom: 3px solid #FFD700;
     white-space: nowrap;
+    font-size: var(--main-font);
 }
 
 .leaderboard-table td {
@@ -3085,6 +3108,9 @@ body.show-game #game-container {
     text-align: center;
     font-weight: 600;
     white-space: nowrap;
+}
+.leaderboard-table td strong{
+    font-family: var(--main-font);
 }
 
 .leaderboard-table tbody tr:nth-child(odd) {
@@ -3160,10 +3186,15 @@ body.show-game #game-container {
     display: inline-flex !important;
     align-items: center;
     width: auto !important;
+    font-family: var(--main-font);
 }
 
 .cert-btn:hover {
     background: linear-gradient(180deg, #1976d2 0%, #1565c0 100%) !important;
+}
+
+.cert-title, .game-name, .certify-text, .user-name, .score-outer, .overlay-btn{
+    font-family: var(--main-font);
 }
 
 .playagain-btn {
@@ -3249,7 +3280,6 @@ body.show-game #game-container {
     transition: all 0.2s ease;
     z-index: 10;
     line-height: 1;
-    padding-bottom: 4px;
 }
 
 .cert-popup-close:hover {
