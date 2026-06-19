@@ -299,28 +299,48 @@
     });
 
     // ===== LOAD IMAGES =====
-    function loadImages() {
-        const promises = [];
+    function loadImages(onProgress) {
+    const promises = [];
+    let loaded = 0;
+    const total = Object.keys(imageSources).length;
 
-        for (const [key, src] of Object.entries(imageSources)) {
-            const img = new Image();
+    for (const [key, src] of Object.entries(imageSources)) {
+        const img = new Image();
 
-            img.src = src;
-            images[key] = img;
+        img.src = src;
+        img.decoding = "async";   // ✅ performance boost
+        img.loading = "eager";    // ✅ force preload
 
-            promises.push(
-                new Promise((resolve) => {
-                    img.onload = () => resolve();
-                    img.onerror = () => {
-                        console.warn('Failed to load image:', src);
-                        resolve();
-                    };
-                })
-            );
-        }
+        images[key] = img;
 
-        return Promise.all(promises);
+        const promise = new Promise((resolve) => {
+            img.onload = () => {
+                loaded++;
+
+                if (onProgress) {
+                    onProgress(loaded, total);
+                }
+
+                resolve();
+            };
+
+            img.onerror = () => {
+                console.warn('Failed to load:', src);
+                loaded++;
+
+                if (onProgress) {
+                    onProgress(loaded, total);
+                }
+
+                resolve();
+            };
+        });
+
+        promises.push(prompt = promise);
     }
+
+    return Promise.all(promises);
+}
 
     // ===== MENU ELEMENTS =====
     const menuElements = [
@@ -2474,14 +2494,14 @@
     const leftZone = document.getElementById('leftZone');
     const rightZone = document.getElementById('rightZone');
 
-    if (leftZone) {
-        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') startMovingForward(); }, { passive: false });
-        leftZone.addEventListener('touchend', (e) => { e.preventDefault(); stopMovingForward(); }, { passive: false });
-        leftZone.addEventListener('touchcancel', () => stopMovingForward());
+    if (rightZone) {
+        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') startMovingForward(); }, { passive: false });
+        rightZone.addEventListener('touchend', (e) => { e.preventDefault(); stopMovingForward(); }, { passive: false });
+        rightZone.addEventListener('touchcancel', () => stopMovingForward());
     }
 
-    if (rightZone) {
-        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') jump(); }, { passive: false });
+    if (leftZone) {
+        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if (GAME.state === 'playing') jump(); }, { passive: false });
     }
     // yogesh code end
 
