@@ -2533,7 +2533,15 @@
     }
 
     const mobPlayAgainBtn = document.getElementById('mobPlayAgainBtn');
-    if (mobPlayAgainBtn) mobPlayAgainBtn.addEventListener('click', () => window.location.reload());
+    if (mobPlayAgainBtn) mobPlayAgainBtn.addEventListener('click', () => {
+        window.location.reload();
+        sessionStorage.clear();
+        localStorage.clear();
+        if ('caches' in window) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map(key => caches.delete(key)));
+        }
+    });
 
     const certPopupClose = document.getElementById('certPopupClose');
 
