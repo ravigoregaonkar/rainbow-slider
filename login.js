@@ -1,4 +1,4 @@
-// ===== ARAKITOL POWER QUEST - LOGIN & MENU LOGIC =====
+// ===== arachitol POWER QUEST - LOGIN & MENU LOGIC =====
 // Fields: Your Name (text only)
 // Certificate uses Your Name, Leaderboard uses Name
 
@@ -231,8 +231,8 @@
                 gameplayScreen.style.display = 'flex';
                 void gameplayScreen.offsetWidth;
                 gameplayScreen.classList.add('active');
-                const playerName = localStorage.getItem('arakitol_player_name') || 'Champion';
-                const event = new CustomEvent('arakitol:startGameplay', {
+                const playerName = localStorage.getItem('arachitol_player_name') || 'Champion';
+                const event = new CustomEvent('arachitol:startGameplay', {
                     detail: {
                         playerName: playerName,
                         timestamp: new Date().toISOString()
@@ -261,22 +261,22 @@
         goFullScreen();
 
         // Generate unique participant ID (only if not already exists for this session)
-        let participantId = localStorage.getItem('arakitol_participant_id');
+        let participantId = localStorage.getItem('arachitol_participant_id');
         if (!participantId) {
             participantId = generateParticipantId();
-            localStorage.setItem('arakitol_participant_id', participantId);
+            localStorage.setItem('arachitol_participant_id', participantId);
         }
 
         // Save player data
-        localStorage.setItem('arakitol_player_name', yourName);
-        localStorage.setItem('arakitol_login_time', new Date().toISOString());
+        localStorage.setItem('arachitol_player_name', yourName);
+        localStorage.setItem('arachitol_login_time', new Date().toISOString());
 
         // Reset attempts for new login (fresh session)
-        localStorage.removeItem('arakitol_attempts');
-        localStorage.removeItem('arakitol_best_score');
-        localStorage.removeItem('arakitol_best_coins');
-        localStorage.removeItem('arakitol_best_super_coins');
-        localStorage.removeItem('arakitol_best_time');
+        localStorage.removeItem('arachitol_attempts');
+        localStorage.removeItem('arachitol_best_score');
+        localStorage.removeItem('arachitol_best_coins');
+        localStorage.removeItem('arachitol_best_super_coins');
+        localStorage.removeItem('arachitol_best_time');
 
         continueBtn.style.transform = 'scale(0.95)';
         setTimeout(function () {
@@ -290,7 +290,7 @@
             const timePart = String(Date.now()).slice(-6);
             const randomPart = Math.floor(100 + Math.random() * 900);
             const uniqueId = initials + '-' + timePart + '-' + randomPart;
-            localStorage.setItem('arakitol_db_player_id', uniqueId);
+            localStorage.setItem('arachitol_db_player_id', uniqueId);
             // yogesh code end
             goToScreen('start');
             console.log('Login successful!');
@@ -383,7 +383,7 @@
         setTimeout(function () {
             startGameBtn.style.transform = '';
 
-            const playerName = localStorage.getItem('arakitol_player_name') || 'Champion';
+            const playerName = localStorage.getItem('arachitol_player_name') || 'Champion';
             showStartMessage(playerName);
 
             setTimeout(function () {
@@ -539,7 +539,7 @@
     preloadImages();
 
     // ===== CONSOLE WELCOME =====
-    console.log('%c Arakitol Power Quest ', 'background: linear-gradient(90deg, #1a5fb4, #FFD700); color: #fff; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 10px;');
+    console.log('%c arachitol Power Quest ', 'background: linear-gradient(90deg, #1a5fb4, #FFD700); color: #fff; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 10px;');
     console.log('%c Menu System Loaded ', 'color: #FFD700; font-size: 14px;');
 
 })();
