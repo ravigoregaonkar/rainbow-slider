@@ -1,4 +1,4 @@
-// ===== ARAKITOL POWER QUEST - ZONE 1 GAMEPLAY =====
+// ===== arachitol POWER QUEST - ZONE 1 GAMEPLAY =====
 (function () {
     'use strict';
 
@@ -1920,11 +1920,11 @@
 
 
     function showScoreScreen() {
-        const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
-        const participantId = localStorage.getItem('arakitol_participant_id') || 'VD0000';
+        const yourName = localStorage.getItem('arachitol_player_name') || 'Player';
+        const participantId = localStorage.getItem('arachitol_participant_id') || 'VD0000';
         const totalScore = (GAME.superCoins * GAME.superCoinValue);
 
-        let leaderboard = JSON.parse(localStorage.getItem('arakitol_leaderboard') || '[]');
+        let leaderboard = JSON.parse(localStorage.getItem('arachitol_leaderboard') || '[]');
         const existingEntry = leaderboard.find(e => e.participantId === participantId);
 
         let bestScore = totalScore;
@@ -1965,10 +1965,10 @@
         leaderboard.sort((a, b) => b.bestScore - a.bestScore);
         leaderboard = leaderboard.slice(0, 50);
 
-        localStorage.setItem('arakitol_leaderboard', JSON.stringify(leaderboard));
-        localStorage.setItem('arakitol_current_super_coins', GAME.totalSuperCoinsCollected);
-        localStorage.setItem('arakitol_current_time', GAME.timeElapsed);
-        localStorage.setItem('arakitol_current_score', totalScore);
+        localStorage.setItem('arachitol_leaderboard', JSON.stringify(leaderboard));
+        localStorage.setItem('arachitol_current_super_coins', GAME.totalSuperCoinsCollected);
+        localStorage.setItem('arachitol_current_time', GAME.timeElapsed);
+        localStorage.setItem('arachitol_current_score', totalScore);
 
         const finalCoinsEl = document.getElementById('finalCoins');
         const finalSuperEl = document.getElementById('finalSuperCoins');
@@ -1998,8 +1998,8 @@
             }
         }
 
-        const uniqueId = localStorage.getItem('arakitol_db_player_id');
-        const playerName = localStorage.getItem('arakitol_player_name') || 'Player';
+        const uniqueId = localStorage.getItem('arachitol_db_player_id');
+        const playerName = localStorage.getItem('arachitol_player_name') || 'Player';
         const finalScore = GAME.totalSuperCoinsCollected * GAME.superCoinValue;
         if (uniqueId && typeof window.saveGameResult === 'function') {
             window.saveGameResult(uniqueId, playerName, GAME.gameElapsedMs, GAME.totalSuperCoinsCollected, finalScore);
@@ -2086,13 +2086,13 @@
     }
 
     function viewCertificate() {
-        const yourName = localStorage.getItem('arakitol_player_name') || 'Player';
+        const yourName = localStorage.getItem('arachitol_player_name') || 'Player';
         // yogesh code - read player unique ID for certificate
-        const playerId = localStorage.getItem('arakitol_db_player_id') || '—';
+        const playerId = localStorage.getItem('arachitol_db_player_id') || '—';
         // yogesh code end
-        const superCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
-        const time = parseInt(localStorage.getItem('arakitol_current_time')) || GAME.timeElapsed || 0;
-        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
+        const superCoins = parseInt(localStorage.getItem('arachitol_current_super_coins')) || GAME.totalSuperCoinsCollected || 0;
+        const time = parseInt(localStorage.getItem('arachitol_current_time')) || GAME.timeElapsed || 0;
+        const totalScore = parseInt(localStorage.getItem('arachitol_current_score')) || (GAME.superCoins * GAME.superCoinValue) || 0;
         const date = new Date().toLocaleDateString('en-IN');
 
         const certFrame = document.getElementById('certificateFrame');
@@ -2109,11 +2109,11 @@
     }
 
     async function downloadCertificate() {
-        const yourName = localStorage.getItem('arakitol_player_name') || 'Ravi';
-        const playerId = localStorage.getItem('arakitol_db_player_id') || '#RA-576733-629';
-        const nanoCoins = parseInt(localStorage.getItem('arakitol_current_super_coins')) || 8;
-        const time = parseInt(localStorage.getItem('arakitol_current_time')) || 39;
-        const totalScore = parseInt(localStorage.getItem('arakitol_current_score')) || 40;
+        const yourName = localStorage.getItem('arachitol_player_name') || 'Ravi';
+        const playerId = localStorage.getItem('arachitol_db_player_id') || '#RA-576733-629';
+        const nanoCoins = parseInt(localStorage.getItem('arachitol_current_super_coins')) || 8;
+        const time = parseInt(localStorage.getItem('arachitol_current_time')) || 39;
+        const totalScore = parseInt(localStorage.getItem('arachitol_current_score')) || 40;
 
         // ✅ Format date as DD-MM-YYYY
         const today = new Date();
@@ -2540,7 +2540,7 @@
         });
     }
 
-    document.addEventListener('arakitol:startGameplay', (e) => {
+    document.addEventListener('arachitol:startGameplay', (e) => {
         console.log('Zone 1 Gameplay starting for:', e.detail.playerName);
         initGameplay();
     });
