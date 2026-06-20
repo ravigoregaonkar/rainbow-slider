@@ -171,6 +171,12 @@
         gameContainer.style.position = 'fixed';
         gameContainer.style.top = '0';
         gameContainer.style.left = '0';
+
+
+        // ✅ Prevent unwanted scrolling
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+
     }
 
     window.addEventListener('resize', scaleContainer);
@@ -361,12 +367,43 @@
                     if (loginBox) {
                         loginBox.style.transform = 'translate(-50%, -45%)';
                     }
+
+                    // ✅ IMPORTANT: fix layout after keyboard closes
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        scaleContainer();
+
+                        // Force repaint (iPad Safari bug fix)
+                        document.body.style.display = 'none';
+                        document.body.offsetHeight;
+                        document.body.style.display = '';
+
+                    }, 200);
+
                 }
             });
         }
     }
 
     handleKeyboard();
+
+    // ✅ iPad FIX — tap outside input causes layout bug
+    document.addEventListener('touchend', function () {
+        setTimeout(() => {
+
+            // Reset scroll
+            window.scrollTo(0, 0);
+
+            // Resize container again
+            scaleContainer();
+
+            // ✅ Force repaint (critical for Safari)
+            document.body.style.display = 'none';
+            document.body.offsetHeight;
+            document.body.style.display = '';
+
+        }, 120);
+    });
 
     // ===== START GAME BUTTON =====
     startGameBtn.addEventListener('click', function (e) {
