@@ -173,11 +173,7 @@
         gameContainer.style.left = '0';
     }
 
-    window.addEventListener('resize', function () {
-        setTimeout(() => {
-            scaleContainer();
-        }, 150);
-    });
+    window.addEventListener('resize', scaleContainer);
     window.addEventListener('orientationchange', function () {
         setTimeout(scaleContainer, 300);
     });
@@ -365,13 +361,6 @@
                     if (loginBox) {
                         loginBox.style.transform = 'translate(-50%, -45%)';
                     }
-
-                    // ✅ CRITICAL FIX
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                        scaleContainer();
-                    }, 300);
-
                 }
             });
         }
