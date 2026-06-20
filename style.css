@@ -495,6 +495,7 @@ body.show-game #game-container {
     /* yogesh code - use JS-set real viewport height to avoid iOS toolbar gap */
     height: 100dvh;
     height: var(--real-vh, 100dvh);
+    height: calc(var(--vh) * 100); /* ✅ REAL HEIGHT */
     position: fixed;
     top: 0;
     left: 0;
