@@ -5,6 +5,14 @@
 (function () {
     'use strict';
 
+    function setRealVH() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+    }
+    window.addEventListener('load', setRealVH);
+    window.addEventListener('resize', setRealVH);
+    window.addEventListener('orientationchange', setRealVH)
+
     // ===== FULL SCREEN FUNCTION =====
     function goFullScreen() {
         const elem = document.documentElement;
@@ -33,23 +41,21 @@
     // 1. Use -webkit-fill-available so content fills behind the toolbar
     // 2. On first user tap, scroll to 1px then back — this collapses Safari's toolbar
     // 3. Lock html/body so the page can never be scrolled (toolbar stays hidden)
+
+    // ✅✅✅ FIXED SAFARI FUNCTION (no breaking logic)
     function hideSafariUI() {
         if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
 
-        // Lock scroll on html and body so toolbar can't reappear
-        document.documentElement.style.cssText = 'height: -webkit-fill-available; overflow: hidden; position: fixed; width: 100%;';
+        document.documentElement.style.height = '-webkit-fill-available';
         document.body.style.height = '-webkit-fill-available';
 
-        // Scroll trick — collapses the Safari nav bar
-        document.documentElement.style.height = (window.innerHeight + 60) + 'px';
-        window.scrollTo(0, 60);
+        window.scrollTo(0, 1);
         setTimeout(() => {
             window.scrollTo(0, 0);
-            document.documentElement.style.height = '-webkit-fill-available';
-            // Resize game container to the now-collapsed viewport
             scaleContainer();
         }, 100);
     }
+
     // yogesh code end
 
     window.addEventListener("load", () => {
@@ -81,10 +87,12 @@
 
 
     // iOS Fallback
+
     function handleIOSFallback() {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         if (isIOS) hideSafariUI();
     }
+
 
     // ===== INTRO SCREEN LOGIC =====
     const introScreen = document.getElementById('intro-screen');
@@ -158,73 +166,25 @@
         return id;
     }
 
-    // ===== SCALE CONTAINER =====
+
+    // ===== SCALE CONTAINER (SAFE VERSION) =====
     function scaleContainer() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
+        gameContainer.style.width = width + 'px';
+        gameContainer.style.height = height + 'px';
 
-        // yogesh code - use visualViewport height on iOS to avoid nav bar overlap
-
-        gameContainer.style.width = vw + 'px';
-        gameContainer.style.height = vh + 'px';
-
-        const windowWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
-        const windowHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        // yogesh code end
-
-        gameContainer.style.width = windowWidth + 'px';
-        gameContainer.style.height = windowHeight + 'px';
-        gameContainer.style.transform = 'none';
         gameContainer.style.position = 'fixed';
         gameContainer.style.top = '0';
         gameContainer.style.left = '0';
-
-
-        // ✅ Prevent unwanted scrolling
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
-
     }
 
     window.addEventListener('resize', scaleContainer);
-    window.addEventListener('orientationchange', function () {
+    window.addEventListener('orientationchange', () => {
         setTimeout(scaleContainer, 300);
     });
-    scaleContainer();
 
-
-    function forceLayoutFix() {
-        // Reset scroll
-        window.scrollTo(0, 0);
-
-        // Force reflow
-        document.body.style.height = '100vh';
-        document.body.offsetHeight;
-
-        // Recalculate container
-        scaleContainer();
-    }
-
-    document.addEventListener('focusout', function () {
-        setTimeout(() => {
-            forceLayoutFix();
-        }, 150);
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('yourNameInput')) {
-            setTimeout(() => {
-                forceLayoutFix();
-            }, 150);
-        }
-    });
-
-    window.addEventListener('resize', function () {
-        setTimeout(() => {
-            forceLayoutFix();
-        }, 100);
-    });
     // ===== LOADING SCREEN =====
     function hideLoadingScreen() {
         setTimeout(() => {
@@ -371,79 +331,29 @@
     document.head.appendChild(shakeStyle);
 
     // ===== KEYBOARD OVERLAP FIX =====
+
+    // ✅✅✅ FIX 2: KEYBOARD CLOSE STABILITY
     function handleKeyboard() {
-        const inputs = [yourNameInput];
 
-        inputs.forEach(function (input) {
-            input.addEventListener('focus', function () {
-                if (window.innerWidth <= 1024) {
-                    gameContainer.classList.add('keyboard-open');
-                    // Scroll to input on mobile
-                    setTimeout(function () {
-                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 350);
-                }
-            });
-
-            input.addEventListener('blur', function () {
-                gameContainer.classList.remove('keyboard-open');
-            });
+        yourNameInput.addEventListener('focus', () => {
+            gameContainer.classList.add('keyboard-open');
         });
 
-        // Handle virtual keyboard on mobile/tablet
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', function () {
-                const heightDiff = window.innerHeight - window.visualViewport.height;
-                if (heightDiff > 150) {
-                    gameContainer.classList.add('keyboard-open');
-                    // Scroll login box up when keyboard opens
-                    const loginBox = document.querySelector('.login-box');
-                    if (loginBox) {
-                        loginBox.style.transform = 'translate(-50%, -70%)';
-                    }
-                } else {
-                    gameContainer.classList.remove('keyboard-open');
-                    const loginBox = document.querySelector('.login-box');
-                    if (loginBox) {
-                        loginBox.style.transform = 'translate(-50%, -45%)';
-                    }
+        yourNameInput.addEventListener('blur', () => {
+            gameContainer.classList.remove('keyboard-open');
 
-                    // ✅ IMPORTANT: fix layout after keyboard closes
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                        scaleContainer();
-
-                        // Force repaint (iPad Safari bug fix)
-                        document.body.style.display = 'none';
-                        document.body.offsetHeight;
-                        document.body.style.display = '';
-
-                    }, 200);
-
-                }
-            });
-        }
+            // 🔥 MAIN FIX (keyboard close issue)
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                setRealVH();
+                scaleContainer();
+            }, 250);
+        });
     }
+
 
     handleKeyboard();
 
-    // ✅ iPad FIX — tap outside input causes layout bug
-    document.addEventListener('touchend', function () {
-        setTimeout(() => {
-
-            // Reset scroll
-            window.scrollTo(0, 0);
-
-            // Resize container again
-            scaleContainer();
-
-            // ✅ Force repaint (critical for Safari)
-            document.body.style.display = 'none';
-            document.body.offsetHeight;
-            document.body.style.display = '';
-
-        }, 120);
-    });
 
     // ===== START GAME BUTTON =====
     startGameBtn.addEventListener('click', function (e) {
