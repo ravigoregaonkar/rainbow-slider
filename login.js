@@ -160,7 +160,15 @@
 
     // ===== SCALE CONTAINER =====
     function scaleContainer() {
+
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
         // yogesh code - use visualViewport height on iOS to avoid nav bar overlap
+
+        gameContainer.style.width = vw + 'px';
+        gameContainer.style.height = vh + 'px';
+
         const windowWidth = window.visualViewport ? window.visualViewport.width : window.innerWidth;
         const windowHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
         // yogesh code end
@@ -185,6 +193,38 @@
     });
     scaleContainer();
 
+
+    function forceLayoutFix() {
+        // Reset scroll
+        window.scrollTo(0, 0);
+
+        // Force reflow
+        document.body.style.height = '100vh';
+        document.body.offsetHeight;
+
+        // Recalculate container
+        scaleContainer();
+    }
+
+    document.addEventListener('focusout', function () {
+        setTimeout(() => {
+            forceLayoutFix();
+        }, 150);
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('yourNameInput')) {
+            setTimeout(() => {
+                forceLayoutFix();
+            }, 150);
+        }
+    });
+
+    window.addEventListener('resize', function () {
+        setTimeout(() => {
+            forceLayoutFix();
+        }, 100);
+    });
     // ===== LOADING SCREEN =====
     function hideLoadingScreen() {
         setTimeout(() => {
