@@ -1378,14 +1378,14 @@
         // bg.speed = 0;
         // groundScroll.speed = 0;
         if (brickWall && brickWall.active) {
-    const distance = brickWall.x - player.x;
+            const distance = brickWall.x - player.x;
 
-    if (distance <= 300) {
-        GAME.stopWorldScroll = true;
-        bg.speed = 0;
-        groundScroll.speed = 0;
-    }
-}
+            if (distance <= 300) {
+                GAME.stopWorldScroll = true;
+                bg.speed = 0;
+                groundScroll.speed = 0;
+            }
+        }
 
         // coins = [];
         // platforms = [];
@@ -1563,8 +1563,8 @@
         // Draw background image - only draw tiles that are actually visible (reduces overdraw)
         if (bg.image && bg.image.complete && bg.image.naturalWidth > 0) {
             let drawX = ((bg.x % bg.width) + bg.width) % bg.width * -1;
-            while (drawX < 1024 + bg.width){
-            // while (drawX < 1024) {
+            while (drawX < 1024 + bg.width) {
+                // while (drawX < 1024) {
                 ctx.drawImage(bg.image, drawX, 0, bg.width, 768);
                 drawX += bg.width;
             }
@@ -2116,7 +2116,7 @@
             <div style="position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 3px dashed #FFD700; border-radius: 18px; pointer-events: none;"></div>
             <div class="cert-title" style="font-size: ${titleSize}; color: #1a237e; font-weight: 900; margin: 5px 0; letter-spacing: 1px;">CERTIFICATE OF COMPLETION</div>
             <div class="game-name" style="font-size: 20px; color: #ff6a00; font-weight: 800; margin: 15px 0;">CATCH THE SMART D</div>
-            <div class="certify-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">Is hereby awarded to</div>
+            <div class="certify-text" style="font-size: 16px; color: #555; margin: 15px 0 5px;">is hereby awarded to</div>
             <div class="user-name" style="font-size: ${nameSize}; color: #e65100; font-weight: bold; margin: 10px 0;">${yourName}</div>
             <div style="font-size: 13px; color: #999; margin-bottom: 10px; letter-spacing: 2px;">ID: #${playerId}</div>
             <div class="score-outer" style="display: flex; justify-content: center; gap: 25px; margin: 25px 0;">
@@ -2214,7 +2214,7 @@
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(15);
         pdf.setTextColor(90);
-        pdf.text('Is hereby awarded to', w / 2, 70, { align: 'center' });
+        pdf.text('is hereby awarded to', w / 2, 70, { align: 'center' });
 
         // ===== Name =====
         pdf.setFontSize(30);
@@ -2239,7 +2239,7 @@
 
         // ===== Box 1 (Nano Coins) =====
         pdf.setDrawColor(255, 110, 0);
-        pdf.setFillColor(250, 240, 225);
+        pdf.setFillColor(255, 240, 199);
         pdf.roundedRect(startX, boxY, boxW, boxH, 10, 10, 'FD');
 
         pdf.setTextColor(255, 110, 0);
@@ -2617,5 +2617,24 @@
     });
 
     console.log('%c Zone 1 Gameplay Engine Loaded ', 'color: #4CAF50; font-size: 14px;');
+
+    let wasMusicPlaying = false;
+
+    document.addEventListener("visibilitychange", function () {
+
+        if (document.hidden) {
+            // Save state before pausing
+            if (bgMusic && !bgMusic.paused) {
+                wasMusicPlaying = true;
+                bgMusic.pause();
+            }
+
+        } else {
+            // Resume only if it was playing
+            if (wasMusicPlaying && musicOn) {
+                bgMusic.play().catch(() => { });
+            }
+        }
+    });
 })();
 
