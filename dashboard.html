@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Catch The D</title>
+    <link rel="preload" href="images/super-coin.png" as="image" type="image/png">
+        <link rel="icon" href="images/super-coin.png" type="image/png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.css" />
+</head>
+<body>
+
+<div class="leaderboard-table-wrapper">
+                    <table id="leaderboardTable" class="leaderboard-table">
+                        <thead><tr><th>RANK</th><th>NAME</th><th>UNIQUE ID</th><th>SUPER
+                                    COINS</th><th>TIME</th><th>SCORE</th></tr></thead>
+                        <tbody id="leaderboardBody2"></tbody>
+                    </table>
+                </div>
+
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.8/js/dataTables.js"></script>
+    <script type="module" src="db.js"></script>
+
+</body>
+</html>
