@@ -1899,35 +1899,70 @@
             animation: fadeIn 0.5s ease;
         `;
 
-        const popupImg = GAME.superMode
-            ? 'images/vitamin-d-power-popup.png'
-            : 'images/vitamin-d-miss-popup.png';
+        const isSuperMode = GAME.superMode;
+        const missed = GAME.totalSuperCoins - GAME.totalSuperCoinsCollected;
+        // yogesh code - dynamic miss message
+        const messageText = isSuperMode ? 'YOU GOT OPTIMUM SMART D POWER' : 'YOU MISSED CATCHING ' + missed + ' Smart D POWER!';
+        // yogesh code end
+        const messageColor = isSuperMode ? '#FFD700' : '#ff4444';
+        const iconText = isSuperMode ? '&#11088;' : '&#10060;';
+        const winlossText = isSuperMode ? 'Hurray!' : 'Sorry!';
 
         messageOverlay.innerHTML = `
-            <img src="${popupImg}" class="power-popup-img">
-            `;
-
+            <div style="
+                background: linear-gradient(135deg, #1a3a6b 0%, #0d1f3c 100%);
+                border: 4px solid ${messageColor};
+                border-radius: 25px;
+                padding: 40px 60px;
+                text-align: center;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                animation: scaleIn 0.5s ease;
+            ">
+                <div style="font-size: 60px; margin-bottom: 15px;">${iconText}</div>
+                <div style="
+                    font-size: 32px;
+                    font-weight: 900;
+                    text-align: center;
+                    color: ${messageColor};
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                    letter-spacing: 2px;
+                ">
+                    ${winlossText};
+                </div>
+                <div style="
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: ${messageColor};
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                    letter-spacing: 1px;
+                ">
+                    ${messageText}
+                </div>
+                <div style="font-size: 18px; color: #a0c4e8; margin-top: 15px;">
+                    ${isSuperMode ? 'All 8 Super Coins Collected!' : 'Mission Incompleted!'}
+                </div>
+            </div>
+        `;
 
         document.body.appendChild(messageOverlay);
 
-        // Reuse existing style tag instead of appending a new one every game over
-        let animStyle = document.getElementById('power-anim-style');
-        if (!animStyle) {
-            animStyle = document.createElement('style');
-            animStyle.id = 'power-anim-style';
-            animStyle.textContent = `
-                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes scaleIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-                @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-            `;
-            document.head.appendChild(animStyle);
-        }
+        const animStyle = document.createElement('style');
+
+        animStyle.textContent = `
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes scaleIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+            @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        `;
+
+        document.head.appendChild(animStyle);
 
         setTimeout(() => {
             messageOverlay.style.animation = 'fadeOut 0.5s ease forwards';
 
             setTimeout(() => {
                 if (messageOverlay.parentNode) messageOverlay.remove();
+                if (animStyle.parentNode) animStyle.remove();
+
                 showScoreScreen();
             }, 500);
         }, 3000);
