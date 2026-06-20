@@ -361,13 +361,6 @@
                     if (loginBox) {
                         loginBox.style.transform = 'translate(-50%, -45%)';
                     }
-
-                    // ✅ CRITICAL FIX
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                        scaleContainer();
-                    }, 300);
-
                 }
             });
         }
